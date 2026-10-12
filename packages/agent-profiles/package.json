@@ -1,0 +1,38 @@
+{
+  "name": "@pi-pocket/agent-profiles",
+  "version": "0.1.0-candidate.0",
+  "private": true,
+  "description": "Portable owner-managed Markdown profile catalog and validator for Pi subagent integrations.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.19"
+  },
+  "files": [
+    "dist/",
+    "src/",
+    "examples/",
+    "README.md",
+    "NOTICE.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit",
+    "test": "node --test test/*.test.ts"
+  },
+  "dependencies": {
+    "yaml": "2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "typescript": "6.0.3"
+  },
+  "license": "UNLICENSED",
+  "x-candidate-status": "experimental",
+  "x-source-license-status": "missing-in-source; stable/distribution claim blocked"
+}

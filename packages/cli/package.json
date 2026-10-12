@@ -1,0 +1,11 @@
+{
+  "name": "portable-pi-cli",
+  "version": "0.1.0-candidate.2",
+  "private": true,
+  "type": "module",
+  "description": "Candidate selective installer and doctor for the portable Pi Durable extension collection.",
+  "engines": { "node": ">=24.19.0" },
+  "files": ["src", "README.md", "catalog.json", "package.json"],
+  "bin": { "portable-pi": "src/index.mjs" },
+  "scripts": { "test": "node --test test/install.test.mjs" }
+}

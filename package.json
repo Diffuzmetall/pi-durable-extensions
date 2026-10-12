@@ -1,0 +1,13 @@
+{
+  "name": "pi-durable-extensions",
+  "version": "0.1.0-candidate.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "engines": { "node": ">=24.19.0" },
+  "scripts": {
+    "check": "node scripts/check-public-tree.mjs",
+    "pack": "node scripts/pack-all.mjs",
+    "manual-proof": "node scripts/manual-route-proof.mjs"
+  }
+}

@@ -1,0 +1,44 @@
+{
+    "name": "@pi-durable-extensions/codemode",
+    "version": "0.1.0-candidate.0",
+    "description": "Portable QuickJS codemode extension for Pi Durable",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.19.0"
+    },
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "import": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./store": {
+            "types": "./src/store.ts",
+            "import": "./src/store.ts",
+            "default": "./src/store.ts"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "src",
+        "examples",
+        "README.md",
+        "NOTICE.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "check": "tsc --noEmit --skipLibCheck --allowImportingTsExtensions --module NodeNext --moduleResolution NodeNext --target ES2024 --strict --erasableSyntaxOnly --verbatimModuleSyntax src/index.ts src/store.ts src/errors.ts",
+        "test": "node --experimental-strip-types --test test/*.test.mjs"
+    },
+    "dependencies": {
+        "@earendil-works/chord": "1.1.0",
+        "@earendil-works/pi-ai": "1.1.0",
+        "@earendil-works/pi-codemode": "1.1.0",
+        "@earendil-works/pi-durable": "1.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "26.6.5",
+        "typescript": "6.0.3"
+    }
+}

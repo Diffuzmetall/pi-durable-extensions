@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "collection": "pi-durable-extensions",
+  "candidate": true,
+  "runtimeObserved": {
+    "platform": "linux-x64",
+    "node": "24.19.0",
+    "npm": "11.17.0"
+  },
+  "artifactPathBase": "artifacts/",
+  "components": [
+    {
+      "id": "codemode",
+      "kind": "extension",
+      "version": "0.1.0-candidate.0",
+      "status": "experimental",
+      "package": "@pi-durable-extensions/codemode",
+      "artifact": {
+        "path": "artifacts/pi-durable-extensions-codemode-0.1.0-candidate.0.tgz",
+        "sha256": "ecb6df1fb3cd55d4ad6bfe8922c881ffe9339246fba882f353a7b5db5f5e9f69",
+        "entries": 8
+      },
+      "testedRuntime": {
+        "node": ">=22.19.0",
+        "piDurable": "1.1.0",
+        "piAi": "1.1.0",
+        "chord": "1.1.0",
+        "piCodemode": "1.1.0"
+      },
+      "dependencies": "declared exact runtime dependencies in package manifest",
+      "authorization": "host-supplied policy",
+      "services": [],
+      "activation": "Register explicitly in the host; no Pocket adapter or built-in replacement is automatic.",
+      "licenseStatus": "MIT evidenced by package-local LICENSE/NOTICE; no publication authorization"
+    },
+    {
+      "id": "agent-mail",
+      "kind": "adapter",
+      "version": "0.0.0-candidate.1",
+      "status": "experimental",
+      "package": "@pi-pocket-candidates/agent-mail-mcp",
+      "artifact": {
+        "path": "artifacts/pi-pocket-candidates-agent-mail-mcp-0.0.0-candidate.1.tgz",
+        "sha256": "2c95c873150506cf3624b4b1abc025f286a90785f4ce7b06490e41860f79c61a",
+        "entries": 6
+      },
+      "testedRuntime": {
+        "node": ">=22.19.0",
+        "piDurable": "1.1.0",
+        "piAi": "1.1.0",
+        "piMcp": "1.1.0",
+        "chord": "1.1.0"
+      },
+      "dependencies": "declared exact runtime dependencies in package manifest",
+      "authorization": "host-controlled MCP policy and write authority",
+      "services": [
+        "Agent Mail MCP at the documented loopback endpoint"
+      ],
+      "activation": "Configure the endpoint and explicitly install the adapter.",
+      "licenseStatus": "UNLICENSED/unresolved source-specific coverage; no stable or redistribution claim"
+    },
+    {
+      "id": "codex-api",
+      "kind": "adapter",
+      "version": "0.1.0-candidate",
+      "status": "experimental",
+      "package": "@pi-durable/codex-api-candidate",
+      "artifact": {
+        "path": "artifacts/pi-durable-codex-api-candidate-0.1.0-candidate.tgz",
+        "sha256": "92e3e3e792fed2c8044566810ed70f3feb6430ac5e6c4efa0c993edba603ec9e",
+        "entries": 12
+      },
+      "testedRuntime": {
+        "node": ">=24.19.0 <25",
+        "piDurable": ">=1.1.0 <1.2.0",
+        "piAi": ">=1.1.0 <1.2.0",
+        "chord": ">=1.1.0 <1.2.0",
+        "typebox": ">=1.3.27 <1.4.0"
+      },
+      "dependencies": "peer dependencies are explicit; no sibling workspace dependency",
+      "authorization": "explicit host authorize capability and native Models OAuth; no paid fallback",
+      "services": [
+        "Codex provider when the host authorizes it"
+      ],
+      "activation": "Provide host capabilities and explicitly register the adapter.",
+      "licenseStatus": "package-local attribution retained; new host wiring has no invented grant"
+    },
+    {
+      "id": "agent-profiles",
+      "kind": "adapter",
+      "version": "0.1.0-candidate.0",
+      "status": "experimental",
+      "package": "@pi-pocket/agent-profiles",
+      "artifact": {
+        "path": "artifacts/pi-pocket-agent-profiles-0.1.0-candidate.0.tgz",
+        "sha256": "2705e5e3fbf9bd9009e965b436acb9716f8c3723459e2133d28df78fc4ccdf4b",
+        "entries": 13
+      },
+      "testedRuntime": {
+        "node": ">=22.19",
+        "yaml": "2.9.0",
+        "authorDevTypeScript": "6.0.3",
+        "observedNode": "24.19.0"
+      },
+      "dependencies": "yaml 2.9.0; no launcher or sibling package dependency",
+      "authorization": "none for parsing; host owns profile directory and launcher policy",
+      "services": [],
+      "activation": "Use parser/catalog exports explicitly; native launcher integration is separate.",
+      "licenseStatus": "UNLICENSED/source license unresolved; private profiles excluded from artifact"
+    },
+    {
+      "id": "web-tools",
+      "kind": "extension",
+      "version": "0.1.0",
+      "status": "experimental",
+      "package": "pi-durable-web-tools",
+      "artifact": {
+        "path": "artifacts/pi-durable-web-tools-0.1.0.tgz",
+        "sha256": "ff40a993db9e89c6e49369c9b7497e545b1c2cf385018c4690a52a760826e4ff",
+        "entries": 6
+      },
+      "testedRuntime": {
+        "node": ">=22.19",
+        "piDurable": "1.1.0",
+        "piAi": "1.1.0",
+        "chord": "1.1.0"
+      },
+      "dependencies": "optional fetch peers remain package-local and explicit",
+      "authorization": "host/network policy",
+      "services": [
+        "configured web provider/network"
+      ],
+      "activation": "Review network policy and explicitly register the extension.",
+      "licenseStatus": "MIT with preserved attribution; existing network limitations remain"
+    },
+    {
+      "id": "antigravity-shim",
+      "kind": "service",
+      "version": "0.1.0-candidate.20261012",
+      "status": "experimental",
+      "package": "pi-antigravity-shim-candidate",
+      "artifact": {
+        "path": "artifacts/pi-antigravity-shim-candidate-0.1.0-candidate.20261012.tgz",
+        "sha256": "26f485ff8ce6b01e0766fd5fa808d706f820d0738bb91f66cd0185eae263e74b",
+        "entries": 15
+      },
+      "testedRuntime": {
+        "node": ">=22.15.0",
+        "piAntigravity": ">=0.10.0"
+      },
+      "dependencies": "required external pi-antigravity provider peer",
+      "authorization": "service-owned credentials and provider auth",
+      "services": [
+        "local loopback Antigravity shim"
+      ],
+      "activation": "Provision and start separately as an explicit operator action; install never starts it.",
+      "licenseStatus": "UNLICENSED/candidate upstream attribution only; no publication grant"
+    },
+    {
+      "id": "codex-voice",
+      "kind": "adapter",
+      "version": "0.1.0-candidate",
+      "status": "candidate",
+      "package": "@pi-durable-extensions/codex-voice",
+      "artifact": {
+        "path": "artifacts/pi-durable-extensions-codex-voice-0.1.0-candidate.tgz",
+        "sha256": "e78b974d00ce8cb2beafde7fcd30906c285b047540ec1e93fa12dbccb31aa55e",
+        "entries": 7
+      },
+      "testedRuntime": {
+        "node": ">=22.19.0",
+        "piDurable": ">=1.1.0 <1.2.0",
+        "piAi": ">=1.1.0 <1.2.0",
+        "observedNode": "24.19.0"
+      },
+      "dependencies": "peer dependencies are explicit; no microphone/UI dependency",
+      "authorization": "host-supplied native Models/provider authorization",
+      "services": [
+        "Codex transcription when separately authorized"
+      ],
+      "activation": "Install transport only; connect an existing host microphone adapter separately.",
+      "licenseStatus": "bounded transport attribution preserved; new adapter wiring has no invented grant"
+    },
+    {
+      "id": "hindsight",
+      "kind": "adapter",
+      "version": "0.1.0",
+      "status": "experimental",
+      "package": "pi-durable-hindsight",
+      "artifact": {
+        "path": "artifacts/pi-durable-hindsight-0.1.0.tgz",
+        "sha256": "4ce1fc0d192530ccbaa42ffd05c3bac21d4f9b8d81179960b6fb05f121043443",
+        "entries": 31
+      },
+      "testedRuntime": {
+        "node": ">=24",
+        "piDurable": "1.0.2",
+        "chord": "1.0.2",
+        "piAi": "1.0.2"
+      },
+      "dependencies": "declared peers and bundled vendor boundary; no Pocket workspace dependency",
+      "authorization": "host-supplied memory policy and explicit lifecycle binding",
+      "services": [
+        "Hindsight memory service when separately configured"
+      ],
+      "activation": "Bind lifecycle controller explicitly; external memory setup and service startup are separate.",
+      "licenseStatus": "MIT and third-party notices retained; vendor/private boundaries remain explicit"
+    }
+  ],
+  "deferred": [
+    "context7"
+  ],
+  "excluded": [
+    "pi-durable-beads",
+    "Lancet",
+    "goals",
+    "schedules",
+    "triggers",
+    "other Pocket built-ins"
+  ],
+  "artifactNote": "Artifact paths are relative to a future distribution bundle. The exact tarballs are retained privately under the sandbox integration-prep artifacts directory for U5 evidence; U6 must re-check them from clean targets."
+}

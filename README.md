@@ -1,0 +1,116 @@
+# Pi Durable Extensions
+
+Eight independently selectable components for Pi Durable, plus a small selective
+installer/doctor CLI. Each component is packaged and installed on its own; nothing
+here is a Pi Pocket built-in, and nothing activates providers, services, or
+Pocket modules by itself.
+
+- **Not** a Pi Pocket distribution and not a replacement for Pocket built-ins.
+- No component starts a service, opens a microphone, calls a provider, or reads
+  a host data directory unless the host explicitly grants that capability.
+- Every component ships its own README with host capabilities, authorization,
+  external services and limitations.
+
+## Contents
+
+| ID | Kind | Version | What it does |
+|---|---|---:|---|
+| `codemode` | extension | `0.1.0-candidate.0` | Portable QuickJS sandbox extension; the Pocket adapter stays separate |
+| `agent-mail` | adapter | `0.0.0-candidate.1` | Fixed-loopback Agent Mail MCP bridge; write authority stays host-controlled |
+| `codex-api` | adapter | `0.1.0-candidate` | Codex Ask/Search/Image/Usage with explicit authorization and upload capability |
+| `agent-profiles` | adapter | `0.1.0-candidate.0` | Markdown profile parser/catalog; no launcher, no bundled profiles |
+| `web-tools` | extension | `0.1.0` | Search/fetch extension with its documented network limits |
+| `antigravity-shim` | service | `0.1.0-candidate.20261012` | Local OpenAI-compatible service, provisioned and started separately |
+| `codex-voice` | adapter | `0.1.0-candidate` | Bounded transcription transport; no microphone UI |
+| `hindsight` | adapter | `0.1.0` | Trusted lifecycle/registry adapter; external memory setup stays separate |
+
+`packages/cli` holds `portable-pi`, a separate selective installer/doctor with
+`list`, `info`, `install` and `doctor`. It is not one of the eight components.
+
+## Requirements
+
+- Linux x64 (observed runtime: Node `24.19.0`, npm `11.17.0`)
+- Node `>=22.19.0` for components that declare it (`codemode`)
+- No global install, no workspace symlinks: install one package from its packed
+  artifact into its own target.
+
+Per-package runtime tuples are authoritative. Most components use Pi
+Durable / Pi AI / Chord `1.1.0`; Hindsight uses `1.0.2`. These are measured
+tuples, not a universal compatibility claim.
+
+## Quick start
+
+```sh
+git clone https://github.com/Diffuzmetall/pi-durable-extensions
+cd pi-durable-extensions
+
+# What is in the collection
+node packages/cli/src/index.mjs list --allow-experimental
+node packages/cli/src/index.mjs info codemode
+
+# Check a catalog artifact without installing anything
+node packages/cli/src/index.mjs install codemode \
+  --target "$PWD/.scratch/target" --version 0.1.0-candidate.0 --dry-run
+
+# Install into a private target with a private npm cache
+node packages/cli/src/index.mjs install codemode \
+  --target "$PWD/.scratch/target" --version 0.1.0-candidate.0
+
+# Integrity / inventory report
+node packages/cli/src/index.mjs doctor --json
+```
+
+`--dry-run` creates no staging, runs no npm and starts nothing. Experimental and
+candidate packages require explicit opt-in (`--allow-experimental`).
+
+The CLI installs a component into the target you name, resolves that component's
+declared peer dependencies into a private prefix, and copies them into the
+target. It never installs the root workspace, never uses a workspace symlink and
+never assumes a neighbouring package is present.
+
+## Using a component in a host
+
+1. Install the exact packed artifact (or the package directory) into your host.
+2. Import the package's documented entry point from the installed path — not
+   from a source checkout.
+3. Provide the host capabilities the component declares (data directory,
+   requester lookup, authorization policy, upload root).
+4. Wire auth, providers, Pocket modules, or service startup yourself, explicitly.
+
+Each package README lists its entries, host capabilities, examples and hard
+boundaries. `packages/*/examples/` contains runnable local examples that use
+fixtures instead of live services.
+
+## Verification
+
+What was verified locally for this tree:
+
+- Package tests and packed-artifact installation for all eight components; the
+  CLI ran all eight install routes on the accepted private distribution with
+  exit `0`, matching artifact digests and installed-source parity.
+- Independent source review and an independent behavioral QA pass over the
+  distribution manifest, component digests, and CLI routes.
+- `portable-pi list / info / doctor / install --dry-run` against the catalog in a
+  private environment.
+
+What is **not** verified and should not be assumed:
+
+- Live Pocket loader/startup, SQLite, drop-in activation, or restarts.
+- Live providers, accounts, quotas, microphones, or third-party services.
+- Importing the `codex-api` package with Node from `node_modules` fails with
+  `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` because the package ships
+  TypeScript sources; run it from an extracted package directory or a Bun
+  runtime, as its README describes.
+- General compatibility beyond the measured runtime tuple.
+
+See `docs/installation.md`, `docs/compatibility.md`, `docs/security.md` and
+`docs/provenance.md`.
+
+## Licensing
+
+MIT for this collection's own code and documentation — see [LICENSE](LICENSE).
+Third-party components, vendored files and bundled dependencies keep their own
+licenses; see [NOTICE.md](NOTICE.md) and the package-local LICENSE / NOTICE /
+THIRD_PARTY_NOTICES files. No rights are granted to Pi Pocket, Pi Durable, Pi AI,
+Chord, the Codex/OpenAI service, the Agent Mail service, Antigravity, or any
+other external product.

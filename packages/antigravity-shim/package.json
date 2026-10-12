@@ -1,0 +1,55 @@
+{
+  "name": "pi-antigravity-shim-candidate",
+  "version": "0.1.0-candidate.20261012",
+  "description": "Portable local OpenAI-compatible service candidate for pi-antigravity",
+  "private": true,
+  "type": "module",
+  "files": [
+    "README.md",
+    "NOTICE.md",
+    "notices",
+    "hooks.mjs",
+    "run.mjs",
+    "scripts/emit-models.mjs",
+    "src",
+    "examples",
+    "systemd"
+  ],
+  "exports": {
+    ".": "./src/index.mjs",
+    "./openai": "./src/index.mjs",
+    "./server": "./src/server.mjs",
+    "./antigravity": "./src/antigravity.mjs",
+    "./hooks": "./hooks.mjs",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "pi-antigravity-shim": "./run.mjs",
+    "pi-antigravity-shim-emit-models": "./scripts/emit-models.mjs"
+  },
+  "scripts": {
+    "start": "node run.mjs",
+    "test": "node --test --test-concurrency=1 tests/openai.node.test.mjs tests/fixture-service.test.mjs",
+    "test:translation": "node --test tests/openai.node.test.mjs",
+    "test:fixture": "node --test tests/fixture-service.test.mjs",
+    "emit-models": "node scripts/emit-models.mjs"
+  },
+  "engines": {
+    "node": ">=22.15.0"
+  },
+  "peerDependencies": {
+    "pi-antigravity": ">=0.10.0"
+  },
+  "peerDependenciesMeta": {
+    "pi-antigravity": {
+      "optional": false
+    }
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "pi-durable",
+    "openai-compatible",
+    "antigravity",
+    "local-service"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+    "name": "pi-durable-web-tools",
+    "version": "0.1.0",
+    "description": "Web search and page fetching for Pi Durable: web_search, web_fetch and batch_web_fetch in one extension.",
+    "type": "module",
+    "license": "MIT",
+    "exports": {
+        ".": "./src/web-tools.ts"
+    },
+    "files": [
+        "src",
+        "docs",
+        "examples",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "test": "node --test test/*.test.mjs",
+        "check": "tsc --noEmit --skipLibCheck --allowImportingTsExtensions --module nodenext --target es2023 --erasableSyntaxOnly src/web-tools.ts",
+        "example": "node examples/bare-durable.mjs"
+    },
+    "peerDependencies": {
+        "@earendil-works/pi-ai": "*",
+        "@earendil-works/pi-durable": "*",
+        "@earendil-works/pi-coding-agent": "*",
+        "defuddle": "*",
+        "linkedom": "*",
+        "wreq-js": "*"
+    },
+    "peerDependenciesMeta": {
+        "@earendil-works/pi-coding-agent": {
+            "optional": true
+        },
+        "defuddle": {
+            "optional": true
+        },
+        "linkedom": {
+            "optional": true
+        },
+        "wreq-js": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@earendil-works/chord": "1.1.0",
+        "@earendil-works/pi-ai": "1.1.0",
+        "@earendil-works/pi-durable": "1.1.0",
+        "typescript": "^5.6.0",
+        "defuddle": "^0.19.5",
+        "linkedom": "^0.18.13",
+        "wreq-js": "^3.2.0"
+    },
+    "engines": {
+        "node": ">=22.19"
+    },
+    "keywords": [
+        "pi-durable",
+        "extension",
+        "web-search",
+        "web-fetch"
+    ]
+}

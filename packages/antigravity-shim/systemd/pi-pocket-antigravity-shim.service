@@ -1,0 +1,17 @@
+[Unit]
+Description=Antigravity OpenAI-compatible shim for Pi Pocket / Pi Durable
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Projects/pi-antigravity-shim
+ExecStart=/home/ubuntu/.nvm/versions/node/v24.19.0/bin/node run.mjs
+Environment=ANTIGRAVITY_SHIM_PORT=18790
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

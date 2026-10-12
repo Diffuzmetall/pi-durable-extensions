@@ -1,0 +1,42 @@
+{
+  "name": "@pi-durable-extensions/codex-voice",
+  "version": "0.1.0-candidate",
+  "private": true,
+  "license": "UNLICENSED",
+  "description": "Bounded Codex subscription transcription transport with an explicit native Models voice adapter.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./transcription": {
+      "types": "./src/transcription.ts",
+      "import": "./src/transcription.ts"
+    }
+  },
+  "files": [
+    "src",
+    "examples",
+    "README.md",
+    "NOTICE.md"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit -p tsconfig.json && node --check examples/harness.mjs && node --check test/*.test.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": ">=1.1.0 <1.2.0",
+    "@earendil-works/pi-durable": ">=1.1.0 <1.2.0"
+  },
+  "devDependencies": {
+    "@earendil-works/chord": "1.1.0",
+    "@earendil-works/pi-ai": "1.1.0",
+    "@earendil-works/pi-durable": "1.1.0",
+    "@types/node": "26.6.5",
+    "typescript": "6.0.3"
+  }
+}
