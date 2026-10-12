@@ -101,6 +101,11 @@ What is **not** verified and should not be assumed:
   `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` because the package ships
   TypeScript sources; run it from an extracted package directory or a Bun
   runtime, as its README describes.
+- `codex-api`'s `uploadRoot(conversationId)` returns
+  `<dataDir>/uploads/<conversationId>` verbatim. It does not sanitise the id: an
+  id containing `..` resolves outside the uploads root. Hosts must validate
+  conversation IDs and enforce resolved-path containment before any file
+  operation.
 - General compatibility beyond the measured runtime tuple.
 
 See `docs/installation.md`, `docs/compatibility.md`, `docs/security.md` and
