@@ -1,6 +1,6 @@
 # Pi Durable Extensions
 
-Nine independently selectable components for Pi Durable, plus a small selective
+Ten independently selectable components for Pi Durable, plus a small selective
 installer/doctor CLI. Each component is packaged and installed on its own; nothing
 here is a Pi Pocket built-in, and nothing activates providers, services, or
 Pocket modules by itself.
@@ -24,14 +24,16 @@ Pocket modules by itself.
 | `antigravity-shim` | service | `0.1.0-candidate.20261012` | Local OpenAI-compatible service, provisioned and started separately |
 | `codex-voice` | adapter | `0.1.0-candidate` | Bounded transcription transport; no microphone UI |
 | `hindsight` | adapter | `0.1.0` | Trusted lifecycle/registry adapter; external memory setup stays separate |
+| `agent-mail-identity` | extension | `0.1.0-candidate.0` | Durable identity binding plus a read-only mailbox watcher; the Pocket entry point refuses without host capability |
 
 `packages/cli` holds `portable-pi`, a separate selective installer/doctor with
-`list`, `info`, `install` and `doctor`. It is not one of the nine components.
+`list`, `info`, `install` and `doctor`. It is not one of the ten components.
 
 ## Requirements
 
 - Linux x64 (observed runtime: Node `24.19.0`, npm `11.17.0`)
-- Node `>=22.19.0` for components that declare it (`codemode`)
+- Node `>=22.19.0` for components that declare it (`codemode`); Node `>=24.19.0`
+  for `agent-mail-identity`
 - No global install, no workspace symlinks: install one package from its packed
   artifact into its own target.
 
@@ -88,6 +90,7 @@ What was verified locally for this tree:
 
 - Package tests and packed-artifact installation for the original eight components.
 - Context7 fixture tests, a real bare-Durable Harness example, two live Context7 tool calls through that Harness, and a packed artifact with a pinned digest.
+- `agent-mail-identity` package tests (110 tests on Node `24.19.0`), its TypeScript typecheck, its static boundary lint, and its three fail-closed gates (`test:live:am1`, `test:live:am2`, `test:live:pocket`, `bench`), each exiting 2 with a stated reason. No live Mail call, Pocket wake, or benchmark number was produced.
 - Independent source review and an independent behavioral QA pass over the
   distribution manifest, component digests, and CLI routes.
 - `portable-pi list / info / doctor / install --dry-run` against the catalog in a
@@ -96,6 +99,7 @@ What was verified locally for this tree:
 What is **not** verified and should not be assumed:
 
 - Live Pocket loader/startup, SQLite, drop-in activation, or restarts.
+- `agent-mail-identity`'s live lanes: no live Agent Mail project, no live Pocket wake, no performance budget. Its mailbox effect comes only from its own bounded CLI fixture, and one of its tests reads the recorded Agent Mail MCP catalog from a sibling `pi-durable-agent-mail` checkout.
 - Live providers, accounts, quotas, microphones, or third-party services beyond the bounded two-call Context7 proof documented above.
 - Importing the `codex-api` package with Node from `node_modules` fails with
   `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` because the package ships

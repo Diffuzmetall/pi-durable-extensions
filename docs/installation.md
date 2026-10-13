@@ -11,7 +11,7 @@ BUNDLE=/absolute/new/pi-durable-bundle
 node scripts/pack-all.mjs --output "$BUNDLE"
 ```
 
-The command creates `$BUNDLE` and `$BUNDLE/artifacts` with mode `0700`, packs all nine packages using `npm pack --ignore-scripts`, makes generated files mode `0600`, computes SHA-256 from those exact tarballs, and writes `$BUNDLE/catalog.json`. It refuses an existing output root and never removes or overwrites a previous bundle.
+The command creates `$BUNDLE` and `$BUNDLE/artifacts` with mode `0700`, packs all ten packages using `npm pack --ignore-scripts`, makes generated files mode `0600`, computes SHA-256 from those exact tarballs, and writes `$BUNDLE/catalog.json`. It refuses an existing output root and never removes or overwrites a previous bundle.
 
 Use the generated catalog with the standalone CLI:
 

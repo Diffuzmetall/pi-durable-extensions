@@ -1,0 +1,43 @@
+{
+    "name": "@pi-durable-extensions/agent-mail-identity",
+    "version": "0.1.0-candidate.0",
+    "private": true,
+    "description": "Pi Durable Agent Mail identity binding and read-only mailbox watcher, with a fail-closed Pocket entry point",
+    "license": "MIT",
+    "type": "module",
+    "engines": {
+        "node": ">=24.19.0"
+    },
+    "exports": {
+        ".": "./src/index.ts",
+        "./pocket": "./pocket/index.ts"
+    },
+    "files": [
+        "src",
+        "pocket",
+        "README.md",
+        "CONTRACT.md",
+        "INSTALLATION.md",
+        "MIGRATION.md",
+        "NOTICE.md",
+        "LICENSE"
+    ],
+    "peerDependencies": {
+        "@earendil-works/pi-durable": "1.1.0",
+        "@earendil-works/pi-ai": "1.1.0"
+    },
+    "devDependencies": {
+        "@earendil-works/chord": "1.1.0",
+        "@types/node": "26.6.5",
+        "typescript": "6.0.3"
+    },
+    "scripts": {
+        "test": "node --experimental-strip-types --test --test-timeout=15000 test/*.test.ts test/pocket/*.test.ts",
+        "typecheck": "tsc --noEmit -p tsconfig.json",
+        "lint": "node scripts/check-boundaries.mjs",
+        "test:live:am1": "node scripts/unavailable-gate.mjs live-am1",
+        "test:live:am2": "node --experimental-strip-types test/live-am2.ts",
+        "test:live:pocket": "node --experimental-strip-types test/pocket/live-pocket.ts",
+        "bench": "node scripts/unavailable-gate.mjs perf"
+    }
+}

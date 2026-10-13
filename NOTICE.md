@@ -19,6 +19,7 @@ relicensed by the root MIT grant.
 | `agent-profiles` | see `packages/agent-profiles/NOTICE.md` |
 | `codex-api` | see `packages/codex-api/NOTICE.md` — attribution is limited to the scope stated there and is not extended to host wiring |
 | `codex-voice` | see `packages/codex-voice/NOTICE.md` |
+| `agent-mail-identity` | MIT — first-party code; see `packages/agent-mail-identity/LICENSE` and `packages/agent-mail-identity/NOTICE.md`. The Agent Mail MCP service and CLI are interoperated with, not redistributed |
 | `cli` (`portable-pi`) | MIT, part of this collection |
 
 ## Bundled dependency licenses
