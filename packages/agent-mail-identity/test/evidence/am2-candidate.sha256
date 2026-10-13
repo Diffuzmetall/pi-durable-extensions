@@ -1,0 +1,36 @@
+# AM2 candidate manifest. Frozen candidate of the AM2 unit (watcher, delivery, CLI listing, tests, docs, fixture),
+# after the gate fixes for the batch budget, phase/operator field ownership, live-watcher adoption, cursor handling
+# and the boundary patterns.
+# The AM1 manifest test/evidence/candidate.sha256 is retained unchanged as the AM1 record; AM2 deliberately changes
+# exactly 13 of its entries (verified with `sha256sum -c candidate.sha256`): src/am-cli.ts, src/durable.ts,
+# src/errors.ts, src/identity.ts, src/index.ts, test/am-cli.test.ts, test/identity.test.ts,
+# test/fixtures/am-fixture.mjs, scripts/check-boundaries.mjs, scripts/unavailable-gate.mjs, package.json,
+# README.md and CONTRACT.md.
+# Verify from the workspace root: sha256sum -c packages/agent-mail-identity/test/evidence/am2-candidate.sha256
+86577b08107e43630e186fab74547d1dd2115511b62268fce09f965e17bd0a24  packages/agent-mail-identity/src/am-cli.ts
+c9dbb12a7bc7c2faf849cf936ed8221b7f52db81f12d4042e2fa7d12d036263e  packages/agent-mail-identity/src/authority.ts
+8c8086b20a4848588686f8c9939a897fff161a6fb73b513cbf8534fc332acf02  packages/agent-mail-identity/src/delivery.ts
+f558d4dec75208b0ddbb79f6505a658ef8f00f3194e72a4fe25d7076e6cdd8d1  packages/agent-mail-identity/src/durable.ts
+76059ebdf64066503340a3b3a570c38ca556843d7ae3f5958ff6b3cde526a5a3  packages/agent-mail-identity/src/errors.ts
+edda5289bed40263c137a8ad4015ae9b9202f147897cb7d28f57b03c4466735b  packages/agent-mail-identity/src/execution-guard.ts
+b94cd0123d0fb586d590b70c77ae5274e71f48185a9ac1de7083e16f47fa09d0  packages/agent-mail-identity/src/identity.ts
+56cf45ec83e4141cd226941d578a576abc4fdc16da4ffaaf0458ca9ec7bcfcb6  packages/agent-mail-identity/src/index.ts
+6f25f78c0eb71d87e7d789d4c07673294520ea21846ac330135d89778168acb4  packages/agent-mail-identity/src/tool-guard.ts
+a31ee9fded0e21c00cf883da6cd2cccc58afad0e4583bf3fddd9d879e538a656  packages/agent-mail-identity/src/watcher.ts
+4215c02740192b8b4259ebf23174232ff9c34c32931901b009e0c6323bf66d91  packages/agent-mail-identity/test/am-cli.test.ts
+88a78a0b28775fda41531571f193ddca84b94a062744755e353da6d0721500db  packages/agent-mail-identity/test/authority.test.ts
+8188a3a98d500947073c4230a5be98133b81572590aee1b07e66b91251d855ad  packages/agent-mail-identity/test/delivery.test.ts
+7da4188e449995e6d2125602a17f9b411c76da17a8e65272d26e6dd729d43cf0  packages/agent-mail-identity/test/durable.test.ts
+cda273a60cbc261948263020de59d027fd6222d39ef8414471e12e3231589a73  packages/agent-mail-identity/test/execution-guard.test.ts
+4e4f75ffd1949d69c89b4cfa95ccefeb780abcaa2a8740e33c4d06c7d8f665af  packages/agent-mail-identity/test/identity.test.ts
+494ee23f9aac1ba0fe5d33937a04b4088196f89db526cc720e1e3616219cfc39  packages/agent-mail-identity/test/tool-guard.test.ts
+c9b9124e565978487586ce597e51cfa403c4c3e98adb9efa4b6dd9970ab1df48  packages/agent-mail-identity/test/watcher.test.ts
+5d62230952866d821d7898835dda461094c420edcb533286d8a8c1289978f438  packages/agent-mail-identity/test/repair-extra.inc.ts
+b954ccedcfb94571b39e6cd47fa0133efb6d7f7a77bb35af942195b4bf7bad55  packages/agent-mail-identity/test/live-am2.ts
+55749479dc18ba7006e6f81936e2f09cda47195b16b73560d834306ec3ae851c  packages/agent-mail-identity/test/fixtures/am-fixture.mjs
+a2b59ec7ec7575dad9c2001d13c0e4cfc045aee1501be734dfdaac00df957497  packages/agent-mail-identity/scripts/check-boundaries.mjs
+5c20af38472596854715357c86f2709cfc16abeabd8f1f8c90e951eca38b1721  packages/agent-mail-identity/scripts/unavailable-gate.mjs
+5cff64e47bdad3da0af7dbe85f20fc45db7dd2fd4c52efd0466d60cf01f21181  packages/agent-mail-identity/package.json
+4b79d0ea7e67d27c6b58321cdb44674b5a9b58ae47b97ac3c6d480d93379e349  packages/agent-mail-identity/tsconfig.json
+52b053577d4b9e403dacf4f9ccac459f87c91162e05e2e9dfa83c002039cfed1  packages/agent-mail-identity/README.md
+4ef439c861835bb2fc830168e8aa986f37bd8bb931cc8fdbab04754b14545198  packages/agent-mail-identity/CONTRACT.md

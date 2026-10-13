@@ -195,18 +195,24 @@ async function managerScript(root, body) {
   return file;
 }
 
-test('active catalog is exactly nine and Context7 is available everywhere', async () => {
+test('active catalog is exactly ten and the promoted components are available everywhere', async () => {
   const catalog = JSON.parse(await readFile(DEFAULT_CATALOG, 'utf8'));
-  assert.equal(catalog.components.length, 9);
+  assert.equal(catalog.components.length, 10);
   assert.equal(catalog.components.some((entry) => entry.id === 'context7'), true);
+  assert.equal(catalog.components.some((entry) => entry.id === 'agent-mail-identity'), true);
   assert.deepEqual(catalog.deferred, []);
   const listed = run(['list', '--catalog', DEFAULT_CATALOG, '--allow-experimental', '--json']);
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).length, 9);
+  assert.equal(JSON.parse(listed.stdout).length, 10);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'context7'), true);
+  assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'agent-mail-identity'), true);
   const info = run(['info', 'context7', '--catalog', DEFAULT_CATALOG, '--json']);
   assert.equal(info.status, 0, info.stderr);
   assert.equal(JSON.parse(info.stdout).version, '0.1.0-candidate.1');
+  const identity = run(['info', 'agent-mail-identity', '--catalog', DEFAULT_CATALOG, '--json']);
+  assert.equal(identity.status, 0, identity.stderr);
+  assert.equal(JSON.parse(identity.stdout).version, '0.1.0-candidate.0');
+  assert.deepEqual(JSON.parse(identity.stdout).testedRuntime, { node: '>=24.19.0', piDurable: '1.1.0', piAi: '1.1.0', chord: '1.1.0 (test-only)' });
 });
 
 test('excluded builtins are rejected from synthetic catalogs', async () => {

@@ -131,6 +131,21 @@
       "services": ["Hindsight memory service when separately configured"],
       "activation": "Bind lifecycle controller explicitly; external memory setup and service startup are separate.",
       "licenseStatus": "MIT and third-party notices retained; vendor/private boundaries remain explicit"
+    },
+    {
+      "id": "agent-mail-identity",
+      "kind": "extension",
+      "version": "0.1.0-candidate.0",
+      "status": "experimental",
+      "package": "@pi-durable-extensions/agent-mail-identity",
+      "description": "Agent Mail identity binding and a read-only mailbox watcher for plain Pi Durable, plus a fail-closed Pocket entry point",
+      "artifact": { "path": "artifacts/pi-durable-extensions-agent-mail-identity-0.1.0-candidate.0.tgz", "sha256": "d41c29e35d8c383d4823162cb6b3ae04c9e2b895ed641f71371bc2503915847b", "entries": 18 },
+      "testedRuntime": { "node": ">=24.19.0", "piDurable": "1.1.0", "piAi": "1.1.0", "chord": "1.1.0 (test-only)" },
+      "dependencies": "declared exact peer dependencies in the package manifest; chord is a test-only dev dependency",
+      "authorization": "explicit host BindingAuthority grant per conversation; the host owns profile lookup, the Mail transport and watcher enable",
+      "services": ["host-supplied Agent Mail CLI (`am`) transport; installing calls nothing and starts nothing"],
+      "activation": "Register the extension, grant a binding, then call watch_enable; import performs no I/O and the Pocket entry point denies without the host capability",
+      "licenseStatus": "MIT granted by the copyright holder (package-local LICENSE, first-party module, no third-party source); candidate status, no stable or registry-distribution claim"
     }
   ],
   "cli": {

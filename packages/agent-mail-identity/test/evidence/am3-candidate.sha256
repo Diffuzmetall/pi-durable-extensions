@@ -1,0 +1,46 @@
+# AM3 candidate manifest. Frozen candidate of the AM3 unit (the separate Pocket entry point, the wake admission, the
+# AM2 gate carry-in fixes, the standalone portability work, the Pocket install/migration tests, docs and scripts),
+# after the AM3 gate fixes F1 (the input is submitted for the person the confirming read validated, and an identity that
+# changes between the two reads cancels the admission), F2 (`watchFrom` named correctly in the docs and asserted), F3
+# (the pending short-circuit test renamed to what it proves, the duplicate-event case split out) and F4 (the refused
+# enable also asserts that the held-back state was never read).
+# The AM1 manifest test/evidence/candidate.sha256 and the AM2 manifest test/evidence/am2-candidate.sha256 are retained
+# unchanged as their records; AM3 deliberately changes exactly 14 of the AM2 manifest's 27 entries (verified with
+# `sha256sum -c packages/agent-mail-identity/test/evidence/am2-candidate.sha256` from the workspace root):
+# src/am-cli.ts, src/index.ts, src/watcher.ts, test/am-cli.test.ts, test/delivery.test.ts, test/durable.test.ts,
+# test/watcher.test.ts, test/fixtures/am-fixture.mjs, scripts/check-boundaries.mjs, scripts/unavailable-gate.mjs,
+# package.json, tsconfig.json, README.md and CONTRACT.md.
+# Verify from the workspace root: sha256sum -c packages/agent-mail-identity/test/evidence/am3-candidate.sha256
+7c008e78caded87775e5592a29685490d3a14847c2c9a8276db8917c7f4b9765  packages/agent-mail-identity/src/am-cli.ts
+c9dbb12a7bc7c2faf849cf936ed8221b7f52db81f12d4042e2fa7d12d036263e  packages/agent-mail-identity/src/authority.ts
+8c8086b20a4848588686f8c9939a897fff161a6fb73b513cbf8534fc332acf02  packages/agent-mail-identity/src/delivery.ts
+f558d4dec75208b0ddbb79f6505a658ef8f00f3194e72a4fe25d7076e6cdd8d1  packages/agent-mail-identity/src/durable.ts
+76059ebdf64066503340a3b3a570c38ca556843d7ae3f5958ff6b3cde526a5a3  packages/agent-mail-identity/src/errors.ts
+edda5289bed40263c137a8ad4015ae9b9202f147897cb7d28f57b03c4466735b  packages/agent-mail-identity/src/execution-guard.ts
+b94cd0123d0fb586d590b70c77ae5274e71f48185a9ac1de7083e16f47fa09d0  packages/agent-mail-identity/src/identity.ts
+840ab57f9e00aa37eccebc4e12f21e22478f7536eed9089230a50bcca6f8d2f6  packages/agent-mail-identity/src/index.ts
+6f25f78c0eb71d87e7d789d4c07673294520ea21846ac330135d89778168acb4  packages/agent-mail-identity/src/tool-guard.ts
+60b8e8d97a6425eac3a414f1a97f14a83357f00c39872f3cf6f93c0b725a627b  packages/agent-mail-identity/src/watcher.ts
+7f07f67fa001563e2cbc05d83f4df53a13660cfce45ae3a332d188c08a62dff2  packages/agent-mail-identity/pocket/index.ts
+0e72d9f5d40ecd5a854eeea6a44ab6323da680b40e000bf48eda55933d952237  packages/agent-mail-identity/test/am-cli.test.ts
+88a78a0b28775fda41531571f193ddca84b94a062744755e353da6d0721500db  packages/agent-mail-identity/test/authority.test.ts
+1947666959cc9d955b6f9e6db3e8d2af6b8190e3014bd5c3c4b5547fe101627f  packages/agent-mail-identity/test/delivery.test.ts
+8e24e157a4e060550c84c580c8e3a160e4a038e03dbf1bbe0cc992378f66effe  packages/agent-mail-identity/test/durable.test.ts
+cda273a60cbc261948263020de59d027fd6222d39ef8414471e12e3231589a73  packages/agent-mail-identity/test/execution-guard.test.ts
+4e4f75ffd1949d69c89b4cfa95ccefeb780abcaa2a8740e33c4d06c7d8f665af  packages/agent-mail-identity/test/identity.test.ts
+b954ccedcfb94571b39e6cd47fa0133efb6d7f7a77bb35af942195b4bf7bad55  packages/agent-mail-identity/test/live-am2.ts
+5d62230952866d821d7898835dda461094c420edcb533286d8a8c1289978f438  packages/agent-mail-identity/test/repair-extra.inc.ts
+494ee23f9aac1ba0fe5d33937a04b4088196f89db526cc720e1e3616219cfc39  packages/agent-mail-identity/test/tool-guard.test.ts
+e27ccbddda97ab808ac12c7d19723dc5e802e2f410881f72b861326ac9655454  packages/agent-mail-identity/test/watcher.test.ts
+3aabbacc1a44185ecb34aeaf738b100cbf502d80efcc92258826e6ba824d2cda  packages/agent-mail-identity/test/pocket/admission.test.ts
+79d6c7f5923f288c450bedd02cf0390082559472a2678779b41bd634e716ef49  packages/agent-mail-identity/test/pocket/install.test.ts
+79614a68d72f00886d0384f93040c44ad4b0a18ef72cf0fe8029aa4f81027cec  packages/agent-mail-identity/test/pocket/live-pocket.ts
+15032999483f30679cca2c54ec0bf70fb0011bf5480928b9a899e8a803a0fd28  packages/agent-mail-identity/test/fixtures/am-fixture.mjs
+a1035c03855154818ec08e51f397bff0c374901fc2e3868ec25cbca11e396a93  packages/agent-mail-identity/scripts/check-boundaries.mjs
+3f72cb172e0465e8471b249ececa09f02088504375f600f56bce779184681d80  packages/agent-mail-identity/scripts/unavailable-gate.mjs
+d36d82b47c4eabc97bf2af4581b1359f979a57003e18ae42631ff83d6e540e3c  packages/agent-mail-identity/package.json
+d8fcd5a3e7fff5776045905d81d7ed8e6cfab7374d89d748c98ff77dbc77e138  packages/agent-mail-identity/tsconfig.json
+aca9b7245820750acb97ecf16b08fdc7dc1b6858b33fe4b2c934a1fa32ab5198  packages/agent-mail-identity/README.md
+639cd832141d21a72df0ed771d005407d3cd60e7d8ff2a33b05a292fa9db0e86  packages/agent-mail-identity/CONTRACT.md
+2f008b102a42f4a5728e5bf16844a18c011254be762bf1dfc00033fc7b1c1ec4  packages/agent-mail-identity/INSTALLATION.md
+6a7950e61133791876ea86bf1419f9b102b93bf6a2a499c460fd1cf837f6d954  packages/agent-mail-identity/MIGRATION.md

@@ -130,10 +130,24 @@ const TRUSTED_PEER_MANIFESTS = Object.freeze({
     }),
     optional: Object.freeze({}),
   }),
+  'agent-mail-identity': Object.freeze({
+    packageName: '@pi-durable-extensions/agent-mail-identity',
+    artifactSha256: 'd41c29e35d8c383d4823162cb6b3ae04c9e2b895ed641f71371bc2503915847b',
+    peers: Object.freeze({
+      '@earendil-works/pi-ai': '1.1.0',
+      '@earendil-works/pi-durable': '1.1.0',
+    }),
+    pins: Object.freeze({
+      '@earendil-works/pi-ai': '1.1.0',
+      '@earendil-works/pi-durable': '1.1.0',
+    }),
+    optional: Object.freeze({}),
+  }),
 });
 const COMPONENT_IDS = new Set([
   'codemode', 'agent-mail', 'codex-api', 'agent-profiles',
   'web-tools', 'context7', 'antigravity-shim', 'codex-voice', 'hindsight',
+  'agent-mail-identity',
 ]);
 const FORBIDDEN_IDS = new Set(['pi-durable-beads', 'lancet', 'goals', 'schedules', 'triggers']);
 
@@ -199,7 +213,7 @@ async function readJson(file, label) {
 function validateEntry(entry, index) {
   if (!entry || typeof entry !== 'object') fail(`catalog component ${index} is not an object`, 'catalog');
   if (!validId(entry.id) || FORBIDDEN_IDS.has(entry.id)) fail(`invalid or excluded component id: ${String(entry.id)}`, 'catalog');
-  if (!COMPONENT_IDS.has(entry.id)) fail(`component is outside the approved nine: ${entry.id}`, 'catalog');
+  if (!COMPONENT_IDS.has(entry.id)) fail(`component is outside the approved collection: ${entry.id}`, 'catalog');
   if (!validVersion(entry.version)) fail(`invalid version for ${entry.id}`, 'catalog');
   if (!['stable', 'experimental', 'candidate', 'blocked'].includes(entry.status)) fail(`invalid status for ${entry.id}`, 'catalog');
   if (!['extension', 'adapter', 'service'].includes(entry.kind)) fail(`invalid kind for ${entry.id}`, 'catalog');

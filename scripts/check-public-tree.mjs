@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname);
-const packages = ["codemode", "agent-mail", "codex-api", "agent-profiles", "web-tools", "context7", "antigravity-shim", "codex-voice", "hindsight", "cli"];
+const packages = ["codemode", "agent-mail", "codex-api", "agent-profiles", "web-tools", "context7", "antigravity-shim", "codex-voice", "hindsight", "agent-mail-identity", "cli"];
 const forbiddenNames = new Set(["node_modules", ".verification", "profiles", "verification.json", "progress.md", "EVIDENCE.md", "DELIVERY.md"]);
 const errors = [];
 

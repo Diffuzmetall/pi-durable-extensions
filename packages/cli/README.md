@@ -85,7 +85,7 @@ omit dev-only packages. The tested anchoring baseline is Linux with
 
 ## Peer materialization boundary
 
-For the nine canonical component artifacts, the installer reads the extracted
+For the ten canonical component artifacts, the installer reads the extracted
 `package.json` before invoking npm and only accepts a package identity, version,
 peer declaration set, and optional-peer metadata that match the artifact SHA-256
 and the checked-in trusted peer manifest. It matches the complete normalized
@@ -112,16 +112,19 @@ rights, or replace host authorization and activation.
 The supported candidate.2 route is a default npm install of the canonical Codex
 API artifact with the four checked-in peer pins `chord@1.1.0`, `pi-ai@1.1.0`,
 `pi-durable@1.1.0`, and `typebox@1.3.27`, each within its declared peer range.
-This is a bounded representative route, not a claim that all nine components
+This is a bounded representative route, not a claim that all ten components
 have been installed or runtime-validated.
 
 ## Catalog boundaries
 
-The candidate catalog has exactly nine approved components: codemode,
+The candidate catalog has exactly ten approved components: codemode,
 agent-mail, codex-api, agent-profiles, web-tools, context7, antigravity-shim,
-codex-voice, and hindsight. Context7 is an active experimental extension; its
-credential setup, shared/unknown external quota, outbound-query disclosure, and
-MIT licence remain explicit package boundaries.
+codex-voice, hindsight, and agent-mail-identity. Context7 is an active
+experimental extension; its credential setup, shared/unknown external quota,
+outbound-query disclosure, and MIT licence remain explicit package boundaries.
+`agent-mail-identity` declares exact `pi-durable@1.1.0` and `pi-ai@1.1.0` peer
+pins; installing it materializes those peers and starts nothing, and its Mail
+transport stays host-supplied.
 `pi-durable-beads`, Lancet, goals, schedules, triggers, and other built-ins are rejected. Component
 status and requirements are descriptive provenance, not proof of a passed bare
 Durable or live-service gate. Service startup, credential setup, host authorization, Pocket adapters,
