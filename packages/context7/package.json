@@ -3,8 +3,7 @@
   "version": "0.1.0-candidate.1",
   "description": "Portable Context7 MCP extension for Pi Durable",
   "type": "module",
-  "license": "UNLICENSED",
-  "private": true,
+  "license": "MIT",
   "engines": {
     "node": ">=22.19.0"
   },
@@ -19,6 +18,7 @@
     "examples",
     "README.md",
     "NOTICE.md",
+    "LICENSE",
     "package.json"
   ],
   "scripts": {

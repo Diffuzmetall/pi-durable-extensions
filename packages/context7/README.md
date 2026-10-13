@@ -47,4 +47,4 @@ node examples/bare-durable.mjs
 
 ## Licensing
 
-This package is `UNLICENSED` and private. No source-specific redistribution grant was found for the extracted bridge; [`NOTICE.md`](./NOTICE.md) records the gap. Do not label it stable or publish it to a registry until the owner supplies applicable licensing evidence.
+MIT, granted by the copyright holder of this repository; the canonical text is in [`LICENSE`](./LICENSE). The module is first-party code written for this collection, not extracted from a third party, so no upstream grant was needed. [`NOTICE.md`](./NOTICE.md) lists the runtime dependencies and their own licences. The candidate status above still applies: no stable or registry-distribution claim is made.

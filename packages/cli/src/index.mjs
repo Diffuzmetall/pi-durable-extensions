@@ -92,7 +92,7 @@ const TRUSTED_PEER_MANIFESTS = Object.freeze({
   }),
   context7: Object.freeze({
     packageName: '@pi-durable-extensions/context7',
-    artifactSha256: 'b73676399a8e15e360c480cb8e9957d91ab29bc4259205c8411725c67ba29229',
+    artifactSha256: 'b327b32efcc00254a91f7a9736b9e0fc3ae80b588ca5f36caebd10f9f422c720',
     peers: Object.freeze({}),
     pins: Object.freeze({}),
     optional: Object.freeze({}),

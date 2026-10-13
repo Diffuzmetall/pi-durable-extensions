@@ -121,7 +121,7 @@ The candidate catalog has exactly nine approved components: codemode,
 agent-mail, codex-api, agent-profiles, web-tools, context7, antigravity-shim,
 codex-voice, and hindsight. Context7 is an active experimental extension; its
 credential setup, shared/unknown external quota, outbound-query disclosure, and
-UNLICENSED source-specific licensing gap remain explicit package boundaries.
+MIT licence remain explicit package boundaries.
 `pi-durable-beads`, Lancet, goals, schedules, triggers, and other built-ins are rejected. Component
 status and requirements are descriptive provenance, not proof of a passed bare
 Durable or live-service gate. Service startup, credential setup, host authorization, Pocket adapters,

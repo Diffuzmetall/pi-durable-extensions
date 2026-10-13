@@ -15,4 +15,4 @@ The public tree contains package source, examples, tests, notices and applicable
 
 ## Status
 
-Context7 promotion adds fixture and real bare-Durable Harness verification, including a bounded two-call live-service proof. Its source-specific license remains unresolved (`UNLICENSED`), so this repository does not make a stable or registry-distribution claim for it. The broader tree still does not certify U7 Pocket adapter compatibility, other live providers, accounts, devices, service deployment, legal redistribution, or publication.
+Context7 promotion adds fixture and real bare-Durable Harness verification, including a bounded two-call live-service proof. Its licence is MIT, granted by the copyright holder for this collection's own first-party code, so no upstream grant was needed; the repository still makes no stable or registry-distribution claim for it. The broader tree still does not certify U7 Pocket adapter compatibility, other live providers, accounts, devices, service deployment, legal redistribution, or publication.

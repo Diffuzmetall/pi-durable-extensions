@@ -116,7 +116,7 @@ See `docs/installation.md`, `docs/compatibility.md`, `docs/security.md` and
 MIT for this collection's own code and documentation — see [LICENSE](LICENSE).
 Third-party components, vendored files and bundled dependencies keep their own
 licenses; see [NOTICE.md](NOTICE.md) and the package-local LICENSE / NOTICE /
-THIRD_PARTY_NOTICES files. Context7 remains `UNLICENSED`: its missing source-specific
-redistribution evidence blocks a stable or registry-distribution claim. No rights are granted to Pi Pocket, Pi Durable, Pi AI,
+THIRD_PARTY_NOTICES files. Context7 is MIT like the rest of this collection's own first-party
+code; no stable or registry-distribution claim is made for it either. No rights are granted to Pi Pocket, Pi Durable, Pi AI,
 Chord, the Codex/OpenAI service, the Agent Mail service, Antigravity, or any
 other external product.

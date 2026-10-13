@@ -175,7 +175,7 @@ async function execute(args: unknown, resolve: boolean, caller?: AbortSignal, cr
             await super.close();
         }
     }
-    const client = new LifecycleClient({ name: "pocket-context7", version: "1.0.0", requestTimeoutMs: 20_000 });
+    const client = new LifecycleClient({ name: "context7", version: packageJson.version, requestTimeoutMs: 20_000 });
     let failure: FailureKind | undefined;
     let result: ReturnType<typeof render> | undefined;
     const pendingReplies = new Map<unknown, string>();

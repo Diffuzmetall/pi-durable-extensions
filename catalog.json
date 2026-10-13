@@ -82,13 +82,13 @@
       "status": "experimental",
       "package": "@pi-durable-extensions/context7",
       "description": "Context7 documentation MCP bridge for plain Pi Durable",
-      "artifact": { "path": "artifacts/pi-durable-extensions-context7-0.1.0-candidate.1.tgz", "sha256": "b73676399a8e15e360c480cb8e9957d91ab29bc4259205c8411725c67ba29229", "entries": 6 },
+      "artifact": { "path": "artifacts/pi-durable-extensions-context7-0.1.0-candidate.1.tgz", "sha256": "b327b32efcc00254a91f7a9736b9e0fc3ae80b588ca5f36caebd10f9f422c720", "entries": 7 },
       "testedRuntime": { "node": ">=22.19.0", "piDurable": "1.1.0", "piAi": "1.1.0", "piMcp": "1.1.0", "chord": "1.1.0" },
       "dependencies": "declared exact runtime dependencies in package manifest",
       "authorization": "host-controlled invocation policy and explicit Context7 credential source",
       "services": ["Context7 MCP at https://mcp.context7.com/mcp; shared quota capacity/reset unknown"],
       "activation": "Provide CONTEXT7_API_KEY or an explicit credential-file capability, then register the extension.",
-      "licenseStatus": "UNLICENSED/source-specific redistribution evidence missing; no stable or registry-distribution claim"
+      "licenseStatus": "MIT granted by the copyright holder (package-local LICENSE, first-party module, no third-party source); candidate status, no stable or registry-distribution claim"
     },
     {
       "id": "antigravity-shim",
