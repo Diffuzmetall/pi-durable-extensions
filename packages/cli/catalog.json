@@ -134,6 +134,33 @@
       "licenseStatus": "MIT with preserved attribution; existing network limitations remain"
     },
     {
+      "id": "context7",
+      "kind": "extension",
+      "version": "0.1.0-candidate.1",
+      "status": "experimental",
+      "package": "@pi-durable-extensions/context7",
+      "description": "Context7 documentation MCP bridge for plain Pi Durable",
+      "artifact": {
+        "path": "artifacts/pi-durable-extensions-context7-0.1.0-candidate.1.tgz",
+        "sha256": "b73676399a8e15e360c480cb8e9957d91ab29bc4259205c8411725c67ba29229",
+        "entries": 6
+      },
+      "testedRuntime": {
+        "node": ">=22.19.0",
+        "piDurable": "1.1.0",
+        "piAi": "1.1.0",
+        "piMcp": "1.1.0",
+        "chord": "1.1.0"
+      },
+      "dependencies": "declared exact runtime dependencies in package manifest",
+      "authorization": "host-controlled invocation policy and explicit Context7 credential source",
+      "services": [
+        "Context7 MCP at https://mcp.context7.com/mcp; shared quota capacity/reset unknown"
+      ],
+      "activation": "Provide CONTEXT7_API_KEY or an explicit credential-file capability, then register the extension.",
+      "licenseStatus": "UNLICENSED/source-specific redistribution evidence missing; no stable or registry-distribution claim"
+    },
+    {
       "id": "antigravity-shim",
       "kind": "service",
       "version": "0.1.0-candidate.20261012",
@@ -190,7 +217,7 @@
       "artifact": {
         "path": "artifacts/pi-durable-hindsight-0.1.0.tgz",
         "sha256": "4ce1fc0d192530ccbaa42ffd05c3bac21d4f9b8d81179960b6fb05f121043443",
-        "entries": 31
+        "entries": 29
       },
       "testedRuntime": {
         "node": ">=24",
@@ -207,9 +234,7 @@
       "licenseStatus": "MIT and third-party notices retained; vendor/private boundaries remain explicit"
     }
   ],
-  "deferred": [
-    "context7"
-  ],
+  "deferred": [],
   "excluded": [
     "pi-durable-beads",
     "Lancet",

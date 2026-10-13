@@ -4,7 +4,7 @@ This U5 tree was assembled from the accepted local candidate trees after the fin
 
 ## Frozen inputs
 
-- Inventory: `inventory-v3.json` (eight active components plus deferred Context7).
+- Inventory baseline: `inventory-v3.json` (the original eight active components plus deferred Context7); the current public tree promotes the accepted Context7 candidate as the ninth active component.
 - Baseline: `baseline-v3.json` and its current hash register.
 - Runtime observed for integration: Linux x64, Node `24.19.0`, npm `11.17.0`.
 - Component package hashes are recomputed before copy and compared against the retained post-copy manifest. Drift stops U5 rather than being normalized.
@@ -15,4 +15,4 @@ The public tree contains package source, examples, tests, notices and applicable
 
 ## Status
 
-This is U5 source/privacy/public-pack preparation. It does not certify U6 clean-target installation, U7 Pocket adapter compatibility, live providers, accounts, devices, service deployment, legal redistribution, or publication.
+Context7 promotion adds fixture and real bare-Durable Harness verification, including a bounded two-call live-service proof. Its source-specific license remains unresolved (`UNLICENSED`), so this repository does not make a stable or registry-distribution claim for it. The broader tree still does not certify U7 Pocket adapter compatibility, other live providers, accounts, devices, service deployment, legal redistribution, or publication.

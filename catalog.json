@@ -76,6 +76,21 @@
       "licenseStatus": "MIT with preserved attribution; existing network limitations remain"
     },
     {
+      "id": "context7",
+      "kind": "extension",
+      "version": "0.1.0-candidate.1",
+      "status": "experimental",
+      "package": "@pi-durable-extensions/context7",
+      "description": "Context7 documentation MCP bridge for plain Pi Durable",
+      "artifact": { "path": "artifacts/pi-durable-extensions-context7-0.1.0-candidate.1.tgz", "sha256": "b73676399a8e15e360c480cb8e9957d91ab29bc4259205c8411725c67ba29229", "entries": 6 },
+      "testedRuntime": { "node": ">=22.19.0", "piDurable": "1.1.0", "piAi": "1.1.0", "piMcp": "1.1.0", "chord": "1.1.0" },
+      "dependencies": "declared exact runtime dependencies in package manifest",
+      "authorization": "host-controlled invocation policy and explicit Context7 credential source",
+      "services": ["Context7 MCP at https://mcp.context7.com/mcp; shared quota capacity/reset unknown"],
+      "activation": "Provide CONTEXT7_API_KEY or an explicit credential-file capability, then register the extension.",
+      "licenseStatus": "UNLICENSED/source-specific redistribution evidence missing; no stable or registry-distribution claim"
+    },
+    {
       "id": "antigravity-shim",
       "kind": "service",
       "version": "0.1.0-candidate.20261012",
@@ -120,16 +135,16 @@
   ],
   "cli": {
     "package": "portable-pi-cli",
-    "version": "0.1.0-candidate.1",
+    "version": "0.1.0-candidate.2",
     "status": "experimental",
-    "artifact": { "path": "artifacts/portable-pi-cli-0.1.0-candidate.1.tgz", "sha256": "f05b04ca0c388b76ad10f30a85d4ed5ab19f39b3cea56baeae7acdb552396874", "entries": 4 },
+    "artifact": { "path": "artifacts/portable-pi-cli-0.1.0-candidate.2.tgz", "sha256": "abc33fe7ac3cf64c2710d72e1f569a70eeafe4c897fb9b714d2889399b4eacee", "entries": 4 },
     "testedRuntime": { "node": ">=24.19.0", "observedNode": "24.19.0", "observedNpm": "11.17.0" },
     "commands": ["list", "info", "install", "doctor"],
     "installPolicy": "exact version and SHA-256; experimental opt-in; --ignore-scripts; isolated single-package dependency tree; retained staging; Linux fd anchoring; pinned GNU mv no-clobber publication",
     "activation": "CLI installation does not enable components or start services",
     "licenseStatus": "private candidate metadata; no publication claim"
   },
-  "deferred": ["context7"],
+  "deferred": [],
   "excluded": ["pi-durable-beads", "Lancet", "goals", "schedules", "triggers", "other Pocket built-ins"],
   "artifactNote": "Artifact paths are relative to a future distribution bundle. The exact tarballs are retained privately under the sandbox integration-prep artifacts directory for U5 evidence; U6 must re-check them from clean targets."
 }

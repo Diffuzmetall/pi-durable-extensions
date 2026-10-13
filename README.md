@@ -1,6 +1,6 @@
 # Pi Durable Extensions
 
-Eight independently selectable components for Pi Durable, plus a small selective
+Nine independently selectable components for Pi Durable, plus a small selective
 installer/doctor CLI. Each component is packaged and installed on its own; nothing
 here is a Pi Pocket built-in, and nothing activates providers, services, or
 Pocket modules by itself.
@@ -20,12 +20,13 @@ Pocket modules by itself.
 | `codex-api` | adapter | `0.1.0-candidate` | Codex Ask/Search/Image/Usage with explicit authorization and upload capability |
 | `agent-profiles` | adapter | `0.1.0-candidate.0` | Markdown profile parser/catalog; no launcher, no bundled profiles |
 | `web-tools` | extension | `0.1.0` | Search/fetch extension with its documented network limits |
+| `context7` | extension | `0.1.0-candidate.1` | Context7 documentation MCP bridge with explicit credential-file capability |
 | `antigravity-shim` | service | `0.1.0-candidate.20261012` | Local OpenAI-compatible service, provisioned and started separately |
 | `codex-voice` | adapter | `0.1.0-candidate` | Bounded transcription transport; no microphone UI |
 | `hindsight` | adapter | `0.1.0` | Trusted lifecycle/registry adapter; external memory setup stays separate |
 
 `packages/cli` holds `portable-pi`, a separate selective installer/doctor with
-`list`, `info`, `install` and `doctor`. It is not one of the eight components.
+`list`, `info`, `install` and `doctor`. It is not one of the nine components.
 
 ## Requirements
 
@@ -85,9 +86,8 @@ fixtures instead of live services.
 
 What was verified locally for this tree:
 
-- Package tests and packed-artifact installation for all eight components; the
-  CLI ran all eight install routes on the accepted private distribution with
-  exit `0`, matching artifact digests and installed-source parity.
+- Package tests and packed-artifact installation for the original eight components.
+- Context7 fixture tests, a real bare-Durable Harness example, two live Context7 tool calls through that Harness, and a packed artifact with a pinned digest.
 - Independent source review and an independent behavioral QA pass over the
   distribution manifest, component digests, and CLI routes.
 - `portable-pi list / info / doctor / install --dry-run` against the catalog in a
@@ -96,7 +96,7 @@ What was verified locally for this tree:
 What is **not** verified and should not be assumed:
 
 - Live Pocket loader/startup, SQLite, drop-in activation, or restarts.
-- Live providers, accounts, quotas, microphones, or third-party services.
+- Live providers, accounts, quotas, microphones, or third-party services beyond the bounded two-call Context7 proof documented above.
 - Importing the `codex-api` package with Node from `node_modules` fails with
   `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` because the package ships
   TypeScript sources; run it from an extracted package directory or a Bun
@@ -116,6 +116,7 @@ See `docs/installation.md`, `docs/compatibility.md`, `docs/security.md` and
 MIT for this collection's own code and documentation — see [LICENSE](LICENSE).
 Third-party components, vendored files and bundled dependencies keep their own
 licenses; see [NOTICE.md](NOTICE.md) and the package-local LICENSE / NOTICE /
-THIRD_PARTY_NOTICES files. No rights are granted to Pi Pocket, Pi Durable, Pi AI,
+THIRD_PARTY_NOTICES files. Context7 remains `UNLICENSED`: its missing source-specific
+redistribution evidence blocks a stable or registry-distribution claim. No rights are granted to Pi Pocket, Pi Durable, Pi AI,
 Chord, the Codex/OpenAI service, the Agent Mail service, Antigravity, or any
 other external product.

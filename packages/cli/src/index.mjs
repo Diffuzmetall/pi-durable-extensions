@@ -90,6 +90,13 @@ const TRUSTED_PEER_MANIFESTS = Object.freeze({
       'wreq-js': true,
     }),
   }),
+  context7: Object.freeze({
+    packageName: '@pi-durable-extensions/context7',
+    artifactSha256: 'b73676399a8e15e360c480cb8e9957d91ab29bc4259205c8411725c67ba29229',
+    peers: Object.freeze({}),
+    pins: Object.freeze({}),
+    optional: Object.freeze({}),
+  }),
   'antigravity-shim': Object.freeze({
     packageName: 'pi-antigravity-shim-candidate',
     artifactSha256: '26f485ff8ce6b01e0766fd5fa808d706f820d0738bb91f66cd0185eae263e74b',
@@ -126,9 +133,8 @@ const TRUSTED_PEER_MANIFESTS = Object.freeze({
 });
 const COMPONENT_IDS = new Set([
   'codemode', 'agent-mail', 'codex-api', 'agent-profiles',
-  'web-tools', 'antigravity-shim', 'codex-voice', 'hindsight',
+  'web-tools', 'context7', 'antigravity-shim', 'codex-voice', 'hindsight',
 ]);
-const DEFERRED_IDS = new Set(['context7']);
 const FORBIDDEN_IDS = new Set(['pi-durable-beads', 'lancet', 'goals', 'schedules', 'triggers']);
 
 class CliError extends Error {
@@ -193,8 +199,7 @@ async function readJson(file, label) {
 function validateEntry(entry, index) {
   if (!entry || typeof entry !== 'object') fail(`catalog component ${index} is not an object`, 'catalog');
   if (!validId(entry.id) || FORBIDDEN_IDS.has(entry.id)) fail(`invalid or excluded component id: ${String(entry.id)}`, 'catalog');
-  if (DEFERRED_IDS.has(entry.id)) fail(`deferred component is unavailable: ${entry.id}`, 'deferred');
-  if (!COMPONENT_IDS.has(entry.id)) fail(`component is outside the approved eight: ${entry.id}`, 'catalog');
+  if (!COMPONENT_IDS.has(entry.id)) fail(`component is outside the approved nine: ${entry.id}`, 'catalog');
   if (!validVersion(entry.version)) fail(`invalid version for ${entry.id}`, 'catalog');
   if (!['stable', 'experimental', 'candidate', 'blocked'].includes(entry.status)) fail(`invalid status for ${entry.id}`, 'catalog');
   if (!['extension', 'adapter', 'service'].includes(entry.kind)) fail(`invalid kind for ${entry.id}`, 'catalog');
@@ -219,7 +224,6 @@ async function readCatalog(file) {
 
 function findEntry(catalog, id) {
   if (!validId(id) || FORBIDDEN_IDS.has(id)) fail(`invalid component id: ${String(id)}`, 'invalid-id');
-  if (DEFERRED_IDS.has(id)) fail(`deferred component is unavailable: ${id}`, 'deferred');
   const entry = catalog.components.find((item) => item.id === id);
   if (!entry) fail(`unknown component: ${id}`, 'not-found');
   return entry;

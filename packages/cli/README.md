@@ -85,7 +85,7 @@ omit dev-only packages. The tested anchoring baseline is Linux with
 
 ## Peer materialization boundary
 
-For the eight canonical component artifacts, the installer reads the extracted
+For the nine canonical component artifacts, the installer reads the extracted
 `package.json` before invoking npm and only accepts a package identity, version,
 peer declaration set, and optional-peer metadata that match the artifact SHA-256
 and the checked-in trusted peer manifest. It matches the complete normalized
@@ -112,16 +112,17 @@ rights, or replace host authorization and activation.
 The supported candidate.2 route is a default npm install of the canonical Codex
 API artifact with the four checked-in peer pins `chord@1.1.0`, `pi-ai@1.1.0`,
 `pi-durable@1.1.0`, and `typebox@1.3.27`, each within its declared peer range.
-This is a bounded representative route, not a claim that all eight components
+This is a bounded representative route, not a claim that all nine components
 have been installed or runtime-validated.
 
 ## Catalog boundaries
 
-The candidate catalog has exactly eight approved components: codemode,
-agent-mail, codex-api, agent-profiles, web-tools, antigravity-shim, codex-voice,
-and hindsight. Context7 is explicitly deferred and unavailable from `list`,
-`info`, and `install`; it is not a synthetic fixture component. `pi-durable-beads`,
-Lancet, goals, schedules, triggers, and other built-ins are rejected. Component
+The candidate catalog has exactly nine approved components: codemode,
+agent-mail, codex-api, agent-profiles, web-tools, context7, antigravity-shim,
+codex-voice, and hindsight. Context7 is an active experimental extension; its
+credential setup, shared/unknown external quota, outbound-query disclosure, and
+UNLICENSED source-specific licensing gap remain explicit package boundaries.
+`pi-durable-beads`, Lancet, goals, schedules, triggers, and other built-ins are rejected. Component
 status and requirements are descriptive provenance, not proof of a passed bare
 Durable or live-service gate. Service startup, credential setup, host authorization, Pocket adapters,
 and activation remain explicit operator steps.

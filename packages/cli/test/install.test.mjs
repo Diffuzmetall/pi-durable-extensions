@@ -195,22 +195,18 @@ async function managerScript(root, body) {
   return file;
 }
 
-test('active catalog is exactly eight and Context7 is deferred everywhere', async () => {
+test('active catalog is exactly nine and Context7 is available everywhere', async () => {
   const catalog = JSON.parse(await readFile(DEFAULT_CATALOG, 'utf8'));
-  assert.equal(catalog.components.length, 8);
-  assert.equal(catalog.components.some((entry) => entry.id === 'context7'), false);
+  assert.equal(catalog.components.length, 9);
+  assert.equal(catalog.components.some((entry) => entry.id === 'context7'), true);
+  assert.deepEqual(catalog.deferred, []);
   const listed = run(['list', '--catalog', DEFAULT_CATALOG, '--allow-experimental', '--json']);
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).length, 8);
-  assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'context7'), false);
+  assert.equal(JSON.parse(listed.stdout).length, 9);
+  assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'context7'), true);
   const info = run(['info', 'context7', '--catalog', DEFAULT_CATALOG, '--json']);
-  assert.notEqual(info.status, 0);
-  assert.match(info.stderr, /deferred component is unavailable/);
-  const target = path.join(TEST_ROOT, 'context7-target');
-  const install = run(['install', 'context7', '--catalog', DEFAULT_CATALOG, '--target', target, '--version', '0.1.0', '--allow-experimental']);
-  assert.notEqual(install.status, 0);
-  assert.match(install.stderr, /deferred component is unavailable/);
-  await assert.rejects(readFile(target));
+  assert.equal(info.status, 0, info.stderr);
+  assert.equal(JSON.parse(info.stdout).version, '0.1.0-candidate.1');
 });
 
 test('excluded builtins are rejected from synthetic catalogs', async () => {
@@ -235,9 +231,9 @@ test('list and info keep experimental opt-in explicit', async () => {
   assert.equal(JSON.parse(shown.stdout)[0].id, 'codemode');
   const info = run(['info', 'codemode', '--catalog', fixtureData.catalog, '--json']);
   assert.equal(JSON.parse(info.stdout).version, '1.2.3');
-  const deferred = run(['info', 'context7', '--catalog', fixtureData.catalog, '--json']);
-  assert.notEqual(deferred.status, 0);
-  assert.match(deferred.stderr, /deferred component is unavailable/);
+  const unknown = run(['info', 'not-cataloged', '--catalog', fixtureData.catalog, '--json']);
+  assert.notEqual(unknown.status, 0);
+  assert.match(unknown.stderr, /unknown component/);
 });
 
 test('dry-run validates digest without writing or running npm', async () => {
