@@ -1,0 +1,37 @@
+{
+  "name": "@pi-pocket/dcg-guard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fail-closed DCG protection for Pi Durable shell execution",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.19.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "pocket",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "peerDependencies": {
+    "@earendil-works/pi-durable": "1.1.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
+    "test": "node --experimental-strip-types --test --test-timeout=15000 test/*.test.ts",
+    "test:dcg": "node --experimental-strip-types --test --test-timeout=30000 test/integration/dcg.test.ts",
+    "test:dcg:excluded": "node --experimental-strip-types --test --test-timeout=30000 test/integration/scoped-policy.counterexample.ts",
+    "test:pocket": "node --experimental-strip-types --test --test-timeout=60000 test/integration/pocket.test.ts",
+    "test:consumer": "node test/consumer.mjs"
+  }
+}

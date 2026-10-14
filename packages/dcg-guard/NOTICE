@@ -1,0 +1,7 @@
+Copyright (c) 2026 Diffuzmetall
+
+The first-party `@pi-pocket/dcg-guard` implementation and collection-specific integration are licensed under the MIT License in this package's `LICENSE` file. That license applies only to this package's first-party files.
+
+This package invokes a separately provisioned DCG 0.15.3 executable through its command-line interface. It does not include or redistribute DCG's binary, Rust implementation, parser, rules, or other upstream source.
+
+The pinned upstream source commit `3eec165ae64a56bfbb2cecaa2510d82076010851` has a `LICENSE` titled “MIT License (with OpenAI/Anthropic Rider)” and an “ADDITIONAL RIDER / RESTRICTION (OpenAI / Anthropic)”. The rider defines restricted parties and states that “use” includes executing, testing, and analyzing the software. This notice does not characterize that as an unmodified MIT grant, grant rights to the separate executable, or conclude whether this independently authored adapter is a derivative work or whether any particular consumer may obtain or invoke the executable. An operator/legal reviewer must assess the exact pinned terms and their applicability before provisioning or running DCG. Review the pinned license: https://github.com/Dicklesworthstone/destructive_command_guard/blob/3eec165ae64a56bfbb2cecaa2510d82076010851/LICENSE

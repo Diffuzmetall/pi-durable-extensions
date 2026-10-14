@@ -195,18 +195,31 @@ async function managerScript(root, body) {
   return file;
 }
 
-test('active catalog is exactly nine and Context7 is available everywhere', async () => {
+test('active catalog has ten entries, preserves Context7, and pins the seven-file DCG candidate', async () => {
   const catalog = JSON.parse(await readFile(DEFAULT_CATALOG, 'utf8'));
-  assert.equal(catalog.components.length, 9);
+  assert.equal(catalog.components.length, 10);
   assert.equal(catalog.components.some((entry) => entry.id === 'context7'), true);
+  assert.equal(catalog.components.some((entry) => entry.id === 'dcg-guard'), true);
   assert.deepEqual(catalog.deferred, []);
   const listed = run(['list', '--catalog', DEFAULT_CATALOG, '--allow-experimental', '--json']);
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).length, 9);
+  assert.equal(JSON.parse(listed.stdout).length, 10);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'context7'), true);
+  assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'dcg-guard'), true);
   const info = run(['info', 'context7', '--catalog', DEFAULT_CATALOG, '--json']);
   assert.equal(info.status, 0, info.stderr);
   assert.equal(JSON.parse(info.stdout).version, '0.1.0-candidate.1');
+  const dcg = run(['info', 'dcg-guard', '--catalog', DEFAULT_CATALOG, '--json']);
+  assert.equal(dcg.status, 0, dcg.stderr);
+  assert.equal(JSON.parse(dcg.stdout).package, '@pi-pocket/dcg-guard');
+  assert.equal(JSON.parse(dcg.stdout).version, '0.1.0');
+  assert.equal(JSON.parse(dcg.stdout).status, 'candidate');
+  assert.equal(JSON.parse(dcg.stdout).artifact.sha256, 'e8f98754876383f425e42e95cb6bc9fc889f78e57d77544eeb1eeeba6a7bfe5b');
+  assert.equal(JSON.parse(dcg.stdout).artifact.entries, 7);
+  assert.deepEqual(JSON.parse(dcg.stdout).testedRuntime, { node: '>=24.19.0', piDurable: '1.1.0' });
+  const missingTarget = run(['install', 'dcg-guard', '--catalog', DEFAULT_CATALOG, '--version', '0.1.0', '--allow-experimental', '--json']);
+  assert.notEqual(missingTarget.status, 0);
+  assert.equal(jsonOutput(missingTarget).error, 'target');
 });
 
 test('excluded builtins are rejected from synthetic catalogs', async () => {

@@ -232,6 +232,21 @@
       ],
       "activation": "Bind lifecycle controller explicitly; external memory setup and service startup are separate.",
       "licenseStatus": "MIT and third-party notices retained; vendor/private boundaries remain explicit"
+    },
+    {
+      "id": "dcg-guard",
+      "kind": "extension",
+      "version": "0.1.0",
+      "status": "candidate",
+      "package": "@pi-pocket/dcg-guard",
+      "description": "Fail-closed DCG protection for Pi Durable shell execution",
+      "artifact": { "path": "artifacts/pi-pocket-dcg-guard-0.1.0.tgz", "sha256": "e8f98754876383f425e42e95cb6bc9fc889f78e57d77544eeb1eeeba6a7bfe5b", "entries": 7 },
+      "testedRuntime": { "node": ">=24.19.0", "piDurable": "1.1.0" },
+      "dependencies": "exact runtime peer @earendil-works/pi-durable 1.1.0",
+      "authorization": "owner-controlled binary path and dedicated evaluator environment",
+      "services": ["separately provisioned DCG 0.15.3 executable; not included"],
+      "activation": "Register explicitly only after owner provisioning and policy admission; installation does not enable the guard or install DCG.",
+      "licenseStatus": "First-party adapter MIT under package-local LICENSE/NOTICE. External DCG is not redistributed; applicability of its qualified MIT (OpenAI/Anthropic Rider) requires operator/legal review before executable provisioning or use; no legal clearance is claimed."
     }
   ],
   "deferred": [],
