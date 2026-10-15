@@ -195,17 +195,19 @@ async function managerScript(root, body) {
   return file;
 }
 
-test('active catalog has ten entries, preserves Context7, and pins the seven-file DCG candidate', async () => {
+test('active catalog has eleven entries, preserves Context7, and pins the seven-file DCG candidate', async () => {
   const catalog = JSON.parse(await readFile(DEFAULT_CATALOG, 'utf8'));
-  assert.equal(catalog.components.length, 10);
+  assert.equal(catalog.components.length, 11);
   assert.equal(catalog.components.some((entry) => entry.id === 'context7'), true);
   assert.equal(catalog.components.some((entry) => entry.id === 'dcg-guard'), true);
+  assert.equal(catalog.components.some((entry) => entry.id === 'search-history'), true);
   assert.deepEqual(catalog.deferred, []);
   const listed = run(['list', '--catalog', DEFAULT_CATALOG, '--allow-experimental', '--json']);
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).length, 10);
+  assert.equal(JSON.parse(listed.stdout).length, 11);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'context7'), true);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'dcg-guard'), true);
+  assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'search-history'), true);
   const info = run(['info', 'context7', '--catalog', DEFAULT_CATALOG, '--json']);
   assert.equal(info.status, 0, info.stderr);
   assert.equal(JSON.parse(info.stdout).version, '0.1.0-candidate.1');
@@ -220,6 +222,13 @@ test('active catalog has ten entries, preserves Context7, and pins the seven-fil
   const missingTarget = run(['install', 'dcg-guard', '--catalog', DEFAULT_CATALOG, '--version', '0.1.0', '--allow-experimental', '--json']);
   assert.notEqual(missingTarget.status, 0);
   assert.equal(jsonOutput(missingTarget).error, 'target');
+  const searchHistory = run(['info', 'search-history', '--catalog', DEFAULT_CATALOG, '--json']);
+  assert.equal(searchHistory.status, 0, searchHistory.stderr);
+  assert.equal(JSON.parse(searchHistory.stdout).package, '@diffuzmetall/pi-durable-search-history');
+  assert.equal(JSON.parse(searchHistory.stdout).version, '0.1.0-candidate.0');
+  assert.equal(JSON.parse(searchHistory.stdout).artifact.sha256, 'deb3adc75ce312de8024a2af66bb3c15684174574cfc53378cf4dc6418e96906');
+  assert.equal(JSON.parse(searchHistory.stdout).artifact.entries, 6);
+  assert.deepEqual(JSON.parse(searchHistory.stdout).testedRuntime, { node: '>=24.19.0', piDurable: '1.2.0', piAi: '1.2.0', chord: '1.2.0' });
 });
 
 test('excluded builtins are rejected from synthetic catalogs', async () => {
