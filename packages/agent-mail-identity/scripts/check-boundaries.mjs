@@ -45,7 +45,10 @@ assert.ok(/"--project", checked\.projectKey, "--agent", checked\.agentName/.test
 // The real read-marking commands are `am mark-all-read`, `am mail ack` and `am mail read`; none may appear here.
 assert.ok(!/mark-all-read|mark_all_read|acknowledge_message|"mail"|'mail'/.test(cli), "am-cli.ts: monitoring must never invoke a read-marking command");
 assert.ok(cli.includes('"agents", "show"') && cli.includes('"inbox-events"'), "am-cli.ts: only the profile lookup and the read-only listing may be invoked");
-assert.ok(/watch_cursor_expired/.test(cli) && /invalid_delivery_page/.test(cli), "am-cli.ts: an unservable cursor and an unexpected page must fail closed");
+// Retention belongs to the daemon's global ledger. Nonzero CLI exits (including cursor_expired) and malformed
+// pages must still reach the watcher's pause classification; a recipient minimum cannot establish expiration.
+assert.ok(/code !== 0\) cancel\("cli_exit_failed"\)/.test(cli) && /invalid_delivery_page/.test(cli), "am-cli.ts: reject nonzero CLI exits and malformed pages");
+assert.ok(/"cli_exit_failed"/.test(delivery) && /"invalid_delivery_page"/.test(delivery), "delivery.ts: CLI failures and malformed pages must remain pause codes");
 assert.ok(/CLI_PAGE_LIMIT_MAX = 1000/.test(cli), "am-cli.ts: the listing page limit must stay inside the CLI's accepted range");
 assert.ok(/events\.length > 0 && oldest === null/.test(cli), "am-cli.ts: a page with events but no usable oldest position must fail closed");
 

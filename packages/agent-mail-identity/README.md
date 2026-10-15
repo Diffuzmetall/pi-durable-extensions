@@ -94,6 +94,12 @@ serve, a malformed page, a page that carries events without a usable oldest posi
 watcher instead of silently skipping letters. Because the listing carries no message body, a wake batch contains the
 event identity, sender, subject and delivery time.
 
+Delivery cursors are global across recipients, so valid continuations can be sparse: an empty mailbox positioned at
+`0` can receive its first event at any later sequence. `oldest_available_cursor` is the recipient's minimum event,
+not a retention floor. The daemon checks actual global retention; its nonzero CLI errors still pause the watcher
+with the bounded `cli_exit_failed` diagnostic. Successful pages are not rejected merely because that minimum exceeds
+`after`.
+
 ## Pocket adapter (AM3)
 
 The Pocket entry point is a separate export, `pi-durable-agent-mail-identity/pocket`. It imports no Pocket source, no
@@ -147,6 +153,13 @@ AM_POCKET_CHECKOUT=/nonexistent npm --prefix packages/agent-mail-identity test
 cannot run, and never fabricates a live watcher run, benchmark, screenshot, or delivery receipt. Live Agent Mail
 acceptance, a real Pocket wake, the cloud-worker lanes, screenshots, video, the trunk comparison and the performance
 budgets remain blocked. Tests and static checks are not live acceptance.
+
+A separate retained isolated-service check on 2026-10-15 exercised Agent Mail 0.3.39 / FrankenSQLite 0.4.12 with a
+standalone Durable 1.1.0 host and real packaged CLI transport: sparse first delivery, guarded outbound reply,
+pause/resume/disable, unread preservation, deduplication across a clean process reopen, and retained identity/cursor
+state passed. Only the model provider was deterministic faux. This is not a production installation, a real Pocket
+wake, a paid/cloud-model test, or crash/power-loss acceptance; the packaged live/performance gates above remain
+unavailable.
 
 Evidence: [REPAIR-REPORT.md](REPAIR-REPORT.md) (AM1 repair), [AM2-REPORT.md](AM2-REPORT.md) (AM2 unit report and crash
 matrix), [AM3-REPORT.md](AM3-REPORT.md) (AM3 admission, installation and migration), manifests

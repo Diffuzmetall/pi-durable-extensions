@@ -90,10 +90,10 @@ async function watchFixture(options: { mailbox?: MailDeliveryEvent[]; pageLimit?
 		root, harness, identity, registry: registry as Registry, faux, telemetry, holds, mailbox, reports, listingLog, listingPage,
 		armGate() { telemetry.gateArmed = true; },
 		releaseGate() { telemetry.gate.resolve(); },
-		async seedListing(events: Array<{ cursor: number; message_id: number }>, extra: { oldest_available_cursor?: number; tail_cursor?: number } = {}) {
+		async seedListing(events: Array<{ cursor: number; message_id: number }>, extra: { oldest_available_cursor?: number; tail_cursor?: number; global_oldest_cursor?: number } = {}) {
 			const tail = extra.tail_cursor ?? (events.length === 0 ? 0 : events[events.length - 1].cursor);
 			const oldest = extra.oldest_available_cursor ?? (events.length === 0 ? 0 : events[0].cursor);
-			await writeFile(listingPage, JSON.stringify({ events: events.map(entry => ({ ...entry, kind: "to", delivered_ts: "2026-10-12T16:56:12.035902Z", subject: `subject ${entry.cursor}`, from: "FrostyRobin", importance: "normal", ack_required: false })), tail_cursor: tail, oldest_available_cursor: oldest }));
+			await writeFile(listingPage, JSON.stringify({ events: events.map(entry => ({ ...entry, kind: "to", delivered_ts: "2026-10-12T16:56:12.035902Z", subject: `subject ${entry.cursor}`, from: "FrostyRobin", importance: "normal", ack_required: false })), tail_cursor: tail, oldest_available_cursor: oldest, global_oldest_cursor: extra.global_oldest_cursor }));
 		},
 		async listingEffects(): Promise<string[]> {
 			try { return (await readFile(listingLog, "utf8")).trim().split("\n"); } catch { return []; }
@@ -503,15 +503,15 @@ test("a cursor the mailbox can no longer serve pauses the CLI-backed watcher ins
 		await f.seedListing([{ cursor: 11713, message_id: 8244 }], { oldest_available_cursor: 11712 });
 		await enable(f, { watchFrom: "11712" });
 		await f.waitFor("the first delivery", async () => (await f.watchState()).cursor === "11713" ? true : undefined, 10000);
-		// The mailbox now keeps only later positions: continuing silently would skip events, so the watcher stops.
-		await f.seedListing([{ cursor: 11800, message_id: 8300 }], { oldest_available_cursor: 11800, tail_cursor: 11800 });
+		// Actual retention is a GLOBAL-ledger fact, not merely a recipient-local gap. The native CLI rejects it.
+		await f.seedListing([{ cursor: 11800, message_id: 8300 }], { oldest_available_cursor: 11800, tail_cursor: 11800, global_oldest_cursor: 11800 });
 		await f.waitFor("the watcher to pause", async () => (await f.watchState()).watch.kind === "paused" ? true : undefined, 10000);
 		const state = await f.watchState();
-		assert.equal(state.watch.kind === "paused" ? state.watch.reason : null, "watch_cursor_expired");
+		assert.equal(state.watch.kind === "paused" ? state.watch.reason : null, "cli_exit_failed");
 		assert.equal(state.cursor, "11713", "the cursor stays where the last admitted batch ended");
 		assert.equal(await f.letters(), 1, "no event was skipped into the conversation");
 		assert.equal((await f.watchers()).length, 0, "the paused watcher task ended");
-		console.log(JSON.stringify({ phase: "cursor-expired", reason: "watch_cursor_expired" }));
+		console.log(JSON.stringify({ phase: "cursor-expired", reason: "cli_exit_failed" }));
 	} finally { await f.close(); }
 });
 

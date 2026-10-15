@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { fixtureDirectory } from "./repair-extra.inc.ts";
 import { fileURLToPath } from "node:url";
 import { CLI_PAGE_LIMIT_MAX, createCliTransport, readDeliveryPage, runJsonCli } from "../src/am-cli.ts";
+import { classifyWatchFailure } from "../src/delivery.ts";
 const fixture=fileURLToPath(new URL("./fixtures/am-fixture.mjs",import.meta.url));
 async function pidIn(path:string){for(let i=0;i<100;i++){try{return Number(await readFile(path,"utf8"));}catch{await new Promise(r=>setTimeout(r,10));}}throw new Error("fixture did not start");}
 test("argv is not interpreted by a shell",async()=>{
@@ -112,6 +113,17 @@ async function mailboxFixture(seed: unknown, suffix: string) {
 }
 const listingTarget={projectKey:"/home/ubuntu/Projects/pi-pocket-sandbox",agentName:"BlueLake"};
 
+test("successful native delivery pages accept empty-to-first and sparse global cursor continuations",()=>{
+ // Real 0.3.39 CLI/MCP page: empty position-now established 0; first recipient event is 1, oldest is 1.
+ // The server checks retention against the GLOBAL ledger. A recipient's oldest event is not a retention floor.
+ for(const [after,first] of [[0,1],[0,23],[12,23],[22,23]] as const){
+  const decoded=readDeliveryPage({events:[page(first,7)],next_cursor:first,oldest_available_cursor:first,tail_cursor:first},String(after));
+  assert.equal(decoded.cursor,String(first));
+  assert.equal(decoded.events.length,1);
+  assert.equal(decoded.events[0].messageId,"7");
+ }
+});
+
 test("CLI poll reads a bounded page of the verified contract and never marks mail read",async()=>{
  const f=await mailboxFixture({events:[page(11713,8244),page(11714,8245),page(11715,8246)],tail_cursor:11715,oldest_available_cursor:11713},"page");
  const transport=f.transport({pageLimit:2});
@@ -136,13 +148,16 @@ test("CLI poll reads a bounded page of the verified contract and never marks mai
 });
 
 test("an empty position-now read adopts the durable tail and an old cursor is refused instead of skipping",async()=>{
- const f=await mailboxFixture({events:[page(11713,8244),page(11714,8245)],tail_cursor:11902,oldest_available_cursor:11713},"tail");
+ const f=await mailboxFixture({events:[page(11713,8244),page(11714,8245)],tail_cursor:11902,oldest_available_cursor:11713,global_oldest_cursor:11713},"tail");
  const transport=f.transport();
  assert.ok(transport.poll);
  const now=await transport.poll(listingTarget,null);
  assert.deepEqual(now,{events:[],cursor:"11902"});
- await assert.rejects(transport.poll(listingTarget,"11700"),/watch_cursor_expired/);
- await assert.rejects(transport.poll(listingTarget,"1"),/watch_cursor_expired/);
+ for(const cursor of ["11700","1","11903"]){
+  await assert.rejects(transport.poll(listingTarget,cursor),error=>error instanceof Error && error.message==="cli_exit_failed" && classifyWatchFailure(error)==="pause");
+ }
+ // Even with pruned global history, the exclusive immediate-predecessor boundary remains valid.
+ assert.equal((await transport.poll(listingTarget,"11712")).events.length,2);
  assert.equal((await f.effects()).filter(name=>name.includes("mark-read")).length,0);
 });
 

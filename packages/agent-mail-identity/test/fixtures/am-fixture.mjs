@@ -57,9 +57,17 @@ else if(args[0]==="inbox-events"){
  }
  else{
   const from=after===undefined?0:Number(after);
-  const events=all.filter(entry=>entry.cursor>from).slice(0,Number.isSafeInteger(limit)&&limit>0?limit:100);
-  const next=events.length?events.at(-1).cursor:(after===undefined?tail:from);
-  process.stdout.write(JSON.stringify({events,next_cursor:next,has_more:events.length>0&&next<tail,...oldestField,tail_cursor:tail}));
+  // Match the native GLOBAL retention test, not the recipient minimum alone (sync.rs, GH#238).
+  // A genuine retention error is a nonzero CLI exit, never a successful page for the adapter to reinterpret.
+  const expired=seed.global_oldest_cursor>1 && from<oldest-1;
+  if(expired || from>tail){
+   process.stdout.write(JSON.stringify({status:"error",code:expired?"cursor_expired":"cursor_ahead",message:"PRIVATE_VALUE_NOT_FOR_ERRORS",details:{after:from}}));
+   process.exitCode=1;
+  } else {
+   const events=all.filter(entry=>entry.cursor>from).slice(0,Number.isSafeInteger(limit)&&limit>0?limit:100);
+   const next=events.length?events.at(-1).cursor:(after===undefined?tail:from);
+   process.stdout.write(JSON.stringify({events,next_cursor:next,has_more:events.length>0&&next<tail,...oldestField,tail_cursor:tail}));
+  }
  }
 }
 else if((args[0]==="delivery" && args[1]==="mark-read") || args[0]==="mark-all-read" || (args[0]==="mail" && args[1]==="ack") || (args[0]==="mail" && args[1]==="read")){

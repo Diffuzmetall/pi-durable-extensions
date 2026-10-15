@@ -188,9 +188,9 @@ function timeOf(value: unknown): number | null {
 }
 
 /**
- * Read one listing page of the verified contract, or fail closed. A page that would move the cursor backwards, serve
- * events at or before the requested cursor, or start after a cursor the mailbox no longer keeps is an error, never a
- * silent skip.
+ * Read one successful listing page, or fail closed on malformed/non-monotone output. Retention is checked by the
+ * daemon/CLI against the GLOBAL ledger; its nonzero exits remain `cli_exit_failed` and pause the watcher. A recipient's
+ * `oldest_available_cursor` is its minimum event, not a retention floor: gaps can be other recipients' traffic.
  */
 export function readDeliveryPage(raw: unknown, requested: string | null): MailDeliveryPage {
 	if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new MailWatchError("invalid_delivery_page");
@@ -220,12 +220,10 @@ export function readDeliveryPage(raw: unknown, requested: string | null): MailDe
 		});
 	}
 	const oldest = positionOf(page.oldest_available_cursor);
-	// Defence in depth: the live listing always reports `oldest_available_cursor`, and without a usable one a page that
-	// starts after the requested cursor is indistinguishable from a page that skipped events, so a page that carries
-	// events and no usable oldest position fails closed instead of being trusted. An empty page reports nothing, so it
-	// is unaffected.
+	// Keep the native response shape strict, but never infer expiration from a recipient-local minimum. In particular,
+	// position-now on an empty mailbox commits 0 and its first event can have ANY later global seq (upstream GH#238).
+	// Only the server knows whether global history was pruned; runJsonCli rejects its error exit before reaching here.
 	if (events.length > 0 && oldest === null) throw new MailWatchError("invalid_delivery_page");
-	if (requestedPosition !== null && oldest !== null && oldest > requestedPosition) throw new MailWatchError("watch_cursor_expired");
 	const next = positionOf(page.next_cursor);
 	if (events.length > 0) return { events, cursor: String(previous) };
 	if (next === null) return { events, cursor: requested };
