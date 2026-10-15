@@ -128,7 +128,7 @@ export function createHindsightExtension({ resolveBinding = resolvePiConfig, res
       const cwd = api.env?.cwd ?? agent.cwd;
       if (!cwd) throw new Error('Hindsight requires this conversation\'s effective cwd');
       const { cfg, bankId } = await resolveBinding(cwd);
-      if (cfg.disabled) return { content: [{ type: 'text', text: JSON.stringify({ error: 'Hindsight is disabled' }) }], details: null, isError: true };
+      if (cfg.disabled) return { output: [{ type: 'text', text: JSON.stringify({ error: 'Hindsight is disabled' }) }], details: null, isError: true };
       const client = await resolveClient({ cwd, bankId }, cfg);
       const specs = toolSpecs(client, bankId, { repoDir: cwd, harness: 'pi', loadConfig: () => cfg, pageTrigger: buildPageTrigger(cfg), reflectTimeoutMs: cfg.reflectToolTimeoutMs, reflectBudget: cfg.reflectBudget, toolGuideExtra: cfg.toolGuideExtra, stampFor: () => buildRetainStamp(cfg, { directory: cwd, harness: 'pi', bankId }) });
       const converted = toPiTool(specs.find(s => s.name === declaration.name));
@@ -137,7 +137,8 @@ export function createHindsightExtension({ resolveBinding = resolvePiConfig, res
         const state = await api.snapshot(DeliveryState, api.conversationId, context);
         api.diagnostic({ severity: state?.intents.some(i => i.status !== 'acked') ? 'warn' : 'info', code: 'hindsight_delivery', message: JSON.stringify(durableDeliveryStatus(state)) });
       }
-      return result;
+      const { content, ...metadata } = result;
+      return { ...metadata, output: content };
     },
   }));
   const memoryNames = new Set(declarations.map(tool => tool.name));

@@ -3,6 +3,10 @@
   "version": "0.1.0-candidate.1",
   "description": "Portable Context7 MCP extension for Pi Durable",
   "type": "module",
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "@types/node": "26.6.5"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=22.19.0"
@@ -22,14 +26,14 @@
     "package.json"
   ],
   "scripts": {
-    "check": "tsc --noEmit --skipLibCheck --allowImportingTsExtensions --module nodenext --moduleResolution nodenext --target es2023 --strict --erasableSyntaxOnly --resolveJsonModule src/context7-mcp.ts",
+    "check": "tsc --noEmit -p tsconfig.json",
     "test": "node --test test/*.test.mjs",
     "example": "node examples/bare-durable.mjs",
     "example:live": "node examples/live-bare-durable.mjs"
   },
   "dependencies": {
-    "@earendil-works/pi-ai": "1.1.0",
-    "@earendil-works/pi-durable": "1.1.0",
-    "@earendil-works/pi-mcp": "1.1.0"
+    "@earendil-works/pi-ai": "1.2.0",
+    "@earendil-works/pi-durable": "1.2.0",
+    "@earendil-works/pi-mcp": "1.2.0"
   }
 }

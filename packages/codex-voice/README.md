@@ -22,8 +22,8 @@ real subscription, device microphone, browser UI, nor live service availability.
 
 ## Requirements and setup
 
-Observed baseline for this candidate: Node `v24.19.0`, `@earendil-works/pi-durable` `1.1.0`, and
-`@earendil-works/pi-ai` `1.1.0` on Linux x64. The package declares Node `>=22.19.0` and peers `>=1.1.0 <1.2.0`,
+Observed baseline for this candidate: Node `v24.19.0`, `@earendil-works/pi-durable` `1.2.0`, and
+`@earendil-works/pi-ai` `1.2.0` on Linux x64. The package declares Node `>=22.19.0` and exact peers `1.2.0`,
 but those ranges are requirements, not a compatibility proof; only the observed tuple is locally verified.
 
 For retained local verification, from this directory:

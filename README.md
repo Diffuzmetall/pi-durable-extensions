@@ -53,20 +53,22 @@ Installation does not enable Pocket modules, create credentials, or start servic
 - Recorded integration environment: **Linux x64, Node `24.19.0`, npm `11.17.0`**.
 - CLI installation uses Linux directory-fd semantics, `/proc/self/fd`, and GNU
   coreutils `/usr/bin/mv`. The recorded `mv` version is `9.5`.
-- Each package retains its own runtime requirements. Most Durable integrations
-  use `1.1.0`. Hindsight uses the distinct Durable/Chord/Pi AI `1.0.2` tuple.
+- Pi-dependent components in this checkout use the verified **Pi 1.2.0** tuple.
+  Pi-independent components keep their own requirements. Native Harness fixtures,
+  package checks and the selective installer are checked separately from activation.
 
 These versions describe recorded environments, not compatibility with every
 Node, Durable, or operating-system version. Refer to the package README and
-[compatibility notes](docs/compatibility.md).
+[compatibility notes](docs/compatibility.md). Source-TypeScript packages must be
+loaded from extracted targets outside `node_modules`, or through a compatible
+TypeScript runtime; ordinary Node npm drop-in activation is not claimed.
 
 ## Quick start
 
 ### 1. Inspect the source catalog
 
-This general quickstart also applies to the original nine-component baseline.
-DCG instructions need a checkout that contains `packages/dcg-guard`.
-Do not assume that a default-branch clone includes DCG before its feature PR merges.
+This checkout includes all ten catalog components, including DCG. Its external
+binary and host admission remain separately provisioned; installation never enables it.
 
 ```sh
 git clone https://github.com/Diffuzmetall/pi-durable-extensions.git
@@ -81,11 +83,10 @@ node packages/cli/src/index.mjs info codemode \
 `list` shows only stable entries by default. The baseline has no stable entries,
 so use `--allow-experimental` to display its candidate and experimental components.
 
-This feature checkout includes **one canonical DCG tarball** under `artifacts/`.
-The other nine component entries and the CLI retain historical artifact metadata,
-not a complete checked-in bundle. Their tarballs need a generated bundle.
-A full-catalog doctor report against the checkout can report those missing artifacts.
-Use the [canonical DCG route](#install-the-canonical-dcg-candidate) for the included asset.
+The Pi 1.2 compatibility candidate includes fresh archives for **all ten components
+and the CLI** under `artifacts/`, with matching catalog digests. A new local bundle
+can still be generated using the steps below; generated bundles are not publication
+or permission to activate external services.
 
 ### 2. Create a local artifact bundle
 
@@ -106,7 +107,8 @@ and the CLI. For DCG, it verifies the root catalog pin and copies the checked-in
 canonical archive byte-for-byte. It refuses an existing output root and writes
 a generated catalog with SHA-256 digests of the exact tarballs.
 It does not publish packages or install the root workspace.
-This DCG delivery did not include a full eleven-package bundle run.
+The Pi 1.2 compatibility checks include a fresh eleven-package bundle and artifact
+integrity checks. See [compatibility](docs/compatibility.md) and [upgrade evidence](UPGRADE_LOG.md).
 
 ### 3. Validate, then install one component
 
@@ -180,11 +182,11 @@ protection to the selected Durable `bash` operation. Its catalog status is
 `candidate`. The package is private, not a published npm release.
 
 **Canonical archive:** [pi-pocket-dcg-guard-0.1.0.tgz](artifacts/pi-pocket-dcg-guard-0.1.0.tgz),
-**9,532 bytes**, **seven first-party files**. Both catalogs and CLI trust metadata
+**9,714 bytes**, **seven first-party files**. Both catalogs and CLI trust metadata
 pin this SHA-256:
 
 ```text
-e8f98754876383f425e42e95cb6bc9fc889f78e57d77544eeb1eeeba6a7bfe5b
+3813025e6335305651db45907478f1f778ea970ab5b6b04abae4538498e0f0e8
 ```
 
 The publisher produced the archive with GNU tar/gzip, not npm.
@@ -193,8 +195,7 @@ The bundle script copies the canonical asset instead of a new npm archive.
 
 ### Install the canonical DCG candidate
 
-Use a feature checkout that contains `packages/dcg-guard` and the canonical asset.
-A default-branch clone does not establish DCG availability before the feature PR merges.
+Use a checkout containing `packages/dcg-guard` and the canonical asset above.
 Choose a fresh absolute target with an existing parent.
 
 **Pass the root catalog explicitly.** The CLI default is
@@ -228,8 +229,9 @@ prepared shell command and cwd before it forwards the operation. Only a consiste
 allow verdict permits execution. Denial, evaluator failure, and unsupported
 protocol results stop the operation.
 
-**Admitted tuple:** local POSIX Node environment, Node `>=24.19.0`,
-`@earendil-works/pi-durable` `1.1.0`, and **DCG `0.15.3`**.
+**Current API/fixture tuple:** local POSIX Node environment, Node `>=24.19.0`,
+`@earendil-works/pi-durable` `1.2.0`. The external executable remains pinned to
+**DCG `0.15.3`**; migration fixtures did not invoke or legally admit that binary.
 The package exports compiled ESM from `dist/`. It does not download DCG,
 install itself, or change Durable/Pocket core.
 
@@ -347,27 +349,19 @@ availability evidence, not successful checks.
 
 ## Limits and verification
 
-Earlier collection checks covered local package tests, packed artifacts,
-source review, and bounded CLI routes. Context7 also has a recorded bare-Durable
-Harness proof and two live service calls. Refer to [provenance](docs/provenance.md)
-for the baseline scope.
+The Pi `1.2.0` migration verified 123 Node test cases/file entries across ten
+components and the expanded CLI suite. Fresh archives for all eleven packages
+were checked; all ten component archives were installed into independent extracted
+targets and their documented entries imported. Catalog digests and installer trust
+pins agree. See [upgrade evidence](UPGRADE_LOG.md) for per-package results, retained
+receipts, and the independent-review limitation.
 
-For the current DCG archive, independent checks verified all seven member bytes
-and public factory/registry API imports. They reused physical public SDK peers:
-Durable/AI/Chord `1.1.0` and SDK-scoped TypeBox `1.3.27`. This was not a fresh
-outside dependency installation. Separate current-source tests covered seven cases,
-and the canonical COPY function had three focused checks.
-
-The historical standalone ISA `30/30` and full `33/33` test results retain their
-earlier scope. They are not new collection-archive Harness or lifecycle checks.
-Context7 and DCG manual-proof import mappings are source metadata, not runtime proof.
-This delivery did not include a full eleven-package bundle, fresh npm-installer,
-packed Harness, DCG evaluation, or Pocket database/lifecycle run.
-
-These results apply only to their identified candidates and environments. They do
-not certify all live services, Pocket startup/SQLite/restarts, or general compatibility.
-Local fixtures and `MemoryStorage` do not prove restart persistence.
-No stable npm publication or main merge is implied.
+These checks do not prove live provider credentials, external DCG evaluation or
+legal admission, Pocket/BB startup, or every database/restart scenario. Local
+fixtures and `MemoryStorage` do not prove restart persistence. Historical baseline
+checks, including earlier Context7 service calls, retain their original scope in
+[provenance](docs/provenance.md); they are not fresh Pi `1.2.0` service acceptance.
+No stable npm publication is implied.
 
 Important host boundaries:
 
@@ -397,12 +391,19 @@ Refer to [security boundaries](docs/security.md) and each component's README.
 
 ## Development
 
-The root scripts do not install dependencies or run every package's test suite.
-Use an isolated development copy for package dependencies and runtime checks.
+`npm run check:compat` copies each package into a private temporary directory,
+installs its dependencies with lifecycle scripts disabled, and runs its declared
+local checks and fixture suite. It does not activate the host or run optional live
+provider/DCG/Pocket lanes. Logs and the machine-readable report remain in that
+temporary directory. Other package-local development work should also use isolated
+copies.
 
 ```sh
 # Read-only public-tree boundary check
 npm run check
+
+# Full isolated Pi 1.2 compatibility sweep (downloads public dependencies)
+npm run check:compat
 
 # Local fixtures, after package-local dependency setup
 npm --prefix packages/cli test

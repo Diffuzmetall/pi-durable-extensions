@@ -57,7 +57,7 @@ try{
  await check('escaped controls bound serialized JSON',async()=>{const p=await m.fetchPage(base+'/controls',40000,'json'),text=m.renderPage(p);bounded(text,40000);const j=JSON.parse(text);assert.equal(j.truncated,true);assert.equal(await readFile(j.filePath,'utf8'),'\u0001'.repeat(40000));assert.ok(j.text.length<40000);});
  await check('five compliant JSON pages share aggregate budget',async()=>{
   const tool=m.default().tools.find(x=>x.name==='batch_web_fetch');const out=await tool.execute({requests:Array.from({length:5},(_,i)=>({url:base+'/batch'+i,format:'json',maxChars:40000}))});
-  const text=out.content[0].text;bounded(text,48000);
+  const text=out.output[0].text;bounded(text,48000);
   const pages=text.split('\n\n---\n\n');assert.equal(pages.length,5);
   for(const p of pages){const j=JSON.parse(p.slice(p.indexOf('\n\n')+2));assert.equal(j.truncated,true);assert.ok(j.filePath);assert.equal(JSON.parse(await readFile(j.filePath,'utf8')).body.length,15000);}
  });

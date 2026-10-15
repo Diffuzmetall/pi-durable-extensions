@@ -17,15 +17,15 @@
       "package": "@pi-durable-extensions/codemode",
       "artifact": {
         "path": "artifacts/pi-durable-extensions-codemode-0.1.0-candidate.0.tgz",
-        "sha256": "ecb6df1fb3cd55d4ad6bfe8922c881ffe9339246fba882f353a7b5db5f5e9f69",
+        "sha256": "269dddbf8021d26c0609d16a98474f7338be1f28468550713c30a7b43b4d1d38",
         "entries": 8
       },
       "testedRuntime": {
         "node": ">=22.19.0",
-        "piDurable": "1.1.0",
-        "piAi": "1.1.0",
-        "chord": "1.1.0",
-        "piCodemode": "1.1.0"
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "chord": "1.2.0",
+        "piCodemode": "1.2.0"
       },
       "dependencies": "declared exact runtime dependencies in package manifest",
       "authorization": "host-supplied policy",
@@ -41,15 +41,15 @@
       "package": "@pi-pocket-candidates/agent-mail-mcp",
       "artifact": {
         "path": "artifacts/pi-pocket-candidates-agent-mail-mcp-0.0.0-candidate.1.tgz",
-        "sha256": "2c95c873150506cf3624b4b1abc025f286a90785f4ce7b06490e41860f79c61a",
+        "sha256": "a96ad6e977da87db4fb631ab12f9763c846135b1539f87ee5815002333a57d9c",
         "entries": 6
       },
       "testedRuntime": {
         "node": ">=22.19.0",
-        "piDurable": "1.1.0",
-        "piAi": "1.1.0",
-        "piMcp": "1.1.0",
-        "chord": "1.1.0"
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "piMcp": "1.2.0",
+        "chord": "1.2.0"
       },
       "dependencies": "declared exact runtime dependencies in package manifest",
       "authorization": "host-controlled MCP policy and write authority",
@@ -67,14 +67,14 @@
       "package": "@pi-durable/codex-api-candidate",
       "artifact": {
         "path": "artifacts/pi-durable-codex-api-candidate-0.1.0-candidate.tgz",
-        "sha256": "92e3e3e792fed2c8044566810ed70f3feb6430ac5e6c4efa0c993edba603ec9e",
+        "sha256": "4253cf67ba376a68aafd133929853eea8ac581ae4e664385fa0c871f1f3f8329",
         "entries": 12
       },
       "testedRuntime": {
         "node": ">=24.19.0 <25",
-        "piDurable": ">=1.1.0 <1.2.0",
-        "piAi": ">=1.1.0 <1.2.0",
-        "chord": ">=1.1.0 <1.2.0",
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "chord": "1.2.0",
         "typebox": ">=1.3.27 <1.4.0"
       },
       "dependencies": "peer dependencies are explicit; no sibling workspace dependency",
@@ -116,14 +116,14 @@
       "package": "pi-durable-web-tools",
       "artifact": {
         "path": "artifacts/pi-durable-web-tools-0.1.0.tgz",
-        "sha256": "ff40a993db9e89c6e49369c9b7497e545b1c2cf385018c4690a52a760826e4ff",
+        "sha256": "8900952f3f25b43cd37c44ff1d0d25415a705e47818bcadb142f956cda626d41",
         "entries": 6
       },
       "testedRuntime": {
         "node": ">=22.19",
-        "piDurable": "1.1.0",
-        "piAi": "1.1.0",
-        "chord": "1.1.0"
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "chord": "1.2.0"
       },
       "dependencies": "optional fetch peers remain package-local and explicit",
       "authorization": "host/network policy",
@@ -142,15 +142,15 @@
       "description": "Context7 documentation MCP bridge for plain Pi Durable",
       "artifact": {
         "path": "artifacts/pi-durable-extensions-context7-0.1.0-candidate.1.tgz",
-        "sha256": "b327b32efcc00254a91f7a9736b9e0fc3ae80b588ca5f36caebd10f9f422c720",
+        "sha256": "b5d1356db4b083d027968673f8f6e40f6b7a7106a89b2bb94edc612742a8d694",
         "entries": 7
       },
       "testedRuntime": {
         "node": ">=22.19.0",
-        "piDurable": "1.1.0",
-        "piAi": "1.1.0",
-        "piMcp": "1.1.0",
-        "chord": "1.1.0"
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "piMcp": "1.2.0",
+        "chord": "1.2.0"
       },
       "dependencies": "declared exact runtime dependencies in package manifest",
       "authorization": "host-controlled invocation policy and explicit Context7 credential source",
@@ -168,12 +168,14 @@
       "package": "pi-antigravity-shim-candidate",
       "artifact": {
         "path": "artifacts/pi-antigravity-shim-candidate-0.1.0-candidate.20261012.tgz",
-        "sha256": "26f485ff8ce6b01e0766fd5fa808d706f820d0738bb91f66cd0185eae263e74b",
+        "sha256": "8e18d16159be1403655166cb5d932809b6c60c676f17d298337eeb8c3e23004e",
         "entries": 15
       },
       "testedRuntime": {
         "node": ">=22.15.0",
-        "piAntigravity": ">=0.10.0"
+        "piAntigravity": "0.10.0",
+        "piAi": "1.2.0",
+        "piCodingAgent": "1.2.0"
       },
       "dependencies": "required external pi-antigravity provider peer",
       "authorization": "service-owned credentials and provider auth",
@@ -191,13 +193,13 @@
       "package": "@pi-durable-extensions/codex-voice",
       "artifact": {
         "path": "artifacts/pi-durable-extensions-codex-voice-0.1.0-candidate.tgz",
-        "sha256": "e78b974d00ce8cb2beafde7fcd30906c285b047540ec1e93fa12dbccb31aa55e",
+        "sha256": "becef241035a7c5b60bc7f717764f1a66e897724cfae6bd354c3755468d3ef7c",
         "entries": 7
       },
       "testedRuntime": {
         "node": ">=22.19.0",
-        "piDurable": ">=1.1.0 <1.2.0",
-        "piAi": ">=1.1.0 <1.2.0",
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
         "observedNode": "24.19.0"
       },
       "dependencies": "peer dependencies are explicit; no microphone/UI dependency",
@@ -216,14 +218,14 @@
       "package": "pi-durable-hindsight",
       "artifact": {
         "path": "artifacts/pi-durable-hindsight-0.1.0.tgz",
-        "sha256": "4ce1fc0d192530ccbaa42ffd05c3bac21d4f9b8d81179960b6fb05f121043443",
-        "entries": 29
+        "sha256": "23788b2931e542bbc0a179d8229a3544eab2880209c49d51ba3b37ebcf446e95",
+        "entries": 30
       },
       "testedRuntime": {
         "node": ">=24",
-        "piDurable": "1.0.2",
-        "chord": "1.0.2",
-        "piAi": "1.0.2"
+        "piDurable": "1.2.0",
+        "chord": "1.2.0",
+        "piAi": "1.2.0"
       },
       "dependencies": "declared peers and bundled vendor boundary; no Pocket workspace dependency",
       "authorization": "host-supplied memory policy and explicit lifecycle binding",
@@ -240,11 +242,20 @@
       "status": "candidate",
       "package": "@pi-pocket/dcg-guard",
       "description": "Fail-closed DCG protection for Pi Durable shell execution",
-      "artifact": { "path": "artifacts/pi-pocket-dcg-guard-0.1.0.tgz", "sha256": "e8f98754876383f425e42e95cb6bc9fc889f78e57d77544eeb1eeeba6a7bfe5b", "entries": 7 },
-      "testedRuntime": { "node": ">=24.19.0", "piDurable": "1.1.0" },
-      "dependencies": "exact runtime peer @earendil-works/pi-durable 1.1.0",
+      "artifact": {
+        "path": "artifacts/pi-pocket-dcg-guard-0.1.0.tgz",
+        "sha256": "3813025e6335305651db45907478f1f778ea970ab5b6b04abae4538498e0f0e8",
+        "entries": 7
+      },
+      "testedRuntime": {
+        "node": ">=24.19.0",
+        "piDurable": "1.2.0"
+      },
+      "dependencies": "exact runtime peer @earendil-works/pi-durable 1.2.0; same physical host runtime identity required",
       "authorization": "owner-controlled binary path and dedicated evaluator environment",
-      "services": ["separately provisioned DCG 0.15.3 executable; not included"],
+      "services": [
+        "separately provisioned DCG 0.15.3 executable; not included"
+      ],
       "activation": "Register explicitly only after owner provisioning and policy admission; installation does not enable the guard or install DCG.",
       "licenseStatus": "First-party adapter MIT under package-local LICENSE/NOTICE. External DCG is not redistributed; applicability of its qualified MIT (OpenAI/Anthropic Rider) requires operator/legal review before executable provisioning or use; no legal clearance is claimed."
     }
@@ -258,5 +269,5 @@
     "triggers",
     "other Pocket built-ins"
   ],
-  "artifactNote": "Artifact paths are relative to a future distribution bundle. The exact tarballs are retained privately under the sandbox integration-prep artifacts directory for U5 evidence; U6 must re-check them from clean targets."
+  "artifactNote": "Exact Pi 1.2.0 candidate component digests. Supply the generated bundle catalog for artifact installation; this embedded metadata does not include the archives."
 }

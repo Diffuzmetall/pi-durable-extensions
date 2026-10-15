@@ -7,15 +7,20 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { createRequire } from "node:module";
 
 /** The provider id this shim registers in Pi/Pi Pocket's models.json. Distinct from
  * the CLI's "antigravity" so no stored OAuth credential of that provider is used. */
 export const PROVIDER_ID = "antigravity-shim";
 
 const AGENT_DIR = process.env.PI_CODING_AGENT_DIR ?? join(homedir(), ".pi", "agent");
-const PACKAGE_DIR =
-    process.env.PI_ANTIGRAVITY_DIR ?? join(AGENT_DIR, "npm", "node_modules", "pi-antigravity");
+function packageDirectory(): string {
+    if (process.env.PI_ANTIGRAVITY_DIR !== undefined) return process.env.PI_ANTIGRAVITY_DIR;
+    try { return dirname(createRequire(import.meta.url).resolve("pi-antigravity/package.json")); }
+    catch { return join(AGENT_DIR, "npm", "node_modules", "pi-antigravity"); }
+}
+const PACKAGE_DIR = packageDirectory();
 const SRC = join(PACKAGE_DIR, "src");
 const FIXTURE_URL =
     process.env.NODE_ENV === "test" ? process.env.ANTIGRAVITY_SHIM_FIXTURE_URL : undefined;

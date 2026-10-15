@@ -1,16 +1,29 @@
 # Compatibility and activation boundaries
 
-Observed integration runtime: Linux x64, Node `24.19.0`, npm `11.17.0`. This is not a universal compatibility claim. Each package README and catalog entry retains its own tested tuple and peer requirements.
+Verified tuple for this checkout: Linux x64, Node `24.19.0`, npm `11.17.0`, Pi Durable `1.2.0`. The npm registry reported `1.2.0` as the latest published version when this migration started. Version ranges for other releases are not inferred from this proof.
 
-| Package | Tested tuple / requirements | Activation boundary |
+| Component | Runtime dependencies checked | Activation boundary |
 |---|---|---|
-| codemode | Pi Durable/Pi AI/Chord/Pi Codemode `1.1.0`; Node `>=22.19` | Register explicitly; Pocket name adapter remains separate |
-| agent-mail | Pi Durable/Pi AI/Chord/Pi MCP `1.1.0`; Node `>=22.19` | Configure loopback MCP endpoint and host write policy |
-| codex-api | Pi Durable/Pi AI/Chord `1.1.0`, TypeBox `1.3.27`; Node `24.19` observed | Host supplies OAuth authorization and optional upload root |
-| agent-profiles | `yaml 2.9.0`; Agent Profiles author dev compiler TypeScript `6.0.3`; Node `24.19` observed | Parser/catalog only; launcher adapter is separate |
-| web-tools | Pi Durable/Pi AI/Chord `1.1.0`; optional fetch peers remain explicit | Review network policy and register manually |
-| antigravity-shim | Node `>=22.15`; `pi-antigravity >=0.10`; local service | Provision/start service separately; installer never starts it |
-| codex-voice | Pi Durable/Pi AI `1.1.0`; Node `24.19` observed | Host supplies Models, auth, lifecycle and microphone adapter |
-| hindsight | Pi Durable/Chord/Pi AI `1.0.2`; Node `>=24` | Bind lifecycle controller explicitly; external memory setup is separate |
+| codemode | Durable / Pi AI / Chord / Pi CodeMode `1.2.0` | Explicit registry install; native invocation-bound nested execution |
+| agent-mail | Durable / Pi AI / Chord / Pi MCP `1.2.0` | Explicit loopback endpoint and host write policy |
+| codex-api | Durable / Pi AI / Chord `1.2.0`, TypeBox `1.3.27` | Host OAuth authorization and optional upload root |
+| agent-profiles | No Pi runtime dependency; YAML `2.9.0` | Parser/catalog only, not a launcher |
+| web-tools | Durable / Pi AI / Chord `1.2.0` | Explicit registry install and network policy |
+| context7 | Durable / Pi AI / Pi MCP `1.2.0` | Explicit credential capability and host invocation policy |
+| antigravity-shim | Installed `pi-antigravity 0.10.0` peer with Pi AI / coding-agent `1.2.0` | Separately started service; fixture tests do not access real OAuth accounts |
+| codex-voice | Durable / Pi AI / Chord `1.2.0` | Host Models/auth and a separate microphone adapter |
+| hindsight | Durable / Pi AI / Chord `1.2.0` | Explicit lifecycle controller; external memory service remains separate |
+| dcg-guard | Durable `1.2.0` | Owner-provisioned DCG; fail-closed guard and native runtime identity checks retained |
+| CLI | Node `24.19.0`, npm `11.17.0`, Linux directory-fd semantics | Exact artifact verification/installation only; never activation |
 
-Hindsight's version tuple is intentionally distinct from the `1.1.0` component tuple. Profile compiler details are package-local evidence only. No Pocket adapter, live provider, account, quota, microphone, detached service, or restart claim is implied by this table.
+## What changed in Pi 1.2
+
+Tool execution results carry model-visible `output`, program-visible `structuredOutput`, UI `details` and `diagnostics`. MCP wire results and model-message content continue to use `content`; those are different contracts and must not be renamed blindly. CodeMode calls `api.executeTool` instead of constructing a partial tool API, so native validation, hooks, caller policy, replay and cancellation remain authoritative.
+
+## Source packages and host integration
+
+TypeScript-source packages are usable from extracted installation targets outside `node_modules` with Node's native stripping. Node refuses direct TypeScript loading inside `node_modules`; these packages are not claimed to be ordinary compiled npm drop-ins. Use the selective installer's extracted target, or a compatible TypeScript runtime. Compiled Agent Profiles and DCG entries use their generated `dist` modules.
+
+Use one admitted host runtime when integrating components. In particular DCG deliberately rejects an environment created by another physical copy of the Durable class, even at the same version. Do not bypass that check to combine separately resolved copies; arrange a single host dependency tree and verify admission instead.
+
+Package fixtures, real Harness tests and packed-artifact verification do not prove Pocket/BB loader activation, live provider credentials, paid quotas, microphone access, or external Hindsight/Agent Mail services. No host configuration or live service activation is part of this migration.

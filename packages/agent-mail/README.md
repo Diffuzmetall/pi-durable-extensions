@@ -39,7 +39,7 @@ checkout, not as an installation or distribution claim.
 The package exports TypeScript source directly and relies on Node's erasable
 TypeScript support. The observed baseline is Node 24.19.0 with
 `@earendil-works/pi-ai`, `@earendil-works/pi-durable`, `@earendil-works/pi-mcp`,
-and `@earendil-works/chord` 1.1.0. The SDK packages document Node >=22.19.0;
+and `@earendil-works/chord` 1.2.0. The SDK packages document Node >=22.19.0;
 this candidate does not claim that every Node or host version works.
 
 A manual host can install the package, create `mcp.json`, import the default

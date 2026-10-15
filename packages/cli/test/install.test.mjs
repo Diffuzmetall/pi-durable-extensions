@@ -14,7 +14,7 @@ const TEST_ROOT = await mkdtemp(path.join(ROOT, 'retained-test-'));
 const MAX_DECOMPRESSED_TAR_BYTES = 16 * 1024 * 1024;
 const MAX_MEMBER_BYTES = 1024 * 1024;
 const MAX_ARCHIVE_MEMBERS = 1024;
-const CANONICAL_HINDSIGHT_ARTIFACT_SHA256 = '4ce1fc0d192530ccbaa42ffd05c3bac21d4f9b8d81179960b6fb05f121043443';
+const CANONICAL_HINDSIGHT_ARTIFACT_SHA256 = '23788b2931e542bbc0a179d8229a3544eab2880209c49d51ba3b37ebcf446e95';
 const CANONICAL_HINDSIGHT_MEMBER_PATH = 'package/src/vendor/mcp-server.js';
 const CANONICAL_HINDSIGHT_MEMBER_BYTES = 1242386;
 const CANONICAL_HINDSIGHT_MEMBER_SHA256 = 'c1adb47de2972bbb4a708fc209dc4e1dbfc7fa53afc6666b133865f24ac9f03d';
@@ -214,9 +214,9 @@ test('active catalog has ten entries, preserves Context7, and pins the seven-fil
   assert.equal(JSON.parse(dcg.stdout).package, '@pi-pocket/dcg-guard');
   assert.equal(JSON.parse(dcg.stdout).version, '0.1.0');
   assert.equal(JSON.parse(dcg.stdout).status, 'candidate');
-  assert.equal(JSON.parse(dcg.stdout).artifact.sha256, 'e8f98754876383f425e42e95cb6bc9fc889f78e57d77544eeb1eeeba6a7bfe5b');
+  assert.equal(JSON.parse(dcg.stdout).artifact.sha256, '3813025e6335305651db45907478f1f778ea970ab5b6b04abae4538498e0f0e8');
   assert.equal(JSON.parse(dcg.stdout).artifact.entries, 7);
-  assert.deepEqual(JSON.parse(dcg.stdout).testedRuntime, { node: '>=24.19.0', piDurable: '1.1.0' });
+  assert.deepEqual(JSON.parse(dcg.stdout).testedRuntime, { node: '>=24.19.0', piDurable: '1.2.0' });
   const missingTarget = run(['install', 'dcg-guard', '--catalog', DEFAULT_CATALOG, '--version', '0.1.0', '--allow-experimental', '--json']);
   assert.notEqual(missingTarget.status, 0);
   assert.equal(jsonOutput(missingTarget).error, 'target');
@@ -359,9 +359,9 @@ test('canonical Codex peer materialization uses only validated specs and scrubbe
   assert.equal(result.status, 0, result.stderr);
   const audit = JSON.parse(await readFile(auditFile, 'utf8'));
   const expectedPeers = [
-    '@earendil-works/chord@1.1.0',
-    '@earendil-works/pi-ai@1.1.0',
-    '@earendil-works/pi-durable@1.1.0',
+    '@earendil-works/chord@1.2.0',
+    '@earendil-works/pi-ai@1.2.0',
+    '@earendil-works/pi-durable@1.2.0',
     'typebox@1.3.27',
   ];
   assert.deepEqual(audit.args.slice(-expectedPeers.length), expectedPeers);
@@ -441,9 +441,9 @@ test('canonical Codex API peer materializes with default npm from the public reg
   assert.equal(result.status, 0, result.stderr);
   const marker = JSON.parse(await readFile(path.join(target, '.portable-install.json'), 'utf8'));
   assert.deepEqual(marker.peerMaterialization.selected, [
-    '@earendil-works/chord@1.1.0',
-    '@earendil-works/pi-ai@1.1.0',
-    '@earendil-works/pi-durable@1.1.0',
+    '@earendil-works/chord@1.2.0',
+    '@earendil-works/pi-ai@1.2.0',
+    '@earendil-works/pi-durable@1.2.0',
     'typebox@1.3.27',
   ]);
   assert.equal(marker.peerMaterialization.source, 'verified-extracted-package-root');

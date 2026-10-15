@@ -113,6 +113,6 @@ test('source-owned package has the required explicit exports', async () => {
   const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
   assert.deepEqual(Object.keys(manifest.exports).sort(), ['.', './bridge', './controller', './delivery', './extension', './lifecycle']);
   assert.equal(manifest.engines.node, '>=24');
-  assert.equal(manifest.peerDependencies['@earendil-works/pi-durable'], '1.0.2');
-  assert.equal(manifest.peerDependencies['@earendil-works/chord'], '1.0.2');
+  assert.equal(manifest.peerDependencies['@earendil-works/pi-durable'], '1.2.0');
+  assert.equal(manifest.peerDependencies['@earendil-works/chord'], '1.2.0');
 });

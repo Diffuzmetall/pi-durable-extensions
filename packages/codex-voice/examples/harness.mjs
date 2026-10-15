@@ -70,7 +70,7 @@ export async function runHarnessProbe() {
                 new Blob(["fixture audio"], { type: "audio/webm;codecs=opus" }),
                 signal,
             );
-            return { content: [{ type: "text", text }] };
+            return { output: [{ type: "text", text }] };
         },
     });
 
@@ -82,7 +82,12 @@ export async function runHarnessProbe() {
     models.setProvider(faux.provider);
     faux.setResponses([
         fauxAssistantMessage(fauxToolCall("codex_voice_probe", {}, { id: "fixture-call" }), { stopReason: "toolUse" }),
-        fauxAssistantMessage("fixture harness complete"),
+        turn => {
+            const message = turn.messages.findLast(m => m.role === "toolResult");
+            const text = message?.content?.filter(p => p.type === "text").map(p => p.text).join("") ?? "";
+            if (!text.includes("fixture transcript")) throw new Error("Transcription output did not reach the model");
+            return fauxAssistantMessage("fixture harness complete");
+        },
     ]);
 
         harness = await Harness.open(new MemoryStorage(), { models, registry }, BACKGROUND_CONTEXT);

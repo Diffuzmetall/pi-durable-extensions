@@ -9,7 +9,7 @@ const echo = defineTool({
     name: "echo",
     description: "Echo text",
     parameters: Type.Object({ text: Type.String() }),
-    execute: async (args) => ({ content: [{ type: "text", text: `echo:${args.text}` }] }),
+    execute: async (args) => ({ output: [{ type: "text", text: `echo:${args.text}` }] }),
 });
 const registry = createRegistry();
 registry.install(defineExtension({ name: "example-echo", tools: [echo] }));
@@ -21,7 +21,11 @@ faux.setResponses([
     fauxAssistantMessage([
         fauxToolCall("codemode", { code: 'return await tools.echo({ text: "hello" });' }),
     ], { stopReason: "toolUse" }),
-    fauxAssistantMessage([fauxText("done")]),
+    turn => {
+        const message = turn.messages.findLast(m => m.role === "toolResult");
+        if (!message?.content?.some(p => p.type === "text" && p.text.includes("echo:hello"))) throw new Error("Nested output did not reach the model");
+        return fauxAssistantMessage([fauxText("done")]);
+    },
 ]);
 const harness = await Harness.open(new MemoryStorage(), { models, registry }, BACKGROUND_CONTEXT);
 const root = await harness.root(BACKGROUND_CONTEXT, {

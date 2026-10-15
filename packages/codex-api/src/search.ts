@@ -265,7 +265,7 @@ export function parseSearchResponse(value: unknown, commands: Commands, mode: Mo
     }
 
     return {
-        content: [{ type: "text" as const, text }],
+        output: [{ type: "text" as const, text }],
         details: { mode, phase: "completed", sources: compactSources, hints: [...new Set(hints)] },
     };
 }

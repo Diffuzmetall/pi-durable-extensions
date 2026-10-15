@@ -1,0 +1,494 @@
+{
+  "status": "complete",
+  "mode": "harness-native fallback",
+  "engine": "open-code-review-delegate: OCR deterministic preview/rules + host source review",
+  "ce_code_review": {
+    "status": "failed",
+    "reason": "In-turn collection conflicts with mandatory asynchronous multi-step delegation; no reviewers launched",
+    "receipt": "/tmp/compound-engineering-1000/ce-code-review/20261015-010515-fe12bb34/review.json"
+  },
+  "scope": {
+    "branch": "fix/pi-durable-1.2-compat",
+    "base": "HEAD",
+    "total_previewed": 73,
+    "total_files": 34,
+    "reviewed_files": 34,
+    "skipped_files": 0,
+    "coverage_rate": 1
+  },
+  "checklist": [
+    {
+      "path": "catalog.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/agent-mail/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/agent-mail/src/index.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/antigravity-shim/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/antigravity-shim/src/antigravity.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/antigravity-shim/tests/fixture-service.test.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/cli/catalog.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/cli/src/index.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/cli/test/install.test.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codemode/examples/bare-durable.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codemode/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codemode/src/index.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codemode/test/bare-durable.test.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-api/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-api/src/ask.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-api/src/image.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-api/src/runtime.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-api/src/search.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-voice/examples/harness.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/codex-voice/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/context7/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/context7/src/context7-mcp.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/context7/test/contracts.test.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/dcg-guard/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/dcg-guard/test/support.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/hindsight/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/hindsight/src/extension.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/hindsight/test/portable-candidate.test.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/web-tools/package.json",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/web-tools/src/web-tools.ts",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "packages/web-tools/test/scan.test.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "scripts/pack-all.mjs",
+      "status": "modified",
+      "disposition": "reviewed"
+    },
+    {
+      "path": "scripts/check-pi12-compat.mjs",
+      "status": "added",
+      "disposition": "reviewed"
+    }
+  ],
+  "excluded": [
+    {
+      "path": "README.md",
+      "status": "modified",
+      "insertions": 14,
+      "deletions": 12,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "artifacts/pi-pocket-dcg-guard-0.1.0.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "docs/compatibility.md",
+      "status": "modified",
+      "insertions": 25,
+      "deletions": 12,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/agent-mail/README.md",
+      "status": "modified",
+      "insertions": 1,
+      "deletions": 1,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/agent-mail/package-lock.json",
+      "status": "modified",
+      "insertions": 50,
+      "deletions": 481,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/agent-mail/test/agent-mail.test.ts",
+      "status": "modified",
+      "insertions": 6,
+      "deletions": 1,
+      "exclude_reason": "default_path"
+    },
+    {
+      "path": "packages/codemode/NOTICE.md",
+      "status": "modified",
+      "insertions": 1,
+      "deletions": 1,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/codemode/README.md",
+      "status": "modified",
+      "insertions": 1,
+      "deletions": 1,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/codemode/package-lock.json",
+      "status": "modified",
+      "insertions": 31,
+      "deletions": 480,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/codex-api/README.md",
+      "status": "modified",
+      "insertions": 3,
+      "deletions": 3,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/codex-api/package-lock.json",
+      "status": "modified",
+      "insertions": 66,
+      "deletions": 506,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/codex-voice/README.md",
+      "status": "modified",
+      "insertions": 2,
+      "deletions": 2,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/codex-voice/package-lock.json",
+      "status": "modified",
+      "insertions": 50,
+      "deletions": 505,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/context7/NOTICE.md",
+      "status": "modified",
+      "insertions": 3,
+      "deletions": 3,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/context7/README.md",
+      "status": "modified",
+      "insertions": 2,
+      "deletions": 2,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/context7/package-lock.json",
+      "status": "modified",
+      "insertions": 400,
+      "deletions": 547,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/dcg-guard/README.md",
+      "status": "modified",
+      "insertions": 2,
+      "deletions": 2,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/dcg-guard/test/boundary.test.ts",
+      "status": "modified",
+      "insertions": 4,
+      "deletions": 5,
+      "exclude_reason": "default_path"
+    },
+    {
+      "path": "packages/dcg-guard/test/races.test.ts",
+      "status": "modified",
+      "insertions": 4,
+      "deletions": 3,
+      "exclude_reason": "default_path"
+    },
+    {
+      "path": "packages/hindsight/README.md",
+      "status": "modified",
+      "insertions": 1,
+      "deletions": 1,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/hindsight/THIRD_PARTY_NOTICES.md",
+      "status": "modified",
+      "insertions": 1,
+      "deletions": 1,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "packages/hindsight/package-lock.json",
+      "status": "modified",
+      "insertions": 48,
+      "deletions": 503,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/hindsight/src/vendor/pi.mjs",
+      "status": "modified",
+      "insertions": 1,
+      "deletions": 1,
+      "exclude_reason": "default_path"
+    },
+    {
+      "path": "packages/web-tools/package-lock.json",
+      "status": "modified",
+      "insertions": 50,
+      "deletions": 505,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "UPGRADE_LOG.md",
+      "status": "added",
+      "insertions": 33,
+      "deletions": 0,
+      "exclude_reason": "unsupported_ext"
+    },
+    {
+      "path": "artifacts/pi-antigravity-shim-candidate-0.1.0-candidate.20261012.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-durable-codex-api-candidate-0.1.0-candidate.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-durable-extensions-codemode-0.1.0-candidate.0.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-durable-extensions-codex-voice-0.1.0-candidate.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-durable-extensions-context7-0.1.0-candidate.1.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-durable-hindsight-0.1.0.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-durable-web-tools-0.1.0.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-pocket-agent-profiles-0.1.0-candidate.0.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/pi-pocket-candidates-agent-mail-mcp-0.0.0-candidate.1.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "artifacts/portable-pi-cli-0.1.0-candidate.2.tgz",
+      "status": "binary",
+      "insertions": 0,
+      "deletions": 0,
+      "exclude_reason": "binary"
+    },
+    {
+      "path": "packages/antigravity-shim/package-lock.json",
+      "status": "added",
+      "insertions": 1649,
+      "deletions": 0,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/cli/package-lock.json",
+      "status": "added",
+      "insertions": 18,
+      "deletions": 0,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/dcg-guard/package-lock.json",
+      "status": "added",
+      "insertions": 1211,
+      "deletions": 0,
+      "exclude_reason": "user_exclude"
+    },
+    {
+      "path": "packages/hindsight/licenses/PI12_PATCH.md",
+      "status": "added",
+      "insertions": 12,
+      "deletions": 0,
+      "exclude_reason": "unsupported_ext"
+    }
+  ],
+  "findings": [],
+  "actionable_findings": [],
+  "verdict": "No remaining blockers for the local Pi 1.2 candidate; not a live host/service acceptance",
+  "independent_reads": [
+    {
+      "thread": "thr_rursddud3y",
+      "scope": "reuse",
+      "findings": 0
+    },
+    {
+      "thread": "thr_5kfq2zkr5n",
+      "scope": "quality",
+      "findings": 3,
+      "applied": 3
+    },
+    {
+      "thread": "thr_5mcg66ejg2",
+      "scope": "efficiency",
+      "findings": 1,
+      "applied": 1
+    }
+  ],
+  "limits": [
+    "No external cross-model pass",
+    "No live credential/provider/microphone/Agent Mail/Hindsight/DCG activation",
+    "No dedicated lint configured; package typechecks/syntax checks and suites used",
+    "Generated artifacts/locks assessed via deterministic integrity/runtime checks, not raw line review"
+  ]
+}

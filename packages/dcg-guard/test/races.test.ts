@@ -32,9 +32,10 @@ test('ISC-7/8/11 argv arrays, missing cwd and unreadable directory cannot start'
   try { assertRefusal(await invoke(f, createBashTool({ prepare(execution) { execution.cwd = closed; } }), safe), 'DCG_UNAVAILABLE:invalid_cwd', f.env); } finally { await chmod(closed, 0o700); }
 });
 test('ISC-7 distinct public Durable class copy is unsupported, never id-only accepted', async () => {
-  const require = createRequire(new URL('../../../package.json', import.meta.url)); const entry = require.resolve('@earendil-works/pi-durable/env/node');
-  const { NodeExecutionEnv: OtherNodeEnv } = await import(pathToFileURL(entry).href); const f = await fixture();
-  assert.ok(!(new OtherNodeEnv({ cwd: f.env.cwd }) instanceof (f.env.constructor as any)), 'duplicate-class fixture prerequisite missing');
+  const require = createRequire(import.meta.url); const entry = require.resolve('@earendil-works/pi-durable/env/node');
+  const { NodeExecutionEnv: OtherNodeEnv } = await import(pathToFileURL(entry).href + '?duplicate-fixture'); const f = await fixture();
+  const { NodeExecutionEnv: AdmittedNodeEnv } = await import('@earendil-works/pi-durable/env/node');
+  assert.ok(!(new OtherNodeEnv({ cwd: f.env.cwd }) instanceof AdmittedNodeEnv), 'duplicate-class fixture prerequisite missing');
   const other = new OtherNodeEnv({ cwd: f.env.cwd }); let starts = 0; other.exec = async () => { starts++; throw new Error('inert duplicate recorder'); };
   const a = apiFor(other); await assert.rejects(f.wrap(createBashTool()).execute({ command: safe }, a.api, ctx), { message: 'DCG_UNAVAILABLE:unsupported_environment' }); assert.equal(starts, 0);
 });

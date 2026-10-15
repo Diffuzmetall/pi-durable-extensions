@@ -517,7 +517,7 @@ export function createUsageTool(host: Host) {
       const runtime = await makeRuntime(api, context, host);
       try {
         return {
-          content: [
+          output: [
             {
               type: "text" as const,
               text: usageText(await runtime.request("../wham/usage")),

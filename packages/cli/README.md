@@ -109,17 +109,18 @@ the selected package root and peer route; it does not provide pre-materializatio
 quotas, guarantee registry availability, grant publication or redistribution
 rights, or replace host authorization and activation.
 
-The supported candidate.2 route is a default npm install of the canonical Codex
-API artifact with the four checked-in peer pins `chord@1.1.0`, `pi-ai@1.1.0`,
-`pi-durable@1.1.0`, and `typebox@1.3.27`, each within its declared peer range.
-This is a bounded representative route, not a claim that all nine components
-have been installed or runtime-validated.
+The Pi 1.2 candidate route pins `chord@1.2.0`, `pi-ai@1.2.0`,
+`pi-durable@1.2.0` and (for Codex API) `typebox@1.3.27`. Exact fresh artifact
+hashes and peer declarations remain hard-coded admission boundaries.
+All ten component archives were installed independently and imported from their
+extracted targets; package fixture suites were checked separately. This does
+not imply host activation, paid provider access, or live service availability.
 
 ## Catalog boundaries
 
-The candidate catalog has exactly nine approved components: codemode,
+The candidate catalog has exactly ten approved components: codemode,
 agent-mail, codex-api, agent-profiles, web-tools, context7, antigravity-shim,
-codex-voice, and hindsight. Context7 is an active experimental extension; its
+codex-voice, hindsight, and dcg-guard. Context7 is an active experimental extension; its
 credential setup, shared/unknown external quota, outbound-query disclosure, and
 MIT licence remain explicit package boundaries.
 `pi-durable-beads`, Lancet, goals, schedules, triggers, and other built-ins are rejected. Component

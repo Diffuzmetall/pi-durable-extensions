@@ -99,7 +99,12 @@ test("real Harness invokes health_check through an isolated loopback MCP fixture
   const faux = fauxProvider({ models: [{ id: "faux-1" }] });
   faux.setResponses([
     fauxAssistantMessage([fauxToolCall("mcp__mcp_agent_mail__health_check", {})], { stopReason: "toolUse" }),
-    fauxAssistantMessage([fauxText("fixture complete")]),
+    turn => {
+      const message = turn.messages.findLast(m => m.role === "toolResult");
+      assert.ok(message?.role === "toolResult");
+      assert.match(message.content.map(part => part.type === "text" ? part.text : "").join(""), /fixture:health_check/);
+      return fauxAssistantMessage([fauxText("fixture complete")]);
+    },
   ]);
   const models = createModels();
   models.setProvider(faux.provider);

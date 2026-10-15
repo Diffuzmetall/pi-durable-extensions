@@ -20,9 +20,9 @@ semantics without importing Pocket modules.
 Observed and locally checked only:
 
 - Node `v24.19.0` (candidate engine range: `>=24.19.0 <25`)
-- `@earendil-works/pi-durable` `1.1.0`
-- `@earendil-works/pi-ai` `1.1.0`
-- `@earendil-works/chord` `1.1.0`
+- `@earendil-works/pi-durable` `1.2.0`
+- `@earendil-works/pi-ai` `1.2.0`
+- `@earendil-works/chord` `1.2.0`
 - `typebox` `1.3.27`
 - `@types/node` `26.6.5` for the local check
 

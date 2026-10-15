@@ -6,7 +6,7 @@ A Durable extension that checks the actual prepared shell command with an owner-
 
 ## Bare Pi Durable
 
-Requirements: Node.js `>=24.19.0`, Pi Durable `1.1.0`, and an owner-provisioned executable DCG `0.15.3` binary. For this install candidate, give DCG a dedicated evaluator state root; do not reuse or copy the owner's existing DCG configuration, allowlists, or data. Create the root and its `home/`, `config/`, and `data/` directories, plus comment-only `policy.toml` and `system-allowlist.toml` files. Their contents can be:
+Requirements: Node.js `>=24.19.0`, Pi Durable `1.2.0`, and an owner-provisioned executable DCG `0.15.3` binary. For this install candidate, give DCG a dedicated evaluator state root; do not reuse or copy the owner's existing DCG configuration, allowlists, or data. Create the root and its `home/`, `config/`, and `data/` directories, plus comment-only `policy.toml` and `system-allowlist.toml` files. Their contents can be:
 
 ```toml
 # Dedicated DCG policy for this guard. No allow rules are admitted.
@@ -48,7 +48,7 @@ For the no-core-write Pocket layout, unpack the exact accepted package archive s
 
 ## Admission and limits
 
-The guard supports only an admitted local POSIX Node environment using the public Durable `1.1.0` APIs and the pinned DCG `0.15.3` robot-test protocol. Host admission must confirm the selected bash implementation, stable trusted shell setup and extension/wrapper composition. The guard rejects unsupported environments and evaluator/protocol failures; it never treats an unavailable result as allow.
+The guard supports only an admitted local POSIX Node environment using the public Durable `1.2.0` APIs and the pinned DCG `0.15.3` robot-test protocol. Host admission must confirm the selected bash implementation, stable trusted shell setup and extension/wrapper composition. The guard rejects unsupported environments and evaluator/protocol failures; it never treats an unavailable result as allow.
 
 Only a complete, consistent protocol allow permits the original shell operation. Refusals use fixed errors: `DCG_DENIED` or `DCG_UNAVAILABLE:<GuardFailure>`; invalid factory options throw `DCG_INVALID_OPTIONS`. Raw command text, evaluator output, rule IDs and configuration are not included in guard errors.
 

@@ -55,7 +55,7 @@ class Failure extends Error {
     kind: FailureKind;
     constructor(kind: FailureKind) { super(messages[kind]); this.kind = kind; }
 }
-const errorResult = (kind: FailureKind) => ({ isError: true, content: [{ type: "text" as const, text: messages[kind] }] });
+const errorResult = (kind: FailureKind) => ({ isError: true, output: [{ type: "text" as const, text: messages[kind] }] });
 const object = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
 
 function validate(args: unknown, resolve: boolean): Record<string, string> {
@@ -152,7 +152,7 @@ function render(result: unknown, key: string) {
     const mapped = toLlmContent({ content });
     const text = redact(mapped.map(block => block.type === "text" ? block.text : "[Context7 binary content omitted]").join("\n"), key);
     if (!text.trim()) throw new Failure("invalid");
-    return { isError: result.isError === true, content: [{ type: "text" as const, text: boundedText(text) }] };
+    return { isError: result.isError === true, output: [{ type: "text" as const, text: boundedText(text) }] };
 }
 
 async function execute(args: unknown, resolve: boolean, caller?: AbortSignal, credentialFile?: string) {

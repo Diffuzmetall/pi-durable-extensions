@@ -12,7 +12,8 @@ let fake;
 let shim;
 
 async function waitFor(url) {
-  for (let attempt = 0; attempt < 80; attempt += 1) {
+  const deadline = Date.now() + 10_000;
+  while (Date.now() < deadline) {
     try {
       const response = await fetch(url);
       if (response.ok) return;
@@ -33,7 +34,6 @@ async function startChildren() {
     cwd: new URL("..", import.meta.url).pathname,
     env: {
       ...process.env,
-      PI_ANTIGRAVITY_DIR: process.env.PI_ANTIGRAVITY_DIR ?? "/home/ubuntu/.pi/agent/npm/node_modules/pi-antigravity",
       NODE_ENV: "test",
       ANTIGRAVITY_SHIM_PORT: String(shimPort),
       ANTIGRAVITY_SHIM_FIXTURE_URL: upstream,

@@ -52,7 +52,7 @@ function run(command, args, cwd) {
     const child = spawn(command, args, {
       cwd,
       env: {
-        ...process.env,
+        ...Object.fromEntries(Object.entries(process.env).filter(([name]) => !name.toLowerCase().startsWith("npm_"))),
         npm_config_ignore_scripts: "true",
         npm_config_audit: "false",
         npm_config_fund: "false",

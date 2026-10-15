@@ -15,10 +15,8 @@ test('ISC-2/3 independent recorder never delegates destructive input even withou
   assert.equal(f.env.starts.length, 1); assert.equal(f.env.starts[0].command, dangerous);
   // No real process operation exists in Recorder.exec; guard counts recorder admission, not prepare entry.
 });
-test('ISC-1/2 public factory selection; actual absent-mode safe transcript forwards once', async () => {
-  const transcript = JSON.parse(await readFile(new URL('../../../work/dcg-upgrade-qa/run-2026-10-13T11-44-29.591Z/safe.json', import.meta.url), 'utf8'));
-  const base = JSON.parse(transcript.stdout); assert.equal(Object.hasOwn(base, 'mode'), false);
-  const f = await fixture({ base }); const registry = createRegistry(); registry.install(f.guard);
+test('ISC-1/2 public factory selection; absent-mode fixture forwards once', async () => {
+  const f = await fixture(); const registry = createRegistry(); registry.install(f.guard);
   assert.equal(f.guard.name, 'dcg-guard'); assert.equal(registry.snapshot().extension('dcg-guard'), f.guard);
   const result = await invoke(f, createBashTool(), safe); assert.equal(result.error, undefined);
   assert.equal(f.env.starts.length, 1); assert.equal(f.env.starts[0].command, safe);
@@ -146,7 +144,8 @@ test('ISC-20 selected tool metadata, prepareArguments, streaming window/timeout/
   const f = await fixture(); const base = { ...createBashTool(), replay: 'unsafe' as const, executionMode: 'parallel' as const, prepareArguments(args: unknown) { return args as { command: string }; } };
   const wrapped = f.wrap(base); for (const key of ['name', 'description', 'parameters', 'replay', 'executionMode', 'prepareArguments', 'outputLimits'] as const) assert.equal(wrapped[key], base[key]);
   const a = apiFor(f.env); const window = { maxBytes: 13, maxLines: 2, minIntervalMs: 1, bytesPerSecond: 1000 }; Object.assign(a.api, { outputWindow: window });
-  assert.deepEqual(await wrapped.execute({ command: safe, timeout: 3 }, a.api, ctx), {});
+  const result = await wrapped.execute({ command: safe, timeout: 3 }, a.api, ctx);
+  assert.deepEqual(result.structuredOutput, { output: "recorded\n", truncated: false, exitCode: 0 });
   assert.deepEqual(a.output, ['recorded\n']); assert.equal(f.env.starts[0].options?.timeout, 3); assert.deepEqual(f.env.starts[0].options?.window, window);
   assert.equal(f.env.starts[0].context, ctx);
   assert.throws(() => f.wrap({ ...base, replay: 'safe' }), /^Error: DCG_UNAVAILABLE:unsupported_environment$/);

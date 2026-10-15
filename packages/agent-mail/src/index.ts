@@ -1541,7 +1541,7 @@ export default function createAgentMailMcp(host: AgentMailExtensionHost) {
                     const result = await client.callTool(spec.name, args, { signal });
 
                     return {
-                        content: toLlmContent(result),
+                        output: toLlmContent(result),
                         ...(result.isError ? { isError: true } : {}),
                     };
                 } catch {

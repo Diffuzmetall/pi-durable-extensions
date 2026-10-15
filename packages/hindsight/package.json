@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "check": "node --check src/adapter.mjs && node --check src/extension.mjs && node --check src/index.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
   "license": "MIT",
   "description": "Trusted Durable registry adapter for pinned Hindsight coding-agent memory",
   "files": ["LICENSE", "README.md", "SECURITY.md", "THIRD_PARTY_NOTICES.md", "licenses/", "src/", "examples/"],
@@ -16,8 +20,8 @@
   },
   "engines": { "node": ">=24" },
   "peerDependencies": {
-    "@earendil-works/pi-durable": "1.0.2",
-    "@earendil-works/chord": "1.0.2"
+    "@earendil-works/pi-durable": "1.2.0",
+    "@earendil-works/chord": "1.2.0"
   },
-  "devDependencies": { "@earendil-works/pi-ai": "1.0.2" }
+  "devDependencies": { "@earendil-works/pi-ai": "1.2.0" }
 }

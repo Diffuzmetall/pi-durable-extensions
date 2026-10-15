@@ -5,7 +5,7 @@ This candidate packages Pi Pocket's codemode behavior for a bare Pi Durable Harn
 ## Requirements
 
 - Node.js `>=22.19.0`; this candidate was measured on Node `v24.19.0`.
-- Pi Durable `1.1.0` and its peer runtime packages, installed by this package's manifest.
+- Pi Durable `1.2.0` and its peer runtime packages, installed by this package's manifest.
 - A Pi Durable `Harness` and registry supplied by the embedding application.
 
 ## Setup

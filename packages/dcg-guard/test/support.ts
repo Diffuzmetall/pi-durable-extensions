@@ -37,6 +37,7 @@ export function apiFor(env: unknown, signal?: AbortSignal) {
   const output: string[] = [], diagnostics: unknown[] = [];
   const api = { env, output(chunk: string | Uint8Array) { output.push(typeof chunk === 'string' ? chunk : Buffer.from(chunk).toString()); },
     diagnostic(d: unknown) { diagnostics.push(d); }, outputWindow: undefined,
+    retainedOutput() { return { text: output.join(""), truncated: false }; },
   } as unknown as ToolExecutionApi;
   return { api, output, diagnostics, context: signal ? { ...ctx, abortSignal: signal } : ctx };
 }

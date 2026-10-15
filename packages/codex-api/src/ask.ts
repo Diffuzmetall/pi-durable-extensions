@@ -177,7 +177,7 @@ export function createAskTool(host: Host) {
                       : "";
 
                 return {
-                    content: [{ type: "text" as const, text: answer.slice(0, 60000) + suffix }],
+                    output: [{ type: "text" as const, text: answer.slice(0, 60000) + suffix }],
                     details: {
                         model: model.id,
                         imageCount: images.length,

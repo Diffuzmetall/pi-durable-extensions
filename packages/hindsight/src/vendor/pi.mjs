@@ -17900,7 +17900,7 @@ function writeFileAtomic(path, body) {
   mkdirSync4(dirname9(path), { recursive: true });
   const tmp = `${path}.${process.pid}.tmp`;
   try {
-    writeFileSync3(tmp, body);
+    writeFileSync3(tmp, body, { mode: 0o600 });
     renameSync3(tmp, path);
   } catch (e) {
     try {

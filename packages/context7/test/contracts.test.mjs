@@ -8,7 +8,7 @@ import { fixture, KEY, UA } from './fixture.mjs';
 
 const args = { libraryId: '/fixture/library/v1', query: 'one question' };
 const resolveArgs = { libraryName: 'fixture', query: 'one question' };
-const text = result => result.content.map(block => block.text).join('\n');
+const text = result => result.output.map(block => block.text).join('\n');
 const call = (extension, value = args, signal, resolve = false) => extension.tools[resolve ? 0 : 1].execute(value, undefined, { abortSignal: signal });
 const source = await readFile(new URL('../src/context7-mcp.ts', import.meta.url), 'utf8');
 const originalFetch = globalThis.fetch;

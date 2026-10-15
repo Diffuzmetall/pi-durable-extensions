@@ -8,7 +8,7 @@
 
 This retained candidate is a standalone package for a Durable host. It does not import Pi Pocket or require a Pocket workspace. The package is currently a local **experimental candidate** pending independent static review and distinct behavioral QA; it is not a stable distribution or live-memory-service claim.
 
-Requirements measured locally: Node.js `24.19.0`, npm `11.17.0`, `@earendil-works/pi-durable` `1.0.2`, `@earendil-works/chord` `1.0.2`, and dev `@earendil-works/pi-ai` `1.0.2`. Node `>=24` is the declared engine. Keep `autoSeed:false`, `autoUpdate:false`, `codebaseSurvey:false`, `retainSessions:false`, and `autoInject:'none'` in deterministic/offline hosts unless each external effect is explicitly authorized. No credentials, source history, or live Hindsight service is included.
+Requirements measured locally: Node.js `24.19.0`, npm `11.17.0`, `@earendil-works/pi-durable` `1.2.0`, `@earendil-works/chord` `1.2.0`, and dev `@earendil-works/pi-ai` `1.2.0`. Node `>=24` is the declared engine. Keep `autoSeed:false`, `autoUpdate:false`, `codebaseSurvey:false`, `retainSessions:false`, and `autoInject:'none'` in deterministic/offline hosts unless each external effect is explicitly authorized. No credentials, source history, or live Hindsight service is included.
 
 From the common repository's supported manual route, use the exact hash-verified bundle artifact and run the retained faux/local example from the unpacked target root:
 

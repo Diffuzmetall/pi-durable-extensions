@@ -9,21 +9,15 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { JsonValue } from "@earendil-works/chord";
 import { withAbortSignal } from "@earendil-works/chord/context";
-import { type ToolCall, Type } from "@earendil-works/pi-ai";
-import { validateToolArguments } from "@earendil-works/pi-ai/utils/validation";
+import { Type } from "@earendil-works/pi-ai";
 import {
     defineExtension,
     defineTool,
     type Extension,
-    type HookApi,
     type JsonObject,
     section,
-    type ToolDiagnostic,
     type ToolExecutionApi,
-    type ToolExecutionResult,
-    type ToolHooks,
     type ToolRegistration,
-    ToolTask,
     type Registry,
 } from "@earendil-works/pi-durable";
 import {
@@ -41,7 +35,6 @@ const DEFAULT_EXTENSION = "codemode";
 const MAX_OUTPUT_TOKENS = 10_000;
 const CHARS_PER_TOKEN = 4;
 const MAX_OUTPUT_IMAGES = 100;
-const MAX_NESTED_CHARS = 1_000_000;
 const MEMORY_LIMIT_BYTES = 256 * 1024 * 1024;
 
 export type CodemodeOptions = {
@@ -54,7 +47,7 @@ export type CodemodeOptions = {
 };
 
 const DESCRIPTION = `Run JavaScript that calls your other tools. The input is raw JavaScript (not JSON, no code fence), run as an async function body in a QuickJS sandbox: top-level \`await\` and \`return\` work. No Node, file system, network, or timers.
-- \`await tools.<name>({ ...args })\` takes the same arguments as calling the tool directly, resolves to its text output, and rejects with an Error when the call fails or is blocked. Calls still running when the script ends are cancelled.
+- \`await tools.<name>({ ...args })\` takes the same arguments as calling the tool directly, resolves to its structured value (or bounded output for tools without a structured schema), and rejects with an Error when the call fails or is blocked. Calls still running when the script ends are cancelled.
 - Each call is checked like a direct call: hooks may block or rewrite it.
 - Optional first line: \`// @options: {"max_output_tokens": 10000, "timeout_ms": 60000}\`
 Globals:
@@ -71,8 +64,6 @@ type CallRecord = {
 };
 
 type CodemodeDetails = { calls: CallRecord[]; fullOutputPath?: string };
-type BeforeTool = ToolHooks["beforeTool"];
-type AfterTool = ToolHooks["afterTool"];
 
 type OutputItem =
     | { type: "text"; text: string }
@@ -113,55 +104,6 @@ function utf8Head(text: string, maxBytes: number): string {
 function utf8Tail(text: string, maxBytes: number): string {
     const encoded = Buffer.from(text, "utf8");
     return encoded.subarray(Math.max(0, encoded.length - maxBytes)).toString("utf8");
-}
-
-function toolHooks(extensions: readonly Extension[]): { before: BeforeTool[]; after: AfterTool[] } {
-    const before: BeforeTool[] = [];
-    const after: AfterTool[] = [];
-
-    for (const extension of extensions) {
-        for (const registration of extension.hooks ?? []) {
-            if (registration.task !== ToolTask.definition.name) {
-                continue;
-            }
-
-            const handlers = registration.handlers as Partial<ToolHooks>;
-
-            if (handlers.beforeTool !== undefined) {
-                before.push(handlers.beforeTool.bind(handlers));
-            }
-
-            if (handlers.afterTool !== undefined) {
-                after.push(handlers.afterTool.bind(handlers));
-            }
-        }
-    }
-
-    return { before, after };
-}
-
-function resultText(result: ToolExecutionResult, diagnostics: readonly ToolDiagnostic[]): string {
-    const parts = (result.content ?? []).flatMap((part) =>
-        part.type === "text" ? [part.text] : [],
-    );
-
-    for (const diagnostic of [...diagnostics, ...(result.diagnostics ?? [])]) {
-        parts.push(diagnostic.message);
-    }
-
-    return parts.join("\n");
-}
-
-function bound(text: string, retain: "head" | "tail"): string {
-    if (text.length <= MAX_NESTED_CHARS) {
-        return text;
-    }
-
-    const note = `[${text.length - MAX_NESTED_CHARS} characters not shown]`;
-
-    return retain === "tail"
-        ? `${note}\n${text.slice(-MAX_NESTED_CHARS)}`
-        : `${text.slice(0, MAX_NESTED_CHARS)}\n${note}`;
 }
 
 function valueText(value: unknown): string {
@@ -284,7 +226,7 @@ async function budget(
 
     try {
         await writeFile(path, combined, { flag: "wx", mode: 0o600 });
-        // This host-generated pointer remains visible in ToolExecutionResult.content and is excluded from the captured-payload budget.
+        // This host-generated pointer remains visible in ToolExecutionResult.output and is excluded from the captured-payload budget.
         text += `\n\n[Full output: ${path} (read it with offset and limit)]`;
     } catch (error) {
         text += `\n\n[Could not save the full output: ${describe(error)}]`;
@@ -346,20 +288,19 @@ export function installCodemode(
 
 export default function createCodemode(options: CodemodeOptions = {}): Extension {
     const { toolName, extensionName } = validateOptions(options);
+    const isCallable = (tool: ToolRegistration) => tool.name !== toolName && (tool.callers?.includes("tools") ?? true);
     const codemode = defineTool({
         name: toolName,
         description: DESCRIPTION,
         parameters: Type.Object({ code: Type.String({ description: "Raw JavaScript source." }) }),
         // Nested calls can write files or cause external effects and must never be replayed.
         replay: "unsafe",
+        callers: ["model"],
         execute: async (args, api: ToolExecutionApi<CodemodeDetails>, context) => {
             const started = performance.now();
             const { code, options: sourceOptions } = parseCodemodeSource(args.code);
             const agent = await api.agent(context);
-            const callable = agent.tools.filter(
-                (tool) => tool.name !== toolName,
-            ) as ToolRegistration[];
-            const hooks = toolHooks(agent.extensions);
+            const callable = agent.tools.filter(isCallable);
             const calls: CallRecord[] = [];
             const publish = () =>
                 void api
@@ -367,126 +308,24 @@ export default function createCodemode(options: CodemodeOptions = {}): Extension
                     .catch(() => {});
             let next = 0;
 
-            const nested = async (
-                tool: ToolRegistration,
-                input: unknown,
-                signal: AbortSignal,
-            ): Promise<string> => {
+            const nested = async (tool: ToolRegistration, input: unknown, signal: AbortSignal): Promise<JsonValue> => {
                 const n = ++next;
-                const call: ToolCall = {
-                    type: "toolCall",
-                    id: `${api.callId}/${n}`,
-                    name: tool.name,
-                    arguments: (input ?? {}) as JsonObject,
-                };
                 const record: CallRecord = { name: tool.name, status: "running" };
-
                 calls.push(record);
                 publish();
                 const callStarted = performance.now();
                 const scope = withAbortSignal(signal, context);
-                const memo = ((name: string, ...rest: unknown[]) =>
-                    (api.memo as (...all: unknown[]) => unknown)(
-                        `codemode/${n}/${name}`,
-                        ...rest,
-                    )) as ToolExecutionApi["memo"];
-                const hookApi: HookApi = { ...api, memo };
-                const check = (value: unknown): JsonObject =>
-                    validateToolArguments(tool, {
-                        ...call,
-                        arguments: value as JsonObject,
-                    }) as JsonObject;
-
                 try {
-                    let callArgs = check(
-                        tool.prepareArguments === undefined
-                            ? call.arguments
-                            : tool.prepareArguments(call.arguments),
-                    );
-
-                    for (const before of hooks.before) {
-                        let decision: Awaited<ReturnType<BeforeTool>>;
-
-                        try {
-                            decision = await before(
-                                { ...call, arguments: callArgs },
-                                hookApi,
-                                scope,
-                            );
-                        } catch (error) {
-                            if (scope.abortSignal?.aborted) {
-                                throw error;
-                            }
-
-                            throw new Error(`Tool call blocked: ${describe(error)}`);
-                        }
-
-                        if (decision?.block !== undefined) {
-                            throw new Error(`Tool call blocked: ${decision.block}`);
-                        }
-
-                        if (decision?.arguments !== undefined) {
-                            callArgs = decision.arguments;
-                        }
+                    const result = await api.executeTool(tool.name, (input ?? {}) as JsonObject, scope, { key: `codemode-${n}` });
+                    if (result.isError) {
+                        const reason = result.diagnostics.map(d => d.message).join("\n");
+                        throw new Error(reason || valueText(result.structuredOutput ?? `Tool ${tool.name} failed`));
                     }
-
-                    callArgs = check(callArgs);
-
-                    if (typeof callArgs.path === "string") {
-                        record.path = callArgs.path;
-                    }
-
-                    const decoder = new TextDecoder();
-                    const output: string[] = [];
-                    const diagnostics: ToolDiagnostic[] = [];
-                    const toolApi: ToolExecutionApi = {
-                        ...api,
-                        callId: call.id,
-                        memo,
-                        output: (chunk) =>
-                            void output.push(
-                                typeof chunk === "string"
-                                    ? chunk
-                                    : decoder.decode(chunk, { stream: true }),
-                            ),
-                        diagnostic: (diagnostic) => void diagnostics.push(diagnostic),
-                        details: async () => {},
-                    };
-                    let result = await tool.execute(callArgs, toolApi, scope);
-
-                    if (result.content === undefined) {
-                        result = {
-                            ...result,
-                            content: [{ type: "text", text: output.join("") + decoder.decode() }],
-                        };
-                    }
-
-                    for (const after of hooks.after) {
-                        result =
-                            (await after(
-                                { ...call, arguments: callArgs },
-                                result,
-                                hookApi,
-                                scope,
-                            )) ?? result;
-                    }
-
-                    const text = bound(
-                        resultText(result, diagnostics),
-                        tool.outputLimits?.retain ?? "head",
-                    );
-
-                    if (result.isError === true) {
-                        throw new Error(text || `Tool ${tool.name} failed`);
-                    }
-
                     record.status = "ok";
-
-                    return text;
+                    return result.structuredOutput ?? "";
                 } catch (error) {
                     record.status = signal.aborted ? "cancelled" : "error";
                     record.error = describe(error).slice(0, 500);
-
                     throw error;
                 } finally {
                     record.durationMs = Math.round(performance.now() - callStarted);
@@ -499,7 +338,7 @@ export default function createCodemode(options: CodemodeOptions = {}): Extension
                     name: tool.name,
                     description: tool.description,
                     inputSchema: tool.parameters as Record<string, unknown>,
-                    outputSchema: { type: "string" },
+                    outputSchema: {},
                     execute: (input, { signal }) => nested(tool, input, signal),
                 })),
                 timeoutMs: sourceOptions.timeoutMs ?? Number.POSITIVE_INFINITY,
@@ -556,7 +395,7 @@ export default function createCodemode(options: CodemodeOptions = {}): Extension
             const header = `${result.ok ? "Script completed" : "Script failed"}\nWall time ${((performance.now() - started) / 1000).toFixed(1)} seconds\nOutput:\n`;
 
             return {
-                content: [{ type: "text", text: header }, ...shown.items],
+                output: [{ type: "text", text: header }, ...shown.items],
                 details: {
                     calls,
                     ...(shown.fullOutputPath === undefined
@@ -574,8 +413,8 @@ export default function createCodemode(options: CodemodeOptions = {}): Extension
         sections: [
             section("codemode", ({ agent }) => {
                 const names = agent.tools
-                    .map((tool) => tool.name)
-                    .filter((name) => name !== toolName);
+                    .filter(isCallable)
+                    .map((tool) => tool.name);
 
                 if (
                     !agent.tools.some((tool) => tool.name === toolName) ||

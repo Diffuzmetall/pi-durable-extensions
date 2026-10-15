@@ -1508,7 +1508,7 @@ const search = defineTool({
             throw new Error(renderToolResult(searches));
         }
 
-        return { content: [{ type: "text" as const, text: renderToolResult(searches) }] };
+        return { output: [{ type: "text" as const, text: renderToolResult(searches) }] };
     },
 });
 
@@ -1535,7 +1535,7 @@ const fetchTool = defineTool({
     // Downloads create files; an interrupted call must not replay and create another one.
     execute: async (args) => {
         const page = await fetchPage(args.url, Math.min(args.maxChars ?? DEFAULT_MAX_CHARS, MAX_MAX_CHARS), args.format);
-        return { content: [{ type: "text" as const, text: renderPage(page) }] };
+        return { output: [{ type: "text" as const, text: renderPage(page) }] };
     },
 });
 
@@ -1572,7 +1572,7 @@ const batchFetchTool = defineTool({
             }
         }
         await Promise.all(Array.from({ length: Math.min(3, args.requests.length) }, () => worker()));
-        return { content: [{ type: "text" as const, text: results.join("\n\n---\n\n") }] };
+        return { output: [{ type: "text" as const, text: results.join("\n\n---\n\n") }] };
     },
 });
 

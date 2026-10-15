@@ -16,7 +16,7 @@ const MAX_ARCHIVE_MEMBERS = 1024;
 const MAX_MEMBER_BYTES = 1024 * 1024;
 const HINDSIGHT_OVERSIZE_MEMBER = Object.freeze({
   componentId: 'hindsight',
-  artifactSha256: '4ce1fc0d192530ccbaa42ffd05c3bac21d4f9b8d81179960b6fb05f121043443',
+  artifactSha256: "23788b2931e542bbc0a179d8229a3544eab2880209c49d51ba3b37ebcf446e95",
   rawPath: 'package/src/vendor/mcp-server.js',
   type: '0',
   size: 1242386,
@@ -27,115 +27,139 @@ const MAX_MARKER_BYTES = 4 * 1024 * 1024;
 const READ_CHUNK_BYTES = 64 * 1024;
 const TRUSTED_GNU_MV = '/usr/bin/mv';
 const TRUSTED_PEER_MANIFESTS = Object.freeze({
-  codemode: Object.freeze({
-    packageName: '@pi-durable-extensions/codemode',
-    artifactSha256: 'ecb6df1fb3cd55d4ad6bfe8922c881ffe9339246fba882f353a7b5db5f5e9f69',
+  "codemode": Object.freeze({
+    packageName: "@pi-durable-extensions/codemode",
+    artifactSha256: "269dddbf8021d26c0609d16a98474f7338be1f28468550713c30a7b43b4d1d38",
     peers: Object.freeze({}),
     optional: Object.freeze({}),
   }),
-  'agent-mail': Object.freeze({
-    packageName: '@pi-pocket-candidates/agent-mail-mcp',
-    artifactSha256: '2c95c873150506cf3624b4b1abc025f286a90785f4ce7b06490e41860f79c61a',
+  "agent-mail": Object.freeze({
+    packageName: "@pi-pocket-candidates/agent-mail-mcp",
+    artifactSha256: "a96ad6e977da87db4fb631ab12f9763c846135b1539f87ee5815002333a57d9c",
     peers: Object.freeze({}),
     optional: Object.freeze({}),
   }),
-  'codex-api': Object.freeze({
-    packageName: '@pi-durable/codex-api-candidate',
-    artifactSha256: '92e3e3e792fed2c8044566810ed70f3feb6430ac5e6c4efa0c993edba603ec9e',
+  "codex-api": Object.freeze({
+    packageName: "@pi-durable/codex-api-candidate",
+    artifactSha256: "4253cf67ba376a68aafd133929853eea8ac581ae4e664385fa0c871f1f3f8329",
     peers: Object.freeze({
-      '@earendil-works/chord': '>=1.1.0 <1.2.0',
-      '@earendil-works/pi-ai': '>=1.1.0 <1.2.0',
-      '@earendil-works/pi-durable': '>=1.1.0 <1.2.0',
-      typebox: '>=1.3.27 <1.4.0',
-    }),
-    pins: Object.freeze({
-      '@earendil-works/chord': '1.1.0',
-      '@earendil-works/pi-ai': '1.1.0',
-      '@earendil-works/pi-durable': '1.1.0',
-      typebox: '1.3.27',
+      "@earendil-works/chord": "1.2.0",
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0",
+      "typebox": ">=1.3.27 <1.4.0"
     }),
     optional: Object.freeze({}),
+    pins: Object.freeze({
+      "@earendil-works/chord": "1.2.0",
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0",
+      "typebox": "1.3.27"
+    }),
   }),
-  'agent-profiles': Object.freeze({
-    packageName: '@pi-pocket/agent-profiles',
-    artifactSha256: '2705e5e3fbf9bd9009e965b436acb9716f8c3723459e2133d28df78fc4ccdf4b',
+  "agent-profiles": Object.freeze({
+    packageName: "@pi-pocket/agent-profiles",
+    artifactSha256: "2705e5e3fbf9bd9009e965b436acb9716f8c3723459e2133d28df78fc4ccdf4b",
     peers: Object.freeze({}),
     optional: Object.freeze({}),
   }),
-  'web-tools': Object.freeze({
-    packageName: 'pi-durable-web-tools',
-    artifactSha256: 'ff40a993db9e89c6e49369c9b7497e545b1c2cf385018c4690a52a760826e4ff',
+  "web-tools": Object.freeze({
+    packageName: "pi-durable-web-tools",
+    artifactSha256: "8900952f3f25b43cd37c44ff1d0d25415a705e47818bcadb142f956cda626d41",
     peers: Object.freeze({
-      '@earendil-works/pi-ai': '*',
-      '@earendil-works/pi-durable': '*',
-      '@earendil-works/pi-coding-agent': '*',
-      defuddle: '*',
-      linkedom: '*',
-      'wreq-js': '*',
-    }),
-    pins: Object.freeze({
-      '@earendil-works/pi-ai': '1.1.0',
-      '@earendil-works/pi-durable': '1.1.0',
-    }),
-    meta: Object.freeze({
-      '@earendil-works/pi-coding-agent': Object.freeze({ optional: true }),
-      defuddle: Object.freeze({ optional: true }),
-      linkedom: Object.freeze({ optional: true }),
-      'wreq-js': Object.freeze({ optional: true }),
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0",
+      "@earendil-works/pi-coding-agent": "1.2.0",
+      "defuddle": "*",
+      "linkedom": "*",
+      "wreq-js": "*"
     }),
     optional: Object.freeze({
-      '@earendil-works/pi-coding-agent': true,
-      defuddle: true,
-      linkedom: true,
-      'wreq-js': true,
+      "@earendil-works/pi-coding-agent": true,
+      "defuddle": true,
+      "linkedom": true,
+      "wreq-js": true
+    }),
+    pins: Object.freeze({
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0"
+    }),
+    meta: Object.freeze({
+      "@earendil-works/pi-coding-agent": {
+        "optional": true
+      },
+      "defuddle": {
+        "optional": true
+      },
+      "linkedom": {
+        "optional": true
+      },
+      "wreq-js": {
+        "optional": true
+      }
     }),
   }),
-  context7: Object.freeze({
-    packageName: '@pi-durable-extensions/context7',
-    artifactSha256: 'b327b32efcc00254a91f7a9736b9e0fc3ae80b588ca5f36caebd10f9f422c720',
+  "context7": Object.freeze({
+    packageName: "@pi-durable-extensions/context7",
+    artifactSha256: "b5d1356db4b083d027968673f8f6e40f6b7a7106a89b2bb94edc612742a8d694",
     peers: Object.freeze({}),
-    pins: Object.freeze({}),
     optional: Object.freeze({}),
   }),
-  'antigravity-shim': Object.freeze({
-    packageName: 'pi-antigravity-shim-candidate',
-    artifactSha256: '26f485ff8ce6b01e0766fd5fa808d706f820d0738bb91f66cd0185eae263e74b',
-    peers: Object.freeze({ 'pi-antigravity': '>=0.10.0' }),
-    meta: Object.freeze({ 'pi-antigravity': Object.freeze({ optional: false }) }),
-    optional: Object.freeze({}),
-  }),
-  'codex-voice': Object.freeze({
-    packageName: '@pi-durable-extensions/codex-voice',
-    artifactSha256: 'e78b974d00ce8cb2beafde7fcd30906c285b047540ec1e93fa12dbccb31aa55e',
+  "antigravity-shim": Object.freeze({
+    packageName: "pi-antigravity-shim-candidate",
+    artifactSha256: "8e18d16159be1403655166cb5d932809b6c60c676f17d298337eeb8c3e23004e",
     peers: Object.freeze({
-      '@earendil-works/pi-ai': '>=1.1.0 <1.2.0',
-      '@earendil-works/pi-durable': '>=1.1.0 <1.2.0',
-    }),
-    pins: Object.freeze({
-      '@earendil-works/pi-ai': '1.1.0',
-      '@earendil-works/pi-durable': '1.1.0',
+      "pi-antigravity": ">=0.10.0",
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-coding-agent": "1.2.0"
     }),
     optional: Object.freeze({}),
+    pins: Object.freeze({
+      "pi-antigravity": "0.10.0",
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-coding-agent": "1.2.0"
+    }),
+    meta: Object.freeze({
+      "pi-antigravity": {
+        "optional": false
+      }
+    }),
   }),
-  hindsight: Object.freeze({
-    packageName: 'pi-durable-hindsight',
-    artifactSha256: '4ce1fc0d192530ccbaa42ffd05c3bac21d4f9b8d81179960b6fb05f121043443',
+  "codex-voice": Object.freeze({
+    packageName: "@pi-durable-extensions/codex-voice",
+    artifactSha256: "becef241035a7c5b60bc7f717764f1a66e897724cfae6bd354c3755468d3ef7c",
     peers: Object.freeze({
-      '@earendil-works/pi-durable': '1.0.2',
-      '@earendil-works/chord': '1.0.2',
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0"
     }),
+    optional: Object.freeze({}),
     pins: Object.freeze({
-      '@earendil-works/pi-durable': '1.0.2',
-      '@earendil-works/chord': '1.0.2',
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0"
+    }),
+  }),
+  "hindsight": Object.freeze({
+    packageName: "pi-durable-hindsight",
+    artifactSha256: "23788b2931e542bbc0a179d8229a3544eab2880209c49d51ba3b37ebcf446e95",
+    peers: Object.freeze({
+      "@earendil-works/pi-durable": "1.2.0",
+      "@earendil-works/chord": "1.2.0"
     }),
     optional: Object.freeze({}),
+    pins: Object.freeze({
+      "@earendil-works/pi-durable": "1.2.0",
+      "@earendil-works/chord": "1.2.0"
+    }),
   }),
-  'dcg-guard': Object.freeze({
-    packageName: '@pi-pocket/dcg-guard',
-    artifactSha256: 'e8f98754876383f425e42e95cb6bc9fc889f78e57d77544eeb1eeeba6a7bfe5b',
-    peers: Object.freeze({ '@earendil-works/pi-durable': '1.1.0' }),
-    pins: Object.freeze({ '@earendil-works/pi-durable': '1.1.0' }),
+  "dcg-guard": Object.freeze({
+    packageName: "@pi-pocket/dcg-guard",
+    artifactSha256: "3813025e6335305651db45907478f1f778ea970ab5b6b04abae4538498e0f0e8",
+    peers: Object.freeze({
+      "@earendil-works/pi-durable": "1.2.0"
+    }),
     optional: Object.freeze({}),
+    pins: Object.freeze({
+      "@earendil-works/pi-durable": "1.2.0"
+    }),
   }),
 });
 const COMPONENT_IDS = new Set([

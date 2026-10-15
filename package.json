@@ -7,6 +7,7 @@
   "engines": { "node": ">=24.19.0" },
   "scripts": {
     "check": "node scripts/check-public-tree.mjs",
+    "check:compat": "node scripts/check-pi12-compat.mjs codemode context7 agent-mail codex-api codex-voice hindsight dcg-guard agent-profiles antigravity-shim web-tools cli",
     "pack": "node scripts/pack-all.mjs",
     "manual-proof": "node scripts/manual-route-proof.mjs"
   }

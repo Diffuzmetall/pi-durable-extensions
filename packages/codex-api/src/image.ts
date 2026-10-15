@@ -187,7 +187,7 @@ export async function executeImage(runtime: CodexRuntime, args: Args) {
     const data = (result as { data?: { b64_json?: unknown }[] } | null)?.data?.[0]?.b64_json;
     const bytes = await decodePng(data);
     const savedPath = await savePng(runtime.cwd, target, bytes, runtime.signal);
-    return { content: [{ type: "text" as const, text: `${images.length ? "Edited" : "Generated"} image saved to ${savedPath}` }, { type: "image" as const, data: bytes.toString("base64"), mimeType: "image/png" }], details: { phase: "completed", savedPath } };
+    return { output: [{ type: "text" as const, text: `${images.length ? "Edited" : "Generated"} image saved to ${savedPath}` }, { type: "image" as const, data: bytes.toString("base64"), mimeType: "image/png" }], details: { phase: "completed", savedPath } };
 }
 
 export function createImageTool(host: Host) {

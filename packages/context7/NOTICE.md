@@ -4,8 +4,8 @@ This experimental package is the first-party Context7 bridge from this collectio
 
 The runtime dependencies declare MIT licenses in their package manifests:
 
-- `@earendil-works/pi-ai@1.1.0`
-- `@earendil-works/pi-durable@1.1.0`
-- `@earendil-works/pi-mcp@1.1.0`
+- `@earendil-works/pi-ai@1.2.0`
+- `@earendil-works/pi-durable@1.2.0`
+- `@earendil-works/pi-mcp@1.2.0`
 
 Their license files remain those packages' responsibility; this package does not copy or modify them.
