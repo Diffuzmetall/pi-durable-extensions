@@ -14,6 +14,7 @@ Verified tuple for this checkout: Linux x64, Node `24.19.0`, npm `11.17.0`, Pi D
 | codex-voice | Durable / Pi AI / Chord `1.2.0` | Host Models/auth and a separate microphone adapter |
 | hindsight | Durable / Pi AI / Chord `1.2.0` | Explicit lifecycle controller; external memory service remains separate |
 | dcg-guard | Durable `1.2.0` | Owner-provisioned DCG; fail-closed guard and native runtime identity checks retained |
+| search-history | Durable / Pi AI / Chord `1.2.0` | Explicit extension registration; no service, configuration read or background task |
 | CLI | Node `24.19.0`, npm `11.17.0`, Linux directory-fd semantics | Exact artifact verification/installation only; never activation |
 
 ## What changed in Pi 1.2

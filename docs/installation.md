@@ -1,6 +1,6 @@
 # Installation routes
 
-U5 distributes exact packed artifacts. The root `catalog.json` pins one checked-in canonical artifact, `artifacts/pi-pocket-dcg-guard-0.1.0.tgz`; the other nine component and CLI entries remain baseline metadata for a generated bundle. The checkout is not a complete eleven-package bundle.
+U5 distributes exact packed artifacts. The root `catalog.json` pins one checked-in canonical artifact, `artifacts/pi-pocket-dcg-guard-0.1.0.tgz`; the other ten component and CLI entries remain baseline metadata for a generated bundle. The checkout is not a complete twelve-package bundle.
 
 ## Build a working bundle
 
@@ -11,7 +11,7 @@ BUNDLE=/absolute/new/pi-durable-bundle
 node scripts/pack-all.mjs --output "$BUNDLE"
 ```
 
-The command creates `$BUNDLE` and `$BUNDLE/artifacts` with mode `0700`. It packs the nine non-DCG components and CLI using `npm pack --ignore-scripts`; for DCG it copies the checked-in canonical archive byte-for-byte after checking the root catalog digest, refusing an existing destination. Generated files have mode `0600`, their exact SHA-256 values populate `$BUNDLE/catalog.json`, and the bundle contains eleven packages. It refuses an existing output root and never removes or overwrites a previous bundle. This full bundle command was not rerun for the DCG repository delivery; the DCG copy route is verified separately.
+The command creates `$BUNDLE` and `$BUNDLE/artifacts` with mode `0700`. It packs the ten non-DCG components and CLI using `npm pack --ignore-scripts`; for DCG it copies the checked-in canonical archive byte-for-byte after checking the root catalog digest, refusing an existing destination. Generated files have mode `0600`, their exact SHA-256 values populate `$BUNDLE/catalog.json`, and the bundle contains twelve packages. It refuses an existing output root and never removes or overwrites a previous bundle. This full bundle command was not rerun for the DCG repository delivery; the DCG copy route is verified separately.
 
 Use the generated catalog with the standalone CLI:
 

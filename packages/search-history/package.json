@@ -1,0 +1,41 @@
+{
+    "name": "@diffuzmetall/pi-durable-search-history",
+    "version": "0.1.0-candidate.0",
+    "description": "Conversation-scoped stored-history search for Pi Durable: the read-only search_history tool over the newest visible entries, including history before reset and compaction.",
+    "type": "module",
+    "license": "MIT",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "files": [
+        "src",
+        "README.md",
+        "LICENSE",
+        "NOTICE.md"
+    ],
+    "engines": {
+        "node": ">=24.19.0"
+    },
+    "peerDependencies": {
+        "@earendil-works/pi-ai": "1.2.0",
+        "@earendil-works/pi-durable": "1.2.0"
+    },
+    "devDependencies": {
+        "@earendil-works/chord": "1.2.0",
+        "@earendil-works/pi-ai": "1.2.0",
+        "@earendil-works/pi-durable": "1.2.0",
+        "@types/node": "26.6.5",
+        "typescript": "6.0.3"
+    },
+    "scripts": {
+        "check": "tsc --noEmit --skipLibCheck --allowImportingTsExtensions --module NodeNext --moduleResolution NodeNext --target ES2024 --strict --erasableSyntaxOnly --verbatimModuleSyntax src/index.ts src/history.ts",
+        "test": "node --test test/*.test.mjs"
+    },
+    "keywords": [
+        "pi-durable",
+        "extension",
+        "history",
+        "search"
+    ]
+}

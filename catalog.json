@@ -258,6 +258,30 @@
       ],
       "activation": "Register explicitly only after owner provisioning and policy admission; installation does not enable the guard or install DCG.",
       "licenseStatus": "First-party adapter MIT under package-local LICENSE/NOTICE. External DCG is not redistributed; applicability of its qualified MIT (OpenAI/Anthropic Rider) requires operator/legal review before executable provisioning or use; no legal clearance is claimed."
+    },
+    {
+      "id": "search-history",
+      "kind": "extension",
+      "version": "0.1.0-candidate.0",
+      "status": "experimental",
+      "package": "@diffuzmetall/pi-durable-search-history",
+      "description": "Conversation-scoped stored-history search: search_history over the newest visible entries, including pre-reset and pre-compaction history",
+      "artifact": {
+        "path": "artifacts/diffuzmetall-pi-durable-search-history-0.1.0-candidate.0.tgz",
+        "sha256": "deb3adc75ce312de8024a2af66bb3c15684174574cfc53378cf4dc6418e96906",
+        "entries": 6
+      },
+      "testedRuntime": {
+        "node": ">=24.19.0",
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "chord": "1.2.0"
+      },
+      "dependencies": "peers pinned to the verified 1.2.0 family; no added runtime dependency",
+      "authorization": "calling conversation scope; the tool cannot select another conversation",
+      "services": [],
+      "activation": "Register the extension explicitly; no service, configuration read or background task.",
+      "licenseStatus": "MIT with NOTICE provenance (adapted from disler/durable-pi); candidate status, no stable or registry-distribution claim"
     }
   ],
   "cli": {

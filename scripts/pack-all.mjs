@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { spawn } from "node:child_process";
 
 const root = path.resolve(new URL("..", import.meta.url).pathname);
-const packageIds = ["codemode", "agent-mail", "codex-api", "agent-profiles", "web-tools", "context7", "antigravity-shim", "codex-voice", "hindsight", "dcg-guard", "cli"];
+const packageIds = ["codemode", "agent-mail", "codex-api", "agent-profiles", "web-tools", "context7", "antigravity-shim", "codex-voice", "hindsight", "dcg-guard", "search-history", "cli"];
 const canonicalDcg = {
   filename: "pi-pocket-dcg-guard-0.1.0.tgz",
   name: "@pi-pocket/dcg-guard",

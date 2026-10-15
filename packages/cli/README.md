@@ -112,17 +112,20 @@ rights, or replace host authorization and activation.
 The Pi 1.2 candidate route pins `chord@1.2.0`, `pi-ai@1.2.0`,
 `pi-durable@1.2.0` and (for Codex API) `typebox@1.3.27`. Exact fresh artifact
 hashes and peer declarations remain hard-coded admission boundaries.
-All ten component archives were installed independently and imported from their
+The Search History candidate additionally pins `pi-ai@1.2.0` and
+`pi-durable@1.2.0`. All ten component archives were installed independently and imported from their
 extracted targets; package fixture suites were checked separately. This does
 not imply host activation, paid provider access, or live service availability.
 
 ## Catalog boundaries
 
-The candidate catalog has exactly ten approved components: codemode,
+The candidate catalog has exactly eleven approved components: codemode,
 agent-mail, codex-api, agent-profiles, web-tools, context7, antigravity-shim,
-codex-voice, hindsight, and dcg-guard. Context7 is an active experimental extension; its
+codex-voice, hindsight, dcg-guard, and search-history. Context7 is an active experimental extension; its
 credential setup, shared/unknown external quota, outbound-query disclosure, and
-MIT licence remain explicit package boundaries.
+MIT licence remain explicit package boundaries. Search History is scoped to the calling
+conversation, returns untrusted transcript excerpts without secret redaction, and targets the
+1.2.0 tool-result contract only.
 `pi-durable-beads`, Lancet, goals, schedules, triggers, and other built-ins are rejected. Component
 status and requirements are descriptive provenance, not proof of a passed bare
 Durable or live-service gate. Service startup, credential setup, host authorization, Pocket adapters,

@@ -161,10 +161,23 @@ const TRUSTED_PEER_MANIFESTS = Object.freeze({
       "@earendil-works/pi-durable": "1.2.0"
     }),
   }),
+  "search-history": Object.freeze({
+    packageName: "@diffuzmetall/pi-durable-search-history",
+    artifactSha256: "deb3adc75ce312de8024a2af66bb3c15684174574cfc53378cf4dc6418e96906",
+    peers: Object.freeze({
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0"
+    }),
+    optional: Object.freeze({}),
+    pins: Object.freeze({
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0"
+    }),
+  }),
 });
 const COMPONENT_IDS = new Set([
   'codemode', 'agent-mail', 'codex-api', 'agent-profiles',
-  'web-tools', 'context7', 'antigravity-shim', 'codex-voice', 'hindsight', 'dcg-guard',
+  'web-tools', 'context7', 'antigravity-shim', 'codex-voice', 'hindsight', 'dcg-guard', 'search-history',
 ]);
 const FORBIDDEN_IDS = new Set(['pi-durable-beads', 'lancet', 'goals', 'schedules', 'triggers']);
 

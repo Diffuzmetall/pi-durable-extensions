@@ -4,7 +4,7 @@ Tools and adapters for **Pi Durable 1.2.0**, packaged so you can install one com
 
 Run sandboxed tool scripts, fetch web pages, look up library docs, connect memory services, or add a shell guard. Each component has its own archive and API. Your host decides what to load and which capabilities to grant.
 
-**Status: candidate collection.** The current catalog contains ten components and a separate installer CLI. None is marked stable; a package version such as `0.1.0` is not a stability guarantee.
+**Status: candidate collection.** The current catalog contains eleven components and a separate installer CLI. None is marked stable; a package version such as `0.1.0` is not a stability guarantee.
 
 [Components](#components) · [Quick start](#quick-start) · [Host integration](#host-integration) · [Verification](#verification) · [Documentation](#documentation)
 
@@ -22,6 +22,7 @@ Run sandboxed tool scripts, fetch web pages, look up library docs, connect memor
 | [Codex Voice](packages/codex-voice/README.md) | Adapter | A bounded transcription transport, without microphone UI |
 | [Hindsight](packages/hindsight/README.md) | Adapter | Memory integration with explicit registry and lifecycle capabilities |
 | [DCG Guard](packages/dcg-guard/README.md) | Extension | Fail-closed checks for an admitted Durable shell execution path |
+| [Search History](packages/search-history/README.md) | Extension | Conversation-scoped stored-history search: `search_history` over the newest visible entries, including pre-reset and pre-compaction history |
 
 Exact IDs, versions, artifact paths, and SHA-256 digests live in [`catalog.json`](catalog.json). The separate [`portable-pi-cli`](packages/cli/README.md) supplies `list`, `info`, `install`, and `doctor`.
 
@@ -132,7 +133,7 @@ catalog + archive → verified installation target
 3. Supply the required models, authorization, storage, execution environment, or lifecycle hooks.
 4. Register it in your host. Provision and start any external service separately.
 
-There is no universal configuration file that activates all ten components. A bare-Durable integration does not require Pocket core changes, but this collection does not provide automatic BB/Pocket loader integration.
+There is no universal configuration file that activates all eleven components. A bare-Durable integration does not require Pocket core changes, but this collection does not provide automatic BB/Pocket loader integration.
 
 Use **one admitted physical Durable runtime** for the host composition. In particular, DCG checks runtime-class identity; a second copy at the same version is not interchangeable. Do not bypass that check.
 
@@ -157,6 +158,10 @@ The Pi `1.2.0` migration passed **123 Node test cases/file entries** across ten 
 These are package, fixture, and installation results—not proof of live credentials, paid quotas, microphone access, external services, real DCG admission, or BB/Pocket activation. Local fixtures and `MemoryStorage` do not prove restart persistence. The full CE review did not complete; the documented native review fallback is not a passed CE review.
 
 See the [upgrade log](UPGRADE_LOG.md) for per-package evidence, reproduction commands, and review limitations. Earlier checks retain their historical scope in [provenance](docs/provenance.md). This is not a stable npm release.
+
+### Search History promotion evidence
+
+The eleventh component was promoted on 2026-10-15 from a candidate pinned to Pi Durable / Pi AI `1.1.0`. Both stacks were measured on Node 24.19.0: `1.1.0` passed 9/9, unmodified `1.2.0` passed 4/9, and the failures traced to the renamed tool result field (`content` to `output`). After the one-line migration, the collection compatibility sweep installed the pinned `1.2.0` dev family into a private temporary copy, ran the strict TypeScript check and the nine fixture checks green, and the selective installer verified the artifact digest, canonical peer declarations and pins. Live credentials, SQLite restart recovery and BB/Pocket activation were not exercised.
 
 ## Security and service boundaries
 
@@ -188,7 +193,7 @@ npm run manual-proof -- \
 
 The compatibility sweep disables dependency lifecycle scripts and does not run optional live provider/DCG/Pocket lanes. It retains private logs and a report in its temporary directory. The 123-case result includes optional canonical installer fixtures; use the environment settings in [UPGRADE_LOG.md](UPGRADE_LOG.md) to reproduce that expanded run.
 
-The bundle script packs the other nine components and the CLI with `npm pack --ignore-scripts`, verifies the DCG pin, and copies its canonical archive. It writes matching digests without publishing packages or activating a host.
+The bundle script packs the other ten components and the CLI with `npm pack --ignore-scripts`, verifies the DCG pin, and copies its canonical archive. It writes matching digests without publishing packages or activating a host.
 
 ## Troubleshooting
 

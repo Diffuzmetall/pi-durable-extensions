@@ -10,6 +10,7 @@ The collection keeps trust-boundary behavior in package cores and explicit host 
 - Antigravity is a separately provisioned loopback service; package installation does not start it or modify provider configuration.
 - Voice uses bounded in-memory audio and an explicit test fetcher only in fixtures; it does not persist recordings or add microphone UI.
 - Hindsight creates private paths with mode/owner checks, bounded no-follow cache reads, explicit bind/admission/shutdown ordering and retained outbox semantics. Same-UID ancestor attacks outside the trusted host scope are a documented non-goal.
+- Search History reads only the calling conversation's stored entries inside one Harness transaction, returns bounded untrusted transcript excerpts with no secret-redaction guarantee, and cannot select another conversation; historical text is data, not instructions.
 - CLI verifies catalog SHA-256, rejects unsafe archive entries, uses `--ignore-scripts`, isolated config/cache, fresh retained staging, Linux directory-fd anchoring and no-clobber publication. It fails closed on unsupported platform semantics.
 
 No credentials, private profiles, audio, uploads, databases, runtime logs, Pocket settings, production Agent Mail state, or live service quota belong in this public tree. Failure staging is retained rather than deleted.
