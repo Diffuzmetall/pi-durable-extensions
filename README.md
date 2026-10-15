@@ -1,74 +1,60 @@
 # Pi Durable Extensions
 
-**Add the tools you need to Pi Durable—without a Pi Pocket installation.**
+Tools and adapters for **Pi Durable 1.2.0**, packaged so you can install one component without installing Pi Pocket.
 
-Select one component. Install its exact packed artifact. Connect it to your
-host. The collection includes code execution, web and documentation tools,
-service adapters, and a selective installer. Pocket-specific integration stays
-separate from portable packages.
+Run sandboxed tool scripts, fetch web pages, look up library docs, connect memory services, or add a shell guard. Each component has its own archive and API. Your host decides what to load and which capabilities to grant.
 
-- **Selective:** each component has its own package, entry point, and requirements.
-- **Explicit:** your host controls authorization, credentials, and activation.
-- **Inspect before install:** the CLI lists components, reports requirements,
-  and validates artifacts with `--dry-run`.
+**Status: candidate collection.** The current catalog contains ten components and a separate installer CLI. None is marked stable; a package version such as `0.1.0` is not a stability guarantee.
 
-This is a **candidate collection**, not a stable npm release or a Pocket
-distribution. Package versions alone do not indicate stable status.
+[Components](#components) · [Quick start](#quick-start) · [Host integration](#host-integration) · [Verification](#verification) · [Documentation](#documentation)
 
-[Components](#choose-a-component) · [Quick start](#quick-start) ·
-[DCG guard](#dcg-guard-integration-candidate) · [Limits](#limits-and-verification) ·
-[Development](#development) · [Contributions](#contributions)
+## Components
 
-## Choose a component
+| Component | Kind | What it provides |
+|---|---|---|
+| [CodeMode](packages/codemode/README.md) | Extension | QuickJS scripts with nested tool calls and conversation-scoped storage |
+| [Agent Mail](packages/agent-mail/README.md) | Adapter | A fixed-loopback MCP connection with host-controlled write authority |
+| [Codex API](packages/codex-api/README.md) | Adapter | Ask, Search, Image, and Usage tools through explicit host authorization |
+| [Agent Profiles](packages/agent-profiles/README.md) | Adapter | A Markdown profile parser and catalog—not an agent launcher |
+| [Web Tools](packages/web-tools/README.md) | Extension | Web search and page fetching |
+| [Context7](packages/context7/README.md) | Extension | Library documentation through the Context7 MCP service |
+| [Antigravity Shim](packages/antigravity-shim/README.md) | Service | A separately started, local OpenAI-compatible service |
+| [Codex Voice](packages/codex-voice/README.md) | Adapter | A bounded transcription transport, without microphone UI |
+| [Hindsight](packages/hindsight/README.md) | Adapter | Memory integration with explicit registry and lifecycle capabilities |
+| [DCG Guard](packages/dcg-guard/README.md) | Extension | Fail-closed checks for an admitted Durable shell execution path |
 
-The [catalog](catalog.json) in this checkout contains ten components.
-Open a component's README for its API, host capabilities, and activation steps.
-DCG is a `candidate` with one checked-in canonical archive and scoped archive/API verification.
+Exact IDs, versions, artifact paths, and SHA-256 digests live in [`catalog.json`](catalog.json). The separate [`portable-pi-cli`](packages/cli/README.md) supplies `list`, `info`, `install`, and `doctor`.
 
-| Component | Kind | Version | Use it for |
-|---|---|---|---|
-| [codemode](packages/codemode/README.md) | extension | `0.1.0-candidate.0` | QuickJS scripts with nested tool calls and conversation-scoped storage |
-| [agent-mail](packages/agent-mail/README.md) | adapter | `0.0.0-candidate.1` | A fixed-loopback Agent Mail MCP connection with host-controlled write authority |
-| [codex-api](packages/codex-api/README.md) | adapter | `0.1.0-candidate` | Codex Ask, Search, Image, and Usage through explicit host authorization |
-| [agent-profiles](packages/agent-profiles/README.md) | adapter | `0.1.0-candidate.0` | A Markdown profile parser and catalog, without a launcher or private profiles |
-| [web-tools](packages/web-tools/README.md) | extension | `0.1.0` | Web search and page fetch tools |
-| [context7](packages/context7/README.md) | extension | `0.1.0-candidate.1` | Library documentation through the Context7 MCP service |
-| [antigravity-shim](packages/antigravity-shim/README.md) | service | `0.1.0-candidate.20261012` | A separately provisioned local OpenAI-compatible service |
-| [codex-voice](packages/codex-voice/README.md) | adapter | `0.1.0-candidate` | A bounded transcription transport, without microphone UI |
-| [hindsight](packages/hindsight/README.md) | adapter | `0.1.0` | Memory integration through explicit registry and lifecycle capabilities |
-| [dcg-guard](packages/dcg-guard/README.md) | extension | `0.1.0` | Fail-closed shell protection with an owner-provisioned DCG binary |
+The Agent Mail component is an MCP adapter, **not an identity bridge**. The collection does not include private agent profiles or install Pocket's Beads, goals, schedules, or other built-ins.
 
-The separate [CLI](packages/cli/README.md), `portable-pi-cli`
-`0.1.0-candidate.2`, provides `list`, `info`, `install`, and `doctor`.
-It does not count as a component. The Agent Mail entry is an MCP adapter,
-not an Agent Mail identity bridge.
+## Why use this collection?
 
-Extensions need explicit registry installation. Adapters also need their
-documented host capabilities. The service needs separate provision and startup.
-Installation does not enable Pocket modules, create credentials, or start services.
+- **Select only what you need.** Install a component rather than a complete application.
+- **Inspect before installing.** Read its requirements, check the artifact, and run a dry run.
+- **Keep the host in control.** Installation does not register tools, create credentials, enable extensions, or start services.
+
+| Approach | Choose it when… |
+|---|---|
+| This collection | You have a Durable host and want selected packages with explicit integration boundaries. |
+| Direct component integration | You want to manage source, dependencies, packaging, and admission yourself. |
+| A Pi Pocket installation | You want the application and its built-in workflows, rather than a portable package collection. |
 
 ## Requirements
 
-- Repository and CLI baseline: **Node.js `>=24.19.0`**.
-- Recorded integration environment: **Linux x64, Node `24.19.0`, npm `11.17.0`**.
-- CLI installation uses Linux directory-fd semantics, `/proc/self/fd`, and GNU
-  coreutils `/usr/bin/mv`. The recorded `mv` version is `9.5`.
-- Pi-dependent components in this checkout use the verified **Pi 1.2.0** tuple.
-  Pi-independent components keep their own requirements. Native Harness fixtures,
-  package checks and the selective installer are checked separately from activation.
+The recorded compatibility environment is **Linux x64, Node.js 24.19.0, npm 11.17.0, and Pi Durable 1.2.0**.
 
-These versions describe recorded environments, not compatibility with every
-Node, Durable, or operating-system version. Refer to the package README and
-[compatibility notes](docs/compatibility.md). Source-TypeScript packages must be
-loaded from extracted targets outside `node_modules`, or through a compatible
-TypeScript runtime; ordinary Node npm drop-in activation is not claimed.
+- The repository and CLI require **Node.js `>=24.19.0`**.
+- The installer uses Linux directory-fd semantics, `/proc/self/fd`, and GNU `/usr/bin/mv`; the recorded coreutils version is `9.5`.
+- Pi-dependent packages are pinned to the verified `1.2.0` family. Pi-independent packages have their own requirements.
+- Several packages export TypeScript source. With native Node loading, use an extracted target **outside `node_modules`**, or a compatible TypeScript runtime. Ordinary npm drop-in loading is not supported for every package.
+
+Other operating systems, runtime versions, and host compositions are not covered by this compatibility evidence. See [compatibility notes](docs/compatibility.md).
 
 ## Quick start
 
-### 1. Inspect the source catalog
+The repository includes the ten component archives and the CLI archive in [`artifacts/`](artifacts/). You do not need to rebuild a bundle to inspect or install them.
 
-This checkout includes all ten catalog components, including DCG. Its external
-binary and host admission remain separately provisioned; installation never enables it.
+### 1. Inspect a component
 
 ```sh
 git clone https://github.com/Diffuzmetall/pi-durable-extensions.git
@@ -76,366 +62,175 @@ cd pi-durable-extensions
 
 node packages/cli/src/index.mjs list \
   --catalog "$PWD/catalog.json" --allow-experimental
+
 node packages/cli/src/index.mjs info codemode \
   --catalog "$PWD/catalog.json"
+
+node packages/cli/src/index.mjs doctor codemode \
+  --catalog "$PWD/catalog.json" --json
 ```
 
-`list` shows only stable entries by default. The baseline has no stable entries,
-so use `--allow-experimental` to display its candidate and experimental components.
+`list` shows stable entries by default. Since this catalog has none, use `--allow-experimental` to see the candidate and experimental components.
 
-The Pi 1.2 compatibility candidate includes fresh archives for **all ten components
-and the CLI** under `artifacts/`, with matching catalog digests. A new local bundle
-can still be generated using the steps below; generated bundles are not publication
-or permission to activate external services.
+### 2. Validate an installation
 
-### 2. Create a local artifact bundle
-
-Select new absolute paths outside the checkout. Their parents must already
-exist. Do not reuse an output directory or an installation target.
+Choose a new absolute target outside the checkout, with an existing parent directory. Change this example path if it is already in use.
 
 ```sh
-BUNDLE="$HOME/pi-durable-bundle-01"
 TARGET="$HOME/pi-codemode-target-01"
 
-node scripts/pack-all.mjs --output "$BUNDLE"
-node packages/cli/src/index.mjs doctor codemode \
-  --catalog "$BUNDLE/catalog.json" --json
+node packages/cli/src/index.mjs install codemode \
+  --catalog "$PWD/catalog.json" \
+  --target "$TARGET" --version 0.1.0-candidate.0 \
+  --allow-experimental --dry-run
 ```
 
-The pack script uses `npm pack --ignore-scripts` for the other nine components
-and the CLI. For DCG, it verifies the root catalog pin and copies the checked-in
-canonical archive byte-for-byte. It refuses an existing output root and writes
-a generated catalog with SHA-256 digests of the exact tarballs.
-It does not publish packages or install the root workspace.
-The Pi 1.2 compatibility checks include a fresh eleven-package bundle and artifact
-integrity checks. See [compatibility](docs/compatibility.md) and [upgrade evidence](UPGRADE_LOG.md).
+A dry run checks prerequisites and the artifact digest. It creates no staging directory, installs no dependencies, and starts no service.
 
-### 3. Validate, then install one component
+### 3. Install the package when ready
 
 ```sh
 node packages/cli/src/index.mjs install codemode \
-  --catalog "$BUNDLE/catalog.json" \
-  --target "$TARGET" --version 0.1.0-candidate.0 \
-  --allow-experimental --dry-run
-
-node packages/cli/src/index.mjs install codemode \
-  --catalog "$BUNDLE/catalog.json" \
+  --catalog "$PWD/catalog.json" \
   --target "$TARGET" --version 0.1.0-candidate.0 \
   --allow-experimental
 ```
 
-A dry run validates prerequisites and the artifact digest. It creates no staging
-directory, runs no npm install, and starts no service.
+The installer uses a private dependency prefix and cache, with lifecycle scripts and bin links disabled. It may download public npm dependencies. It refuses unsafe archives, foreign files, and conflicting targets; an intact identical installation is a no-op.
 
-The actual install uses a private dependency prefix and cache. It disables
-lifecycle scripts and bin links. Public dependency downloads can occur.
-The installer refuses foreign files, unsafe archives, and target conflicts.
-Failure staging remains available for inspection. An intact, identical prior
-installation is a no-op.
+**Always pass the catalog explicitly.** The CLI's embedded catalog has relative paths that do not locate the root checkout's artifacts. Use the same selected catalog throughout inspection and installation. `--allow-experimental` does not override a blocked entry.
 
-For another component, select its exact ID and version from the generated
-catalog. Supply `--allow-experimental` for candidate or experimental entries.
+For another component, take its exact ID and version from the catalog. For manual extraction, see [installation](docs/installation.md).
 
-### CLI reference
+## CLI reference
 
-Use `node packages/cli/src/index.mjs` as the command prefix from this checkout.
-Use the same explicit catalog throughout an installation: the root catalog for
-the checked-in DCG asset, or the generated bundle catalog for bundled artifacts.
+Run these commands from the repository root. Examples use CodeMode; substitute another catalog ID as needed.
 
-| Command | Example arguments | Purpose |
+| Command | Example | Purpose |
 |---|---|---|
-| `list` | `--catalog "$BUNDLE/catalog.json" --allow-experimental` | Display selectable components |
-| `info` | `codemode --catalog "$BUNDLE/catalog.json"` | Display one component's requirements and activation boundary |
-| `install` | `codemode --catalog "$BUNDLE/catalog.json" --target "$TARGET" --version 0.1.0-candidate.0 --allow-experimental --dry-run` | Validate an exact installation without materialization |
-| `doctor` | `codemode --catalog "$BUNDLE/catalog.json" --target "$TARGET" --json` | Report runtime, artifact integrity, and target state |
+| `list` | `node packages/cli/src/index.mjs list --catalog "$PWD/catalog.json" --allow-experimental` | List selectable components |
+| `info` | `node packages/cli/src/index.mjs info codemode --catalog "$PWD/catalog.json"` | Show requirements and activation boundaries |
+| `install` | See the dry-run and installation commands above | Validate or materialize an exact component |
+| `doctor` | `node packages/cli/src/index.mjs doctor codemode --catalog "$PWD/catalog.json" --target "$TARGET" --json` | Report artifact integrity and target state |
 
-`doctor` does not probe external services or certify host activation.
-Without a component ID, `doctor` examines the full catalog, including blocked entries.
-`--allow-experimental` does not override a `blocked` installation status.
-Refer to [CLI safety and resource limits](packages/cli/README.md).
-The archive limits do not impose quotas on npm dependency materialization.
+`doctor` does not probe external services or certify activation. Without an ID, it examines the full catalog, including blocked entries. Archive limits are not quotas on npm dependency materialization. See the [CLI reference and safety limits](packages/cli/README.md).
 
-### Manual route and host activation
+## Host integration
 
-The [manual installation procedure](docs/installation.md) describes archive
-inspection, digest verification, extraction, and runtime dependency installation.
-It also provides `scripts/manual-route-proof.mjs` for local fixture checks.
-
-Several packages export TypeScript source. Node refuses type stripping inside
-`node_modules`. Import those entries from an extracted target outside
-`node_modules`, with the documented Node flags. Do not assume that a normal
-`npm install` makes every candidate importable by package name.
-
-1. Read the selected package's README.
-2. Import its documented entry from the installed target.
-3. Supply the required host capabilities and authorization policy.
-4. Register the component explicitly in your Durable host.
-
-Your host supplies models, storage, and the execution environment. Package
-installation does not supply those capabilities. No Pocket core change is necessary
-for a bare-Durable integration.
-
-## DCG guard: integration candidate
-
-The [dcg-guard package](packages/dcg-guard/README.md) adds destructive-command
-protection to the selected Durable `bash` operation. Its catalog status is
-`candidate`. The package is private, not a published npm release.
-
-**Canonical archive:** [pi-pocket-dcg-guard-0.1.0.tgz](artifacts/pi-pocket-dcg-guard-0.1.0.tgz),
-**9,714 bytes**, **seven first-party files**. Both catalogs and CLI trust metadata
-pin this SHA-256:
+**Installing a package is not connecting it to Durable.** Your application must import its entry point, supply the documented capabilities, and register it explicitly.
 
 ```text
-3813025e6335305651db45907478f1f778ea970ab5b6b04abae4538498e0f0e8
+catalog + archive → verified installation target
+                                ↓
+               host capabilities + explicit registration
+                                ↓
+                         Durable Harness
 ```
 
-The publisher produced the archive with GNU tar/gzip, not npm.
-`npm pack` creates a different DCG artifact, not this verified candidate.
-The bundle script copies the canonical asset instead of a new npm archive.
+1. Read the component's README for its entry point and factory API.
+2. Import it from the installed target using a supported loading method.
+3. Supply the required models, authorization, storage, execution environment, or lifecycle hooks.
+4. Register it in your host. Provision and start any external service separately.
 
-### Install the canonical DCG candidate
+There is no universal configuration file that activates all ten components. A bare-Durable integration does not require Pocket core changes, but this collection does not provide automatic BB/Pocket loader integration.
 
-Use a checkout containing `packages/dcg-guard` and the canonical asset above.
-Choose a fresh absolute target with an existing parent.
+Use **one admitted physical Durable runtime** for the host composition. In particular, DCG checks runtime-class identity; a second copy at the same version is not interchangeable. Do not bypass that check.
 
-**Pass the root catalog explicitly.** The CLI default is
-`packages/cli/catalog.json`. Its relative artifact paths do not locate the
-checked-in archive at the repository root.
+### DCG Guard
 
-```sh
-DCG_TARGET="$HOME/pi-dcg-guard-target-01"
+DCG Guard is an additional protection layer, **not a sandbox**. It checks the prepared command and cwd before forwarding the selected Durable shell operation. Denial, evaluator failure, or an unsupported protocol stops that operation.
 
-node packages/cli/src/index.mjs info dcg-guard \
-  --catalog "$PWD/catalog.json"
+- The external DCG `0.15.3` executable is **not included or downloaded**. Before provisioning or invoking it, obtain operator/legal review of the pinned **MIT License (with OpenAI/Anthropic Rider)**; applicability remains unverified. See the [NOTICE](packages/dcg-guard/NOTICE).
+- Use the exact catalog-pinned archive. The bundle script copies it byte-for-byte; `npm pack` produces a different artifact.
+- Admission requires a trusted local POSIX Node host, the selected bash implementation, and a separate evaluator state root. Do not reuse owner configuration, allowlists, or grants. Do not add directory-scoped allowlists.
+- The comment-only policy enables the default core Git/filesystem packs. It does **not** establish GitHub deletion protection; additional packs require explicit owner selection and admission.
+- The evaluator deadline is `2,000 ms`; framed command input is capped at `65,536` bytes, stdout at `1,048,576` bytes, and stderr at `65,536` bytes. These are fixed guard limits, separate from the bash timeout.
+- Exact-command, single-use grants remain in a dedicated store. Evaluation can consume a grant before cancellation prevents execution; the guard does not create, cache, replay, or refund grants.
+- Coverage excludes arbitrary MCP/file mutations, opaque script contents, and direct process launches outside the admitted path. Remote/container environments, Windows, PowerShell, Bun, and untested Durable versions are not supported. Downstream cancellation is not an OS-level no-spawn guarantee.
 
-node packages/cli/src/index.mjs install dcg-guard \
-  --catalog "$PWD/catalog.json" \
-  --target "$DCG_TARGET" --version 0.1.0 \
-  --allow-experimental --dry-run
+Factory options, isolated policy setup, Pocket drop-in layout, reload constraints, and the full admission conditions are in the [DCG package guide](packages/dcg-guard/README.md). Historical real-DCG and Pocket results are not fresh acceptance of this collection's current archive.
 
-node packages/cli/src/index.mjs install dcg-guard \
-  --catalog "$PWD/catalog.json" \
-  --target "$DCG_TARGET" --version 0.1.0 \
-  --allow-experimental
-```
+## Verification
 
-These commands document the guarded installer route, not a fresh npm installation
-result. Installation does not provision DCG, configure policy, register the guard,
-or enable Pocket. For a generated bundle, consistently use `$BUNDLE/catalog.json`
-instead. Its DCG asset must retain the canonical digest.
+The Pi `1.2.0` migration passed **123 Node test cases/file entries** across ten components and the expanded CLI suite, with no failures or skips in the accepted evidence. All ten component archives were installed into independent extracted targets and their documented entries imported; all eleven archive digests were checked.
 
-The standalone guard uses the public DCG robot CLI protocol. It examines the actual
-prepared shell command and cwd before it forwards the operation. Only a consistent
-allow verdict permits execution. Denial, evaluator failure, and unsupported
-protocol results stop the operation.
+These are package, fixture, and installation results—not proof of live credentials, paid quotas, microphone access, external services, real DCG admission, or BB/Pocket activation. Local fixtures and `MemoryStorage` do not prove restart persistence. The full CE review did not complete; the documented native review fallback is not a passed CE review.
 
-**Current API/fixture tuple:** local POSIX Node environment, Node `>=24.19.0`,
-`@earendil-works/pi-durable` `1.2.0`. The external executable remains pinned to
-**DCG `0.15.3`**; migration fixtures did not invoke or legally admit that binary.
-The package exports compiled ESM from `dist/`. It does not download DCG,
-install itself, or change Durable/Pocket core.
+See the [upgrade log](UPGRADE_LOG.md) for per-package evidence, reproduction commands, and review limitations. Earlier checks retain their historical scope in [provenance](docs/provenance.md). This is not a stable npm release.
 
-### Bare Durable registry example
+## Security and service boundaries
 
-Before you provision or invoke DCG, obtain operator/legal review of its pinned
-**MIT License (with OpenAI/Anthropic Rider)**. Applicability remains unverified.
-The first-party adapter's MIT grant does not establish legal clearance for the
-external executable. Refer to the package [NOTICE](packages/dcg-guard/NOTICE).
+- The host owns credentials and authorization. Installation grants neither.
+- Context7 sends documentation queries to an external service; do not send secrets or private text. Shared quota capacity and reset policy are unknown.
+- Codex upload paths require host-side conversation-ID validation and resolved-path containment checks.
+- Web Tools do not claim new SSRF protection.
+- Hindsight requires lifecycle integration and a separately configured memory service.
 
-Provision an executable DCG `0.15.3` binary separately only after that review.
-Select absolute paths as trusted owner configuration, not from model-controlled arguments.
-
-Create a dedicated evaluator root with `home/`, `config/`, and `data/`
-directories. Give `policy.toml` and `system-allowlist.toml` comment-only contents:
-
-```toml
-# Dedicated guard policy. No allow rules.
-```
-
-### Policy pack coverage
-
-The comment-only policy uses DCG's default core packs: `core.git` and
-`core.filesystem`. It **does not enable GitHub deletion protection**.
-Selecting the guard alone does not extend the classifier's pack coverage.
-
-For protection against `gh repo delete`, the owner must explicitly select
-`platform.github` in the dedicated `policy.toml`. This documentation example
-retains the core packs and adds no allow rules:
-
-```toml
-[packs]
-enabled = ["core.git", "core.filesystem", "platform.github"]
-```
-
-Use this selection only after owner approval and host admission for the pinned
-binary and policy. Keep `system-allowlist.toml` comment-only. Do not change
-production settings through this example. The current comment-only Pocket policy
-alone does not establish GitHub deletion protection.
-
-Disk and database coverage need their corresponding packs. Select those packs
-only when necessary, with explicit owner policy and admission. Pack selection
-does not create grants or directory-scoped allowlists.
-
-Keep `config/dcg/allowlist.toml` absent. Do not copy existing owner DCG settings
-or grant data. Do not add directory-scoped allowlists.
-
-### Registry setup
-
-After owner admission of the binary, policy, and host composition, use this
-registry setup in your bare-Durable host. Replace the absolute paths before use.
-
-```js
-import { createRegistry } from "@earendil-works/pi-durable";
-import { CodingTools } from "@earendil-works/pi-durable/tools";
-import { createDcgGuard } from "/absolute/path/to/installed-dcg-guard/dist/index.js";
-
-const registry = createRegistry();
-const root = "/absolute/path/to/dcg-guard-state";
-registry.install(CodingTools);
-registry.install(createDcgGuard({
-  binaryPath: "/absolute/path/to/dcg",
-  evaluatorEnv: {
-    HOME: `${root}/home`,
-    XDG_CONFIG_HOME: `${root}/config`,
-    XDG_DATA_HOME: `${root}/data`,
-    DCG_CONFIG: `${root}/policy.toml`,
-    DCG_ALLOWLIST_SYSTEM_PATH: `${root}/system-allowlist.toml`,
-    DCG_ALLOW_ONCE_PATH: `${root}/data/allow-once.jsonl`,
-    DCG_PENDING_EXCEPTIONS_PATH: `${root}/data/pending-exceptions.jsonl`,
-  },
-}));
-```
-
-Pass this registry to your host's Harness setup. The factory accepts exactly two
-options: `binaryPath` and `evaluatorEnv`. There is no default binary lookup or
-public timeout option. Host admission must confirm the selected bash implementation,
-trusted shell setup, and extension composition.
-
-### Guard limits and grants
-
-| Boundary | Fixed limit |
-|---|---|
-| Evaluator deadline | `2,000 ms`, separate from the bash tool timeout |
-| Framed command input | `65,536 bytes`, including the two-byte terminator |
-| Evaluator stdout | `1,048,576 bytes` |
-| Evaluator stderr | `65,536 bytes` |
-
-Exact-command, single-use owner grants use the dedicated grant store. The guard
-does not create, cache, replay, or refund grants. Evaluation can consume a grant
-before cancellation or a crash prevents shell execution.
-
-This is **not a sandbox**. It does not protect arbitrary MCP/file mutations,
-opaque script contents, or process launches outside the admitted Durable execution
-path. It does not support remote/container environments, Windows, PowerShell,
-Bun, or untested Durable versions. Directory-scoped policy parity is excluded.
-It does not guarantee zero OS-level process spawns during downstream cancellation.
-
-### Optional Pocket drop-in
-
-The separate package example is [pocket/dcg-guard.ts](packages/dcg-guard/pocket/dcg-guard.ts).
-The intended no-core-write
-layout places the unpacked helper at `<dataDir>/extensions/_dcg-guard/` and the
-configured drop-in at `<dataDir>/extensions/dcg-guard.ts`. Its relative import
-uses `./_dcg-guard/dist/index.js`.
-
-Select a dedicated evaluator root and binary path before activation. Do not replace
-Pocket's existing dependency link. Enable the drop-in only through the owner's
-approved Pocket workflow. A helper-package change needs a fresh helper location
-or an owner restart. A drop-in reload alone does not invalidate imported modules.
-
-Historical standalone acceptance does not certify this archive's Pocket activation
-or every loader/restart scenario. Historical evaluator timeouts remain unresolved
-availability evidence, not successful checks.
-
-## Limits and verification
-
-The Pi `1.2.0` migration verified 123 Node test cases/file entries across ten
-components and the expanded CLI suite. Fresh archives for all eleven packages
-were checked; all ten component archives were installed into independent extracted
-targets and their documented entries imported. Catalog digests and installer trust
-pins agree. See [upgrade evidence](UPGRADE_LOG.md) for per-package results, retained
-receipts, and the independent-review limitation.
-
-These checks do not prove live provider credentials, external DCG evaluation or
-legal admission, Pocket/BB startup, or every database/restart scenario. Local
-fixtures and `MemoryStorage` do not prove restart persistence. Historical baseline
-checks, including earlier Context7 service calls, retain their original scope in
-[provenance](docs/provenance.md); they are not fresh Pi `1.2.0` service acceptance.
-No stable npm publication is implied.
-
-Important host boundaries:
-
-- Context7 sends documentation queries to an external service. Its shared quota
-  capacity and reset policy are unknown. Do not send secrets or private text.
-- Codex tools need explicit host authorization and provider credentials.
-- `codex-api` returns `<dataDir>/uploads/<conversationId>` without ID sanitization.
-  Validate conversation IDs and resolved-path containment before file operations.
-- Web tools retain their documented network limits. This collection does not
-  claim new SSRF protection.
-- Hindsight needs explicit lifecycle integration and separately configured memory services.
-- The collection does not install Beads, Lancet, goals, schedules, triggers,
-  or other Pocket built-ins.
-
-Refer to [security boundaries](docs/security.md) and each component's README.
-
-## Troubleshooting
-
-| Symptom | Action |
-|---|---|
-| `list` shows no components | Add `--allow-experimental` for the baseline catalog |
-| `doctor` reports missing artifacts | Create a fresh bundle and pass its generated catalog with `--catalog` |
-| Install refuses a version or target | Use the exact catalog version and a new absolute target with an existing parent |
-| `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` | Use the documented extracted-source route outside `node_modules` |
-| DCG returns `DCG_UNAVAILABLE:timeout` | Stop. Examine the binary, dedicated evaluator state, and fixed deadline. Do not bypass the guard |
-| DCG returns `DCG_DENIED` | Respect the refusal. Use only the owner's exact-command grant procedure if authorized |
+Read [security boundaries](docs/security.md) before enabling a component.
 
 ## Development
 
-`npm run check:compat` copies each package into a private temporary directory,
-installs its dependencies with lifecycle scripts disabled, and runs its declared
-local checks and fixture suite. It does not activate the host or run optional live
-provider/DCG/Pocket lanes. Logs and the machine-readable report remain in that
-temporary directory. Other package-local development work should also use isolated
-copies.
-
 ```sh
-# Read-only public-tree boundary check
+# Check the public repository boundary; no dependency installation.
 npm run check
 
-# Full isolated Pi 1.2 compatibility sweep (downloads public dependencies)
+# Install dependencies in private temporary copies and run local fixture suites.
 npm run check:compat
 
-# Local fixtures, after package-local dependency setup
-npm --prefix packages/cli test
-npm --prefix packages/codemode run check
-npm --prefix packages/codemode test
-
-# Artifact and manual-consumer checks: each output path must be new
+# Build a separate artifact bundle. The output must not exist; its parent must.
 npm run pack -- --output /absolute/new/pi-durable-bundle
+
+# Run the manual-consumer proof against that bundle, with a fresh output path.
 npm run manual-proof -- \
   --bundle /absolute/new/pi-durable-bundle \
   --output /absolute/new/pi-durable-manual-proof
 ```
 
-The standalone DCG package defines `typecheck`, `build`, `test`, `test:dcg`,
-`test:consumer`, and `test:pocket`. Real-DCG, consumer, and Pocket checks need
-explicit prerequisites. `test:dcg:excluded` is the unsupported scoped-policy
-counterexample, not a release acceptance check. Do not report it as a passing
-supported-policy case. Build emits ESM and declarations under `dist/`.
+The compatibility sweep disables dependency lifecycle scripts and does not run optional live provider/DCG/Pocket lanes. It retains private logs and a report in its temporary directory. The 123-case result includes optional canonical installer fixtures; use the environment settings in [UPGRADE_LOG.md](UPGRADE_LOG.md) to reproduce that expanded run.
+
+The bundle script packs the other nine components and the CLI with `npm pack --ignore-scripts`, verifies the DCG pin, and copies its canonical archive. It writes matching digests without publishing packages or activating a host.
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---|---|
+| `list` is empty | Add `--allow-experimental`; the current catalog has no stable entries. |
+| `doctor` cannot find an archive | Pass the root catalog explicitly, or the catalog from your generated bundle. |
+| Installation refuses a target or version | Use the exact catalog version and a new absolute target with an existing parent. |
+| Node reports `ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING` | Load TypeScript from an extracted target outside `node_modules`, or use a compatible TypeScript runtime. |
+| Installed tools do not appear | The package still needs explicit host registration and its required capabilities. |
+| DCG returns `DCG_UNAVAILABLE:timeout` | Stop and inspect the binary, isolated evaluator state, and fixed deadline. Do not bypass the guard. |
+| DCG returns `DCG_DENIED` | Respect the refusal; use only the owner's authorized exact-command grant procedure. |
+
+## FAQ
+
+**Do I need Pi Pocket?** No. These packages target a Durable host; Pocket-specific examples are separate.
+
+**Does installation enable an extension?** No. Registration, authorization, lifecycle wiring, and service startup are host responsibilities.
+
+**Can I use ordinary npm installation for every package?** No. Several entries export TypeScript source and need the extracted-target route or a compatible TypeScript runtime.
+
+**Are these stable packages?** No. Consult the catalog status, not just the package's version string.
+
+**Does `doctor` verify my running host?** No. It checks the declared package and installation boundaries, not live service or loader behavior.
+
+## Documentation
+
+- [Installation and manual extraction](docs/installation.md)
+- [Runtime compatibility](docs/compatibility.md)
+- [Security boundaries](docs/security.md)
+- [Pi 1.2 migration evidence](UPGRADE_LOG.md)
+- [Source provenance](docs/provenance.md)
+- [Catalog](catalog.json) and [packed artifacts](artifacts/)
 
 ## Contributions
 
-Issues and pull requests are welcome as proposals. Include reproduction steps,
-the component version, the runtime tuple, and the expected behavior for bug reports.
-Do not include credentials or private data.
+Issues and pull requests are welcome as proposals. For bug reports, include reproduction steps, the component version, runtime tuple, and expected behavior. Do not include credentials or private data.
 
-The repository owner and authorized agents control repository writes and
-publication. A submitted proposal does not grant direct write access.
+The repository owner and authorized agents control writes and publication. A proposal does not grant direct write access.
 
 ## License
 
-[MIT](LICENSE), copyright © 2026 Diffuzmetall, for this collection's own code
-and documentation. Third-party and vendored files retain their own licenses.
-Refer to [NOTICE.md](NOTICE.md) and package-local license and attribution files.
-Some candidate packages retain unresolved or `UNLICENSED` metadata. The root
-license does not override those boundaries or grant rights to external products.
+[MIT](LICENSE), copyright © 2026 Diffuzmetall, for this collection's own code and documentation. Third-party and vendored files retain their own licenses; see [NOTICE.md](NOTICE.md) and package-local notices.
+
+Some candidate packages retain unresolved or `UNLICENSED` metadata. The root license does not override those boundaries or grant rights to external products.
