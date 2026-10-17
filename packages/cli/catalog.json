@@ -282,6 +282,30 @@
       "services": [],
       "activation": "Register the extension explicitly; no service, configuration read or background task.",
       "licenseStatus": "MIT with NOTICE provenance (adapted from disler/durable-pi); candidate status, no stable or registry-distribution claim"
+    },
+    {
+      "id": "durable-subagents",
+      "kind": "extension",
+      "version": "0.1.0-candidate.0",
+      "status": "experimental",
+      "package": "@pi-durable-extensions/durable-subagents",
+      "description": "Persistent isolated SDK children, canonical text results and direct native steer reports",
+      "artifact": {
+        "path": "artifacts/pi-durable-extensions-durable-subagents-0.1.0-candidate.0.tgz",
+        "sha256": "4089d5f0bae1250bc6d4d295eddb87de4b3943a76cd8bccbe4fd9083732f0e05",
+        "entries": 14
+      },
+      "testedRuntime": {
+        "node": ">=24.19.0",
+        "piDurable": "1.2.0",
+        "piAi": "1.2.0",
+        "chord": "1.2.0"
+      },
+      "dependencies": "SDK peers pinned to 1.2.0; no runtime sibling or Pocket dependency",
+      "authorization": "default registry requires existing Hindsight admission controller; direct factory requires equivalent host policy; explicit models require host resolveModel",
+      "services": [],
+      "activation": "Import TypeScript outside node_modules or with a compatible loader. Explicitly compose factory or registry adapter; no host, model login, Mail identities or TUI supplied.",
+      "licenseStatus": "MIT integration with retained Pocket MIT license and source attribution; candidate GitHub package, not npm publication"
     }
   ],
   "deferred": [],

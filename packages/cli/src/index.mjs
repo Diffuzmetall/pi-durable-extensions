@@ -27,6 +27,21 @@ const MAX_MARKER_BYTES = 4 * 1024 * 1024;
 const READ_CHUNK_BYTES = 64 * 1024;
 const TRUSTED_GNU_MV = '/usr/bin/mv';
 const TRUSTED_PEER_MANIFESTS = Object.freeze({
+  "durable-subagents": Object.freeze({
+    packageName: "@pi-durable-extensions/durable-subagents",
+    artifactSha256: "4089d5f0bae1250bc6d4d295eddb87de4b3943a76cd8bccbe4fd9083732f0e05",
+    peers: Object.freeze({
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0",
+      "@earendil-works/chord": "1.2.0"
+    }),
+    optional: Object.freeze({}),
+    pins: Object.freeze({
+      "@earendil-works/pi-ai": "1.2.0",
+      "@earendil-works/pi-durable": "1.2.0",
+      "@earendil-works/chord": "1.2.0"
+    }),
+  }),
   "codemode": Object.freeze({
     packageName: "@pi-durable-extensions/codemode",
     artifactSha256: "269dddbf8021d26c0609d16a98474f7338be1f28468550713c30a7b43b4d1d38",
@@ -177,7 +192,7 @@ const TRUSTED_PEER_MANIFESTS = Object.freeze({
 });
 const COMPONENT_IDS = new Set([
   'codemode', 'agent-mail', 'codex-api', 'agent-profiles',
-  'web-tools', 'context7', 'antigravity-shim', 'codex-voice', 'hindsight', 'dcg-guard', 'search-history',
+  'web-tools', 'context7', 'antigravity-shim', 'codex-voice', 'hindsight', 'dcg-guard', 'search-history', 'durable-subagents',
 ]);
 const FORBIDDEN_IDS = new Set(['pi-durable-beads', 'lancet', 'goals', 'schedules', 'triggers']);
 

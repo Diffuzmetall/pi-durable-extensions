@@ -4,7 +4,7 @@ Tools and adapters for **Pi Durable 1.2.0**, packaged so you can install one com
 
 Run sandboxed tool scripts, fetch web pages, look up library docs, connect memory services, or add a shell guard. Each component has its own archive and API. Your host decides what to load and which capabilities to grant.
 
-**Status: candidate collection.** The current catalog contains eleven components and a separate installer CLI. None is marked stable; a package version such as `0.1.0` is not a stability guarantee.
+**Status: candidate collection.** The current catalog contains twelve components and a separate installer CLI. None is marked stable; a package version such as `0.1.0` is not a stability guarantee.
 
 [Components](#components) · [Quick start](#quick-start) · [Host integration](#host-integration) · [Verification](#verification) · [Documentation](#documentation)
 
@@ -23,6 +23,7 @@ Run sandboxed tool scripts, fetch web pages, look up library docs, connect memor
 | [Hindsight](packages/hindsight/README.md) | Adapter | Memory integration with explicit registry and lifecycle capabilities |
 | [DCG Guard](packages/dcg-guard/README.md) | Extension | Fail-closed checks for an admitted Durable shell execution path |
 | [Search History](packages/search-history/README.md) | Extension | Conversation-scoped stored-history search: `search_history` over the newest visible entries, including pre-reset and pre-compaction history |
+| [Durable Subagents](packages/durable-subagents/README.md) | Extension/library | Persistent isolated children, canonical text results and direct native reports; explicit host admission and registry composition |
 
 Exact IDs, versions, artifact paths, and SHA-256 digests live in [`catalog.json`](catalog.json). The separate [`portable-pi-cli`](packages/cli/README.md) supplies `list`, `info`, `install`, and `doctor`.
 
@@ -53,7 +54,7 @@ Other operating systems, runtime versions, and host compositions are not covered
 
 ## Quick start
 
-The repository includes the ten component archives and the CLI archive in [`artifacts/`](artifacts/). You do not need to rebuild a bundle to inspect or install them.
+The repository includes the twelve component archives and the CLI archive in [`artifacts/`](artifacts/). You do not need to rebuild a bundle to inspect or install them.
 
 ### 1. Inspect a component
 
@@ -133,7 +134,7 @@ catalog + archive → verified installation target
 3. Supply the required models, authorization, storage, execution environment, or lifecycle hooks.
 4. Register it in your host. Provision and start any external service separately.
 
-There is no universal configuration file that activates all eleven components. A bare-Durable integration does not require Pocket core changes, but this collection does not provide automatic BB/Pocket loader integration.
+There is no universal configuration file that activates all twelve components. A bare-Durable integration does not require Pocket core changes, but this collection does not provide automatic BB/Pocket loader integration.
 
 Use **one admitted physical Durable runtime** for the host composition. In particular, DCG checks runtime-class identity; a second copy at the same version is not interchangeable. Do not bypass that check.
 
@@ -193,7 +194,7 @@ npm run manual-proof -- \
 
 The compatibility sweep disables dependency lifecycle scripts and does not run optional live provider/DCG/Pocket lanes. It retains private logs and a report in its temporary directory. The 123-case result includes optional canonical installer fixtures; use the environment settings in [UPGRADE_LOG.md](UPGRADE_LOG.md) to reproduce that expanded run.
 
-The bundle script packs the other ten components and the CLI with `npm pack --ignore-scripts`, verifies the DCG pin, and copies its canonical archive. It writes matching digests without publishing packages or activating a host.
+The bundle script packs the other eleven components and the CLI with `npm pack --ignore-scripts`, verifies the DCG pin, and copies its canonical archive. It writes matching digests without publishing packages or activating a host.
 
 ## Troubleshooting
 
@@ -223,6 +224,7 @@ The bundle script packs the other ten components and the CLI with `npm pack --ig
 
 - [Installation and manual extraction](docs/installation.md)
 - [Runtime compatibility](docs/compatibility.md)
+- [Durable Subagents: orchestration, models, results and recovery](docs/durable-subagents.md)
 - [Security boundaries](docs/security.md)
 - [Pi 1.2 migration evidence](UPGRADE_LOG.md)
 - [Source provenance](docs/provenance.md)

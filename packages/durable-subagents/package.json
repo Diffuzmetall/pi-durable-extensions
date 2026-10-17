@@ -1,0 +1,27 @@
+{
+  "name": "@pi-durable-extensions/durable-subagents",
+  "version": "0.1.0-candidate.0",
+  "private": true,
+  "type": "module",
+  "description": "Persistent isolated child conversations and direct native reports for Pi Durable SDK 1.2.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/Diffuzmetall/pi-durable-extensions.git", "directory": "packages/durable-subagents" },
+  "engines": { "node": ">=24.19.0" },
+  "exports": { ".": "./src/index.ts", "./registry": "./src/registry.ts" },
+  "files": ["src/", "README.md", "NOTICE.md", "LICENSE", "LICENSE.pocket"],
+  "scripts": { "test": "node --test test/*.test.mjs", "check": "tsc -p tsconfig.json" },
+  "peerDependencies": {
+    "@earendil-works/pi-durable": "1.2.0",
+    "@earendil-works/pi-ai": "1.2.0",
+    "@earendil-works/chord": "1.2.0"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-durable": "1.2.0",
+    "@earendil-works/pi-ai": "1.2.0",
+    "@earendil-works/chord": "1.2.0",
+    "@earendil-works/pi-codemode": "1.2.0",
+    "@earendil-works/pi-mcp": "1.2.0",
+    "@types/node": "24.10.0",
+    "typescript": "6.0.3"
+  }
+}
