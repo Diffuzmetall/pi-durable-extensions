@@ -1,11 +1,12 @@
 # Durable Subagents
 
-An independently packable **Pi Durable SDK 1.2.0 extension/library** for persistent,
+An independently packable **Pi Durable SDK 1.2.0 / 1.3.0 extension/library** for persistent,
 isolated child conversations. No Pocket application, BB provider, host patch,
 second runtime, scheduler, credentials or external service is included.
 
-Candidate version `0.1.0-candidate.1`; Node.js **>=24.19.0**. The checked compatibility
-tuple is Linux x64, Node 24.19.0 and the public Durable / Pi AI / Chord 1.2.0 family.
+Candidate version `0.1.0-candidate.2`; Node.js **>=24.19.0**. Checked compatibility
+tuples are Linux x64, Node 24.19.0 and the public Durable / Pi AI / Chord
+1.2.0 or 1.3.0 family. Keep all three SDK peers on the same admitted version.
 The three SDK packages are peers: resolve them to the host's admitted physical
 runtime, not a second copy. This is a GitHub package, **not an npm release**.
 
@@ -26,7 +27,7 @@ existing parent directory:
 TARGET="$HOME/pi-durable-subagents-target-01"
 node packages/cli/src/index.mjs install durable-subagents \
   --catalog "$PWD/catalog.json" --target "$TARGET" \
-  --version 0.1.0-candidate.1 --allow-experimental --dry-run
+  --version 0.1.0-candidate.2 --allow-experimental --dry-run
 # After inspecting the dry run, repeat without --dry-run to materialize the package.
 ```
 
@@ -37,6 +38,15 @@ start a host or register tools. See [manual extraction](https://github.com/Diffu
 Exports are TypeScript source. Native Node type stripping cannot load `.ts` inside
 `node_modules`; use an extracted target **outside** it (as above), or a compatible
 TypeScript loader. Do not present ordinary npm installation as a universal loader.
+
+## Select the actual owner, not just the SDK version
+
+Children return ordinary text; no `ChildReport` JSON schema is required. SDK 1.3 alone
+does not guarantee that an installed extension is this package: an older copied
+`durable-subagents` owner can still inject a strict JSON contract. Select the exact
+checked package source/archive in the host composition, and reopen the owning
+session through the host's supported lifecycle. Do not overwrite a live module or
+rerun a completed child to repair an old report. Existing history stays intact.
 
 ## Register with your host
 
