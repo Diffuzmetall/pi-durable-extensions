@@ -76,6 +76,16 @@ then verifies that the selected model exists. The default registry adapter accep
 this callback as an option, but a loader invoking it with only `base` supplies none:
 in that composition explicit `model` is rejected rather than silently ignored.
 
+A single-user host may explicitly opt in to the package's `resolveAvailableModel`
+export when its policy is to allow every model from its authenticated picker:
+`installSubagents(base, {resolveModel: resolveAvailableModel})`. The resolver
+requires the exact `provider/modelId`, checks `api.models.getAvailable(provider)`,
+and refuses aliases, unavailable/unconfigured providers or models and auth errors
+without a fallback. It does not change the parent or global model. For tenant,
+provider, spending or other restrictions, use a narrower host-owned callback;
+this helper is not a multi-user authorization service. Existing admission and
+tool-role guards remain in force.
+
 `send` intentionally rejects `model`, `thinking`, `role` and `tools`. Existing
 children keep their spawn configuration. For a new authorized configuration,
 spawn a new named child; do not claim that send changed an existing child's model.

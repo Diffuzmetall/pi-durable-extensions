@@ -29,7 +29,7 @@ const TRUSTED_GNU_MV = '/usr/bin/mv';
 const TRUSTED_PEER_MANIFESTS = Object.freeze({
   "durable-subagents": Object.freeze({
     packageName: "@pi-durable-extensions/durable-subagents",
-    artifactSha256: "4089d5f0bae1250bc6d4d295eddb87de4b3943a76cd8bccbe4fd9083732f0e05",
+    artifactSha256: "4842feccab4d14fa6f28f70b663440ff2c9dcdef1bf0e905ee37fc6c86c66c8e",
     peers: Object.freeze({
       "@earendil-works/pi-ai": "1.2.0",
       "@earendil-works/pi-durable": "1.2.0",

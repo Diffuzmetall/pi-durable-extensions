@@ -1,6 +1,6 @@
 {
   "name": "@pi-durable-extensions/durable-subagents",
-  "version": "0.1.0-candidate.0",
+  "version": "0.1.0-candidate.1",
   "private": true,
   "type": "module",
   "description": "Persistent isolated child conversations and direct native reports for Pi Durable SDK 1.2.",

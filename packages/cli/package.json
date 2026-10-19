@@ -1,6 +1,6 @@
 {
   "name": "portable-pi-cli",
-  "version": "0.1.0-candidate.2",
+  "version": "0.1.0-candidate.3",
   "private": true,
   "type": "module",
   "description": "Candidate selective installer and doctor for the portable Pi Durable extension collection.",

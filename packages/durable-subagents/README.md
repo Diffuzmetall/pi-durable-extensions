@@ -4,7 +4,7 @@ An independently packable **Pi Durable SDK 1.2.0 extension/library** for persist
 isolated child conversations. No Pocket application, BB provider, host patch,
 second runtime, scheduler, credentials or external service is included.
 
-Candidate version `0.1.0-candidate.0`; Node.js **>=24.19.0**. The checked compatibility
+Candidate version `0.1.0-candidate.1`; Node.js **>=24.19.0**. The checked compatibility
 tuple is Linux x64, Node 24.19.0 and the public Durable / Pi AI / Chord 1.2.0 family.
 The three SDK packages are peers: resolve them to the host's admitted physical
 runtime, not a second copy. This is a GitHub package, **not an npm release**.
@@ -26,7 +26,7 @@ existing parent directory:
 TARGET="$HOME/pi-durable-subagents-target-01"
 node packages/cli/src/index.mjs install durable-subagents \
   --catalog "$PWD/catalog.json" --target "$TARGET" \
-  --version 0.1.0-candidate.0 --allow-experimental --dry-run
+  --version 0.1.0-candidate.1 --allow-experimental --dry-run
 # After inspecting the dry run, repeat without --dry-run to materialize the package.
 ```
 
@@ -62,6 +62,23 @@ parent report and supervision admissions; replacing the owner does not remove
 other guards. Without `resolveModel`, inheritance works but explicit model
 selection is rejected. A host registry-loader that only passes `base` does not
 supply this callback automatically.
+
+For a single-user host whose policy permits every model in its authenticated
+picker, opt in to the included resolver instead of writing the callback:
+
+```js
+import installSubagents, { resolveAvailableModel } from './subagents-target/src/index.ts';
+const registry = installSubagents(existingRegistry, { resolveModel: resolveAvailableModel });
+```
+
+`resolveAvailableModel` accepts an exact `provider/modelId`, checks
+`api.models.getAvailable(provider)`, and rejects bare aliases, unknown models,
+unconfigured providers and auth lookup failures without fallback. It preserves
+slashes inside model IDs and does not log in, enable providers or change parent
+or global defaults. This **is an explicit authorization choice**, not automatic
+permission from catalog membership. Multi-user, provider-restricted or
+budget-restricted hosts must supply their own narrower policy instead. The
+unconfigured adapter still rejects explicit model selection.
 
 For a host that directly composes SDK extensions, `registry.install(createSubagent(
   hostAdmission, { resolveModel: hostResolveModel }))` is the factory route.

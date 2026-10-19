@@ -1,6 +1,6 @@
 # Portable collection CLI candidate
 
-This is the U6 candidate for selective local installation. A fresh private artifact may use package version `0.1.0-candidate.2`; the frozen canonical candidate remains unchanged. It has no Pocket or
+This is the U6 candidate for selective local installation. A fresh private artifact may use package version `0.1.0-candidate.3`; the frozen canonical candidate remains unchanged. It has no Pocket or
 collection-workspace imports and uses only Node built-ins plus the host `npm`
 command. It does not publish packages, claim a public package namespace,
 assert license approval, read credentials, enable extensions, start services,

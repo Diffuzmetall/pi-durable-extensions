@@ -9,7 +9,7 @@ import { fauxProvider, fauxAssistantMessage, fauxToolCall, Type } from '@earendi
 import { createModels } from '@earendil-works/pi-ai/models';
 import { Harness, MemoryStorage, createRegistry, defineExtension, defineTool, LiveDoc, InboxDoc } from '@earendil-works/pi-durable';
 import { openNodeSqliteStorage } from '@earendil-works/pi-durable/storage/sqlite/node';
-import installSubagents, { createSubagent, SubagentsDoc } from '../src/index.ts';
+import installSubagents, { createSubagent, resolveAvailableModel, SubagentsDoc } from '../src/index.ts';
 import { RequestsDoc } from '../src/requests.ts';
 
 const pause = ms => new Promise(r => setTimeout(r, ms));
@@ -180,6 +180,22 @@ test('model policy is required; host-authorized catalog model and thinking/tools
     assert.match(output(await noPolicy.invoke({ task: 'child:bad', name: 'bad', model: 'anything' })), /host resolveModel policy/);
     assert.equal(Object.keys(await noPolicy.agents()).length, 0);
   } finally { await noPolicy.close(); }
+});
+
+test('opt-in authenticated model policy configures the child and leaves parent settings unchanged', { timeout: 12000 }, async () => {
+  const f = await fixture({ options: { resolveModel: resolveAvailableModel } });
+  try {
+    const model = f.provider.getModel();
+    const before = (await f.root.agent(context)).model;
+    await f.invoke({ task: 'child:explicit-model', name: 'explicit-model', model: `${model.provider}/${model.id}`, thinking: 'high' });
+    assert.deepEqual((await (await f.child('explicit-model')).agent(context)).model,
+      { provider: model.provider, modelId: model.id });
+    assert.deepEqual((await f.root.agent(context)).model, before);
+    assert.ok(f.admissions.length > 0);
+    assert.match(output(await f.invoke({ task: 'child:bad', name: 'alias', model: model.id })), /exact provider\/model/);
+    assert.match(output(await f.invoke({ task: 'child:bad', name: 'missing', model: `${model.provider}/missing` })), /unavailable|not authenticated/);
+    assert.equal(Object.keys(await f.agents()).length, 1);
+  } finally { await f.close(); }
 });
 
 test('default maxActive is 20, not 10, and a twenty-first active child is rejected', { timeout: 20000 }, async () => {

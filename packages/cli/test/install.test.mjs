@@ -195,16 +195,16 @@ async function managerScript(root, body) {
   return file;
 }
 
-test('active catalog has eleven entries, preserves Context7, and pins the seven-file DCG candidate', async () => {
+test('active catalog has twelve entries, preserves Context7, and pins the DCG and subagents candidates', async () => {
   const catalog = JSON.parse(await readFile(DEFAULT_CATALOG, 'utf8'));
-  assert.equal(catalog.components.length, 11);
+  assert.equal(catalog.components.length, 12);
   assert.equal(catalog.components.some((entry) => entry.id === 'context7'), true);
   assert.equal(catalog.components.some((entry) => entry.id === 'dcg-guard'), true);
   assert.equal(catalog.components.some((entry) => entry.id === 'search-history'), true);
   assert.deepEqual(catalog.deferred, []);
   const listed = run(['list', '--catalog', DEFAULT_CATALOG, '--allow-experimental', '--json']);
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).length, 11);
+  assert.equal(JSON.parse(listed.stdout).length, 12);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'context7'), true);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'dcg-guard'), true);
   assert.equal(JSON.parse(listed.stdout).some((entry) => entry.id === 'search-history'), true);
@@ -229,6 +229,12 @@ test('active catalog has eleven entries, preserves Context7, and pins the seven-
   assert.equal(JSON.parse(searchHistory.stdout).artifact.sha256, 'deb3adc75ce312de8024a2af66bb3c15684174574cfc53378cf4dc6418e96906');
   assert.equal(JSON.parse(searchHistory.stdout).artifact.entries, 6);
   assert.deepEqual(JSON.parse(searchHistory.stdout).testedRuntime, { node: '>=24.19.0', piDurable: '1.2.0', piAi: '1.2.0', chord: '1.2.0' });
+  const subagents = run(['info', 'durable-subagents', '--catalog', DEFAULT_CATALOG, '--json']);
+  assert.equal(subagents.status, 0, subagents.stderr);
+  assert.equal(JSON.parse(subagents.stdout).version, '0.1.0-candidate.1');
+  assert.equal(JSON.parse(subagents.stdout).package, '@pi-durable-extensions/durable-subagents');
+  assert.equal(JSON.parse(subagents.stdout).artifact.sha256, '4842feccab4d14fa6f28f70b663440ff2c9dcdef1bf0e905ee37fc6c86c66c8e');
+  assert.equal(JSON.parse(subagents.stdout).artifact.entries, 15);
 });
 
 test('excluded builtins are rejected from synthetic catalogs', async () => {

@@ -16,6 +16,7 @@ export { SubagentsDoc } from './documents.ts';
 export type { SubagentRecord, PendingSubagentReport } from './documents.ts';
 export type { SubagentAdmission } from './tasks.ts';
 export { default } from './registry.ts';
+export { resolveAvailableModel } from './model-policy.ts';
 
 export type SubagentOptions = {
   maxActive?: number;

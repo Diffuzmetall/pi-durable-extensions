@@ -286,14 +286,14 @@
     {
       "id": "durable-subagents",
       "kind": "extension",
-      "version": "0.1.0-candidate.0",
+      "version": "0.1.0-candidate.1",
       "status": "experimental",
       "package": "@pi-durable-extensions/durable-subagents",
       "description": "Persistent isolated SDK children, canonical text results and direct native steer reports",
       "artifact": {
-        "path": "artifacts/pi-durable-extensions-durable-subagents-0.1.0-candidate.0.tgz",
-        "sha256": "4089d5f0bae1250bc6d4d295eddb87de4b3943a76cd8bccbe4fd9083732f0e05",
-        "entries": 14
+        "path": "artifacts/pi-durable-extensions-durable-subagents-0.1.0-candidate.1.tgz",
+        "sha256": "4842feccab4d14fa6f28f70b663440ff2c9dcdef1bf0e905ee37fc6c86c66c8e",
+        "entries": 15
       },
       "testedRuntime": {
         "node": ">=24.19.0",
@@ -310,11 +310,11 @@
   ],
   "cli": {
     "package": "portable-pi-cli",
-    "version": "0.1.0-candidate.2",
+    "version": "0.1.0-candidate.3",
     "status": "experimental",
     "artifact": {
-      "path": "artifacts/portable-pi-cli-0.1.0-candidate.2.tgz",
-      "sha256": "9d3c97669a503162ac1f16d322f914945d42bc3361f8cac42e322ace6a88de55",
+      "path": "artifacts/portable-pi-cli-0.1.0-candidate.3.tgz",
+      "sha256": "886d15d0744f6c9ad3cc57d0185885aa8bfc8298cac41dea1fbbfdf69bbf738a",
       "entries": 4
     },
     "testedRuntime": {
